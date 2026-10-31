@@ -1,165 +1,341 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swypyy | Creative & Developer Lab</title>
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent: #38bdf8;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+    <title>SWYPYY | Anonymous Creator Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0b0b0e',
+                        darkSurface: '#121217',
+                        darkCard: '#1a1a24',
+                        darkBorder: '#282836',
+                        crimson: '#ff2a4b',
+                        crimsonHover: '#e01e3e',
+                        crimsonDark: '#800f22',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['Fira Code', 'Courier New', 'monospace'],
+                    },
+                    boxShadow: {
+                        'glow': '0 0 35px -5px rgba(255, 42, 75, 0.4)',
+                        'glow-sm': '0 0 15px -3px rgba(255, 42, 75, 0.3)',
+                    }
+                }
+            }
         }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
 
         body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            background-color: #0b0b0e;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
         }
 
-        header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-            border-bottom: 1px solid #334155;
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(26, 26, 36, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        h1 {
-            font-size: 2.5rem;
-            margin: 0 0 10px 0;
-            color: var(--accent);
-            letter-spacing: 1px;
+        .glass-card:hover {
+            border-color: rgba(255, 42, 75, 0.4);
         }
 
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
+        /* Text Gradients */
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 30%, #ff2a4b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 25px;
+        /* Halo Circle Background Effect */
+        .halo-bg {
+            background: radial-gradient(circle at center, rgba(255, 42, 75, 0.25) 0%, rgba(255, 42, 75, 0.05) 50%, transparent 75%);
         }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            padding: 8px 16px;
-            background: #334155;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-
-        nav a:hover {
-            background: var(--accent);
-            color: #0f172a;
-            font-weight: bold;
-        }
-
-        main {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 24px;
-            border: 1px solid #334155;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent);
-        }
-
-        .card h2 {
-            margin-top: 0;
-            font-size: 1.3rem;
-            color: var(--accent);
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            border-top: 1px solid #334155;
-            margin-top: 60px;
+        
+        .halo-bg-card {
+            background: radial-gradient(circle at top right, rgba(255, 42, 75, 0.15) 0%, transparent 60%);
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-crimson selection:text-white">
 
-    <header>
-        <h1>SWYPYY</h1>
-        <p class="subtitle">Anonymously forging code, web apps, browser games, novels, tools, and digital art under one roof.</p>
-        <nav>
-            <a href="#apps">Apps & Tools</a>
-            <a href="#games">Web Games</a>
-            <a href="#code">Code Hub</a>
-            <a href="#writing">Novels & Books</a>
-            <a href="#gallery">Art Gallery</a>
-        </nav>
+    <!-- 1. NAVIGATION HEADER -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-card border-b border-darkBorder/50 px-6 py-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2 text-2xl font-black tracking-wider text-white uppercase group">
+                <span>SWYPYY</span>
+                <span class="w-2.5 h-2.5 rounded-full bg-crimson group-hover:scale-125 transition-transform duration-300 shadow-glow-sm"></span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide text-slate-300">
+                <a href="#home" class="hover:text-crimson transition-colors">Home</a>
+                <a href="#novel" class="hover:text-crimson transition-colors">Web Novel</a>
+                <a href="#showcase" class="hover:text-crimson transition-colors">Future Projects</a>
+                <a href="#about" class="hover:text-crimson transition-colors">About</a>
+            </nav>
+
+            <!-- CTA Header Button -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="#novel" class="px-5 py-2.5 rounded-full bg-crimson hover:bg-crimsonHover text-white text-xs font-bold uppercase tracking-wider shadow-glow transition-all duration-300 transform hover:-translate-y-0.5">
+                    Read Novel
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-white focus:outline-none" aria-label="Toggle Menu">
+                <svg id="menuIcon" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 w-full bg-darkSurface/95 border-b border-darkBorder px-6 py-6 flex-col space-y-4 shadow-2xl backdrop-blur-xl">
+            <a href="#home" onclick="toggleMobileMenu()" class="text-slate-200 hover:text-crimson font-medium py-1">Home</a>
+            <a href="#novel" onclick="toggleMobileMenu()" class="text-slate-200 hover:text-crimson font-medium py-1">Web Novel</a>
+            <a href="#showcase" onclick="toggleMobileMenu()" class="text-slate-200 hover:text-crimson font-medium py-1">Future Projects</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="text-slate-200 hover:text-crimson font-medium py-1">About</a>
+            <a href="#novel" onclick="toggleMobileMenu()" class="block text-center py-3 rounded-xl bg-crimson text-white font-bold uppercase text-xs">
+                Read Novel Now
+            </a>
+        </div>
     </header>
 
-    <main>
-        <div class="grid">
-            <section class="card" id="apps">
-                <h2>🛠️ Apps & Tools</h2>
-                <p>Interactive web utilities, productivity tools, and experimental applications built directly in JavaScript & web technologies.</p>
-            </section>
+    <!-- 2. HERO BANNER SECTION (Inspired by Reference Images) -->
+    <section id="home" class="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 overflow-hidden">
+        
+        <!-- Ambient Glowing Background Circle -->
+        <div class="absolute top-1/2 right-10 md:right-1/4 -translate-y-1/2 w-72 h-72 sm:w-[450px] sm:h-[450px] md:w-[550px] md:h-[550px] rounded-full halo-bg pointer-events-none -z-10 animate-pulse"></div>
 
-            <section class="card" id="games">
-                <h2>🎮 Web Games</h2>
-                <p>Playable browser games powered by Canvas, HTML5, and custom web engines.</p>
-            </section>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Column: Hero Text Content -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left z-10">
+                
+                <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-crimson/10 border border-crimson/30 text-crimson text-xs font-semibold tracking-wide">
+                    <span class="w-2 h-2 rounded-full bg-crimson animate-ping"></span>
+                    <span>100% Anonymous Creator Hub</span>
+                </div>
 
-            <section class="card" id="code">
-                <h2>💻 Code Repos</h2>
-                <p>Open-source projects, scripts, code snippets, and developer resources.</p>
-            </section>
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight leading-none text-white">
+                    HELLO I AM <br/>
+                    <span class="gradient-text uppercase">SWYPYY</span>
+                </h1>
 
-            <section class="card" id="writing">
-                <h2>📚 Novels & Books</h2>
-                <p>Original stories, web serials, novel drafts, and published reading material.</p>
-            </section>
+                <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
+                    Author, Developer & Anonymous Digital Architect. Forging immersive web novels, interactive browser apps, experimental games, and code under one dark roof.
+                </p>
 
-            <section class="card" id="gallery">
-                <h2>🎨 Art & Designs</h2>
-                <p>Digital artwork, graphic experiments, and concept visual showcases.</p>
-            </section>
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#novel" class="px-8 py-4 rounded-full bg-crimson hover:bg-crimsonHover text-white font-bold text-sm tracking-wider uppercase shadow-glow transition-all duration-300 transform hover:-translate-y-1">
+                        Start Reading Novel
+                    </a>
+                    <a href="#about" class="px-8 py-4 rounded-full glass-card border border-darkBorder hover:border-crimson text-slate-200 font-semibold text-sm tracking-wider uppercase transition-all duration-300">
+                        Explore Profile
+                    </a>
+                </div>
+
+                <!-- Floating Stats Badges (Matching Reference Style) -->
+                <div class="pt-8 grid grid-cols-3 gap-4 border-t border-darkBorder/60 max-w-md mx-auto lg:mx-0">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-black text-white">01</div>
+                        <div class="text-xs text-slate-400 font-medium uppercase tracking-wider">Web Novel</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-black text-crimson">100%</div>
+                        <div class="text-xs text-slate-400 font-medium uppercase tracking-wider">Free Access</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-black text-white">∞</div>
+                        <div class="text-xs text-slate-400 font-medium uppercase tracking-wider">Future Ideas</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Anonymous Persona Avatar (Matching Glowing Red Circle Graphic) -->
+            <div class="lg:col-span-5 flex justify-center relative z-10">
+                <div class="relative w-72 sm:w-96 h-72 sm:h-96">
+                    
+                    <!-- Glowing Outer Ring -->
+                    <div class="absolute inset-0 rounded-full border-2 border-crimson/40 shadow-glow animate-spin-slow"></div>
+                    
+                    <!-- Dark Inner Disc -->
+                    <div class="absolute inset-4 rounded-full bg-gradient-to-b from-darkCard to-darkBg border border-darkBorder flex items-center justify-center overflow-hidden shadow-2xl">
+                        
+                        <!-- Anonymous Hooded Vector Silhouette -->
+                        <svg class="w-full h-full text-slate-200 transform translate-y-4" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background Red Glow Inside Avatar -->
+                            <circle cx="100" cy="100" r="70" fill="#ff2a4b" fill-opacity="0.25"/>
+                            
+                            <!-- Hooded Silhouette -->
+                            <path d="M100 25 C65 25 50 60 50 100 C50 140 30 180 20 200 L180 200 C170 180 150 140 150 100 C150 60 135 25 100 25 Z" fill="#0b0b0e"/>
+                            <path d="M100 35 C72 35 60 68 60 105 C60 135 45 170 35 190 L165 190 C155 170 140 135 140 105 C140 68 128 35 100 35 Z" fill="#161620"/>
+                            
+                            <!-- Darkened Face Shadow -->
+                            <path d="M75 90 Q100 75 125 90 Q120 145 100 150 Q80 145 75 90 Z" fill="#08080a"/>
+                            
+                            <!-- Glowing Red Eye Slits/Visor -->
+                            <path d="M82 105 L95 107 L84 110 Z" fill="#ff2a4b"/>
+                            <path d="M118 105 L105 107 L116 110 Z" fill="#ff2a4b"/>
+                            
+                            <!-- Jacket Collar Lines -->
+                            <path d="M75 150 L100 190 L125 150" stroke="#ff2a4b" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+
+                    </div>
+
+                    <!-- Floating Badge: Anonymous Alias -->
+                    <div class="absolute -bottom-2 -left-2 glass-card px-4 py-2 rounded-2xl border border-darkBorder flex items-center space-x-3 shadow-xl">
+                        <div class="w-3 h-3 rounded-full bg-crimson animate-pulse"></div>
+                        <div class="text-xs font-bold text-white tracking-wide">STATUS: ACTIVE AUTHOR</div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <p>&copy; Swypyy. All rights reserved. Created anonymously.</p>
-    </footer>
+    <!-- 3. FEATURED SECTION: WEB NOVEL FOCUS -->
+    <section id="novel" class="py-20 px-6 bg-darkSurface/50 border-y border-darkBorder/40 relative">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-crimson font-mono text-xs font-bold uppercase tracking-widest block mb-2">// PRIMARY RELEASE</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">FEATURED WEB NOVEL</h2>
+                </div>
+                <p class="text-slate-400 text-sm max-w-md mt-2 md:mt-0 font-light">
+                    Direct access to Swypyy's ongoing fiction. No paywalls, no ads, updated regularly.
+                </p>
+            </div>
 
-</body>
-  </html>
-              
+            <!-- Novel Showcase Card -->
+            <div class="glass-card rounded-3xl p-6 sm:p-10 border border-darkBorder halo-bg-card relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- Novel Cover Placeholder -->
+                    <div class="lg:col-span-4 flex justify-center">
+                        <div class="w-56 h-80 sm:w-64 sm:h-92 rounded-2xl bg-gradient-to-br from-darkCard to-black border border-crimson/30 shadow-glow flex flex-col justify-between p-6 relative group overflow-hidden">
+                            <div class="absolute inset-0 bg-crimson/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <div class="flex justify-between items-center text-xs font-mono text-crimson font-bold">
+                                <span>SWYPYY PRESENTS</span>
+                                <span>VOL. 1</span>
+                            </div>
+
+                            <div class="my-auto text-center">
+                                <span class="text-xs text-slate-400 font-mono block mb-1">ORIGINAL FICTION</span>
+                                <h3 class="text-2xl font-black text-white tracking-tight uppercase leading-tight">
+                                    CHRONICLES OF THE VOID
+                                </h3>
+                            </div>
+
+                            <div class="text-center border-t border-darkBorder/60 pt-3">
+                                <span class="text-[10px] text-slate-400 font-mono uppercase tracking-widest block">STATUS: ONGOING</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Novel Info & Chapters -->
+                    <div class="lg:col-span-8 space-y-6">
+                        
+                        <!-- Tags -->
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-crimson/15 text-crimson border border-crimson/30 text-xs font-bold">DARK FANTASY</span>
+                            <span class="px-3 py-1 rounded-full bg-darkCard text-slate-300 border border-darkBorder text-xs font-semibold">CYBERPUNK</span>
+                            <span class="px-3 py-1 rounded-full bg-darkCard text-slate-300 border border-darkBorder text-xs font-semibold">MYSTERY</span>
+                            <span class="px-3 py-1 rounded-full bg-darkCard text-slate-300 border border-darkBorder text-xs font-semibold">WEB SERIAL</span>
+                        </div>
+
+                        <!-- Novel Title & Synopsis -->
+                        <div>
+                            <h3 class="text-2xl sm:text-4xl font-black text-white mb-3">CHRONICLES OF THE VOID</h3>
+                            <p class="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+                                In a world ruled by unseen algorithms and forgotten magic, an anonymous outcast stumbles upon an ancient code capable of rewriting reality itself. Follow the journey through dark labyrinths and neon-lit depths.
+                            </p>
+                        </div>
+
+                        <!-- Chapter Selection Box -->
+                        <div class="space-y-3 pt-2">
+                            <span class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider block">Available Chapters:</span>
+                            
+                            <!-- Chapter 1 (Active) -->
+                            <div onclick="openReaderModal(1)" class="glass-card p-4 rounded-xl border border-darkBorder hover:border-crimson flex justify-between items-center cursor-pointer transition-all duration-200 group">
+                                <div class="flex items-center space-x-3">
+                                    <span class="w-8 h-8 rounded-lg bg-crimson/20 text-crimson font-mono text-xs font-bold flex items-center justify-center">01</span>
+                                    <div>
+                                        <div class="text-sm font-bold text-white group-hover:text-crimson transition-colors">Chapter 1: The Echo in the Code</div>
+                                        <div class="text-xs text-slate-400">Published • 12 Min Read</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-bold text-crimson flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
+                                    <span>READ NOW</span>
+                                    <span>→</span>
+                                </span>
+                            </div>
+
+                            <!-- Chapter 2 (Coming Soon) -->
+                            <div class="glass-card p-4 rounded-xl border border-darkBorder/40 flex justify-between items-center opacity-60">
+                                <div class="flex items-center space-x-3">
+                                    <span class="w-8 h-8 rounded-lg bg-darkBorder text-slate-400 font-mono text-xs font-bold flex items-center justify-center">02</span>
+                                    <div>
+                                        <div class="text-sm font-bold text-slate-300">Chapter 2: Shadows of the Grid</div>
+                                        <div class="text-xs text-slate-400">In Preparation</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-mono text-slate-500">[SOON]</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="pt-2">
+                            <button onclick="openReaderModal(1)" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-crimson hover:bg-crimsonHover text-white font-bold text-sm tracking-wider uppercase shadow-glow transition-all">
+                                Read Chapter 1 Now
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. SHOWCASE GRID (FUTURE CREATIONS: APPS, GAMES, ART) -->
+    <section id="showcase" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-crimson font-mono text-xs font-bold uppercase tracking-widest block mb-2">// EXPANSION HUB</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">SWYPYY CREATIVE LABS</h2>
+                <p class="text-slate-400 text-sm mt-3 font-light">
+                    Future drops and interactive projects currently being forged under Swypyy's anonymous studio.
+                </p>
+            </div>
+
+            <!-- Cards Grid (Inspired by Reference Service Grid) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Card 1: Web Apps & Tools -->
+                <div class="glass-card rounded-2xl p-6 border border-darkBorder flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-crimson/15 border border-crimson/30 flex items-center justify-center text-crimson mb-6 group-hover:scale-110 tr
