@@ -27,6 +27,7 @@
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
                     }
                 }
             }
@@ -34,7 +35,7 @@
     </script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
 
         body {
             background-color: #07060b;
@@ -48,20 +49,29 @@
         .purple-glow-card {
             box-shadow: 0 0 25px -5px rgba(124, 58, 237, 0.3);
         }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
 
     <!-- HEADER NAVIGATION -->
-    <header class="sticky top-0 z-40 bg-void/80 backdrop-blur-md border-b border-white/5">
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             
-            <!-- BRAND LOGO (Full Swypyy Image from assets/logo.png) -->
+            <!-- BRAND LOGO HEADER -->
             <a href="#home" class="flex items-center group">
-                <img src="assets/logo.png" alt="Swypyy Logo" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/180x50/07060b/7c3aed?text=Swypyy';">
+                <img src="Assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
             </a>
 
-            <!-- DESKTOP MENU (Horizontal navigation on Desktop) -->
+            <!-- DESKTOP MENU (Hidden on mobile) -->
             <nav class="hidden md:flex items-center gap-8">
                 <a href="#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
                 <a href="#novels" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Novels</a>
@@ -92,20 +102,20 @@
     <main class="flex-grow">
         
         <!-- HERO SECTION -->
-        <section id="home" class="relative py-24 md:py-36 px-6 purple-glow-bg flex items-center justify-center">
+        <section id="home" class="relative py-20 md:py-32 px-6 purple-glow-bg flex items-center justify-center">
             <div class="max-w-4xl mx-auto text-center space-y-6">
                 
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-light border border-brand-purple/30 text-brand-light text-sm font-medium">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-light border border-brand-purple/30 text-brand-light text-xs sm:text-sm font-medium">
                     <span class="w-2 h-2 rounded-full bg-brand-purple animate-pulse"></span>
                     Digital Creator & Author
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white flex flex-wrap justify-center items-center gap-3">
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
                     <span>Stories & Ideas by</span>
-                    <img src="assets/logo.png" alt="Swypyy Logo" class="h-12 sm:h-16 md:h-20 w-auto inline-block object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x60/07060b/7c3aed?text=Swypyy';">
+                    <span class="text-brand-glow">Swypyy</span>
                 </h1>
 
-                <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                <p class="text-base sm:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
                     Welcome to my official portfolio. Explore my original web novels, future projects, and creative experiments.
                 </p>
 
@@ -132,7 +142,7 @@
                 <div class="bg-surface rounded-2xl border border-white/10 p-6 md:p-8 flex flex-col md:flex-row gap-8 items-start hover:border-brand-purple/40 transition-all purple-glow-card">
                     
                     <!-- NOVEL COVER PLACEHOLDER -->
-                    <div class="w-full md:w-56 h-80 bg-surface-light rounded-xl border border-brand-purple/30 flex flex-col items-center justify-center p-6 text-center relative overflow-hidden shrink-0 group">
+                    <div class="w-full md:w-56 h-72 sm:h-80 bg-surface-light rounded-xl border border-brand-purple/30 flex flex-col items-center justify-center p-6 text-center relative overflow-hidden shrink-0 group">
                         <div class="absolute inset-0 bg-gradient-to-b from-brand-purple/20 to-transparent opacity-50"></div>
                         <i data-lucide="book-open" class="w-12 h-12 text-brand-glow mb-4"></i>
                         <span class="text-xl font-bold text-white z-10">Web Novel Title</span>
@@ -176,126 +186,23 @@
                 <!-- CARD CONTAINER -->
                 <div class="relative bg-surface rounded-3xl border border-white/10 p-8 md:p-12 overflow-hidden">
                     
-                    <!-- MOBILE ONLY BACKGROUND WATERMARK (assets/s-logo.png) -->
-                    <div class="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none opacity-15">
-                        <img src="assets/s-logo.png" alt="S Logo Background" class="w-72 h-72 object-contain select-none" onerror="this.onerror=null; this.src='https://placehold.co/280x280/07060b/7c3aed?text=S';">
-                    </div>
-
-                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                        
-                        <!-- DESKTOP LEFT SIDE: LARGE S LOGO (assets/s-logo.png) -->
-                        <div class="hidden md:flex md:col-span-4 items-center justify-center">
-                            <div class="relative group">
-                                <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl group-hover:bg-brand-purple/50 transition-all"></div>
-                                <img src="assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/200x200/07060b/7c3aed?text=S';">
-                            </div>
-                        </div>
-
-                        <!-- RIGHT SIDE CONTENT (DESKTOP & MOBILE) -->
-                        <div class="md:col-span-8 space-y-4 text-left">
-                            <h2 class="text-3xl font-extrabold text-white">About Me</h2>
-                            <p class="text-gray-300 leading-relaxed">
-                                Hello! I'm <strong class="text-brand-light">Swypyy</strong>. I am a passionate creator focused on writing immersive web novels, designing innovative web projects, and building digital tools.
-                            </p>
-                            <p class="text-gray-400 leading-relaxed text-sm">
-                                This site serves as my official home base where I publish all my works directly for readers and visitors.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- CONTACT SECTION -->
-        <section id="contact" class="py-20 px-6 bg-surface/30 border-t border-white/5">
-            <div class="max-w-3xl mx-auto text-center space-y-8">
-                <div class="space-y-3">
-                    <h2 class="text-3xl font-extrabold text-white">Get In Touch</h2>
-                    <p class="text-gray-400">Have feedback, questions, or just want to connect?</p>
-                </div>
-
-                <div class="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-surface border border-white/10 hover:border-brand-purple/40 transition-all">
-                    <i data-lucide="mail" class="w-6 h-6 text-brand-glow"></i>
-                    <a href="mailto:swypyy@gmail.com" class="text-lg font-semibold text-white hover:text-brand-glow transition-colors">
-                        swypyy@gmail.com
-                    </a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
-        <div class="max-w-6xl mx-auto px-6">
-            <p>&copy; 2026 SWYPYY. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- E-READER MODAL -->
-    <div id="readerModal" class="fixed inset-0 bg-void/95 backdrop-blur-xl z-50 hidden flex-col justify-between p-6 overflow-y-auto">
-        <div class="max-w-3xl mx-auto w-full space-y-6">
-            <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                <h3 id="modalChapterTitle" class="text-xl font-bold text-white">Chapter Title</h3>
-                <button onclick="closeReader()" class="p-2 text-gray-400 hover:text-white">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            <div class="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                <p>Paste your chapter content here. This viewer lets visitors read your novel cleanly in dark mode without distractions.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT FOR MOBILE MENU & E-READER -->
-    <script>
-        lucide.createIcons();
-
-        // Mobile Menu Logic
-        const menuBtn = document.getElementById('menuBtn');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-
-        menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
-        closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-        mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-
-        // Reader Modal Logic
-        function openReader(chapterTitle) {
-            document.getElementById('modalChapterTitle').innerText = chapterTitle;
-            document.getElementById('readerModal').classList.remove('hidden');
-            document.getElementById('readerModal').classList.add('flex');
-        }
-
-        function closeReader() {
-            document.getElementById('readerModal').classList.add('hidden');
-            document.getElementById('readerModal').classList.remove('flex');
-        }
-    </script>
-</body>
-            </html>
-    
-                <!-- CARD CONTAINER -->
-                <div class="relative bg-surface rounded-3xl border border-white/10 p-8 md:p-12 overflow-hidden">
-                    
-                    <!-- MOBILE ONLY BACKGROUND WATERMARK (S LOGO) -->
+                    <!-- MOBILE ONLY BACKGROUND WATERMARK -->
                     <div class="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
-                        <span class="s-logo-handwritten text-[240px] text-brand-purple leading-none select-none">S</span>
+                        <img src="Assets/s-logo.png" alt="S Logo Watermark" class="w-64 h-64 object-contain select-none" onerror="this.onerror=null; this.src='assets/s-logo.png';">
                     </div>
 
                     <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
                         
                         <!-- DESKTOP LEFT SIDE: LARGE S LOGO -->
                         <div class="hidden md:flex md:col-span-4 items-center justify-center">
-                            <div class="relative">
-                                <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl"></div>
-                                <span class="s-logo-handwritten text-[180px] text-brand-purple leading-none select-none relative z-10">S</span>
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl group-hover:bg-brand-purple/50 transition-all"></div>
+                                <img src="Assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/s-logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('fallbackSLogo').style.display='block';};">
+                                <span id="fallbackSLogo" class="hidden s-logo-handwritten text-[160px] text-brand-purple leading-none select-none relative z-10">S</span>
                             </div>
                         </div>
 
-                        <!-- RIGHT SIDE CONTENT (DESKTOP & MOBILE) -->
+                        <!-- RIGHT SIDE CONTENT -->
                         <div class="md:col-span-8 space-y-4 text-left">
                             <h2 class="text-3xl font-extrabold text-white">About Me</h2>
                             <p class="text-gray-300 leading-relaxed">
@@ -379,4 +286,5 @@
         }
     </script>
 </body>
-</html>
+                </html>
+    
