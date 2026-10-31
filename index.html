@@ -27,7 +27,6 @@
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
-                        cursive: ['Caveat', 'cursive', 'sans-serif']
                     }
                 }
             }
@@ -35,7 +34,7 @@
     </script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
         body {
             background-color: #07060b;
@@ -49,11 +48,6 @@
         .purple-glow-card {
             box-shadow: 0 0 25px -5px rgba(124, 58, 237, 0.3);
         }
-
-        .s-logo-handwritten {
-            font-family: 'Caveat', cursive;
-            line-height: 1;
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
@@ -62,10 +56,9 @@
     <header class="sticky top-0 z-40 bg-void/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             
-            <!-- BRAND LOGO -->
-            <a href="#home" class="flex items-center gap-1 group">
-                <span class="s-logo-handwritten text-4xl font-bold text-brand-purple group-hover:text-brand-glow transition-colors select-none">S</span>
-                <span class="text-2xl font-bold tracking-wider text-white group-hover:text-brand-light transition-colors">wypyy</span>
+            <!-- BRAND LOGO (Full Swypyy Image from assets/logo.png) -->
+            <a href="#home" class="flex items-center group">
+                <img src="assets/logo.png" alt="Swypyy Logo" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/180x50/07060b/7c3aed?text=Swypyy';">
             </a>
 
             <!-- DESKTOP MENU (Horizontal navigation on Desktop) -->
@@ -107,8 +100,9 @@
                     Digital Creator & Author
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white">
-                    Stories & Ideas by <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple via-brand-glow to-white">Swypyy</span>
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white flex flex-wrap justify-center items-center gap-3">
+                    <span>Stories & Ideas by</span>
+                    <img src="assets/logo.png" alt="Swypyy Logo" class="h-12 sm:h-16 md:h-20 w-auto inline-block object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x60/07060b/7c3aed?text=Swypyy';">
                 </h1>
 
                 <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
@@ -179,6 +173,110 @@
         <section id="about" class="py-20 px-6">
             <div class="max-w-5xl mx-auto">
                 
+                <!-- CARD CONTAINER -->
+                <div class="relative bg-surface rounded-3xl border border-white/10 p-8 md:p-12 overflow-hidden">
+                    
+                    <!-- MOBILE ONLY BACKGROUND WATERMARK (assets/s-logo.png) -->
+                    <div class="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none opacity-15">
+                        <img src="assets/s-logo.png" alt="S Logo Background" class="w-72 h-72 object-contain select-none" onerror="this.onerror=null; this.src='https://placehold.co/280x280/07060b/7c3aed?text=S';">
+                    </div>
+
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                        
+                        <!-- DESKTOP LEFT SIDE: LARGE S LOGO (assets/s-logo.png) -->
+                        <div class="hidden md:flex md:col-span-4 items-center justify-center">
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl group-hover:bg-brand-purple/50 transition-all"></div>
+                                <img src="assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/200x200/07060b/7c3aed?text=S';">
+                            </div>
+                        </div>
+
+                        <!-- RIGHT SIDE CONTENT (DESKTOP & MOBILE) -->
+                        <div class="md:col-span-8 space-y-4 text-left">
+                            <h2 class="text-3xl font-extrabold text-white">About Me</h2>
+                            <p class="text-gray-300 leading-relaxed">
+                                Hello! I'm <strong class="text-brand-light">Swypyy</strong>. I am a passionate creator focused on writing immersive web novels, designing innovative web projects, and building digital tools.
+                            </p>
+                            <p class="text-gray-400 leading-relaxed text-sm">
+                                This site serves as my official home base where I publish all my works directly for readers and visitors.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="py-20 px-6 bg-surface/30 border-t border-white/5">
+            <div class="max-w-3xl mx-auto text-center space-y-8">
+                <div class="space-y-3">
+                    <h2 class="text-3xl font-extrabold text-white">Get In Touch</h2>
+                    <p class="text-gray-400">Have feedback, questions, or just want to connect?</p>
+                </div>
+
+                <div class="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-surface border border-white/10 hover:border-brand-purple/40 transition-all">
+                    <i data-lucide="mail" class="w-6 h-6 text-brand-glow"></i>
+                    <a href="mailto:swypyy@gmail.com" class="text-lg font-semibold text-white hover:text-brand-glow transition-colors">
+                        swypyy@gmail.com
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
+        <div class="max-w-6xl mx-auto px-6">
+            <p>&copy; 2026 SWYPYY. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- E-READER MODAL -->
+    <div id="readerModal" class="fixed inset-0 bg-void/95 backdrop-blur-xl z-50 hidden flex-col justify-between p-6 overflow-y-auto">
+        <div class="max-w-3xl mx-auto w-full space-y-6">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                <h3 id="modalChapterTitle" class="text-xl font-bold text-white">Chapter Title</h3>
+                <button onclick="closeReader()" class="p-2 text-gray-400 hover:text-white">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
+                <p>Paste your chapter content here. This viewer lets visitors read your novel cleanly in dark mode without distractions.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FOR MOBILE MENU & E-READER -->
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+        closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        // Reader Modal Logic
+        function openReader(chapterTitle) {
+            document.getElementById('modalChapterTitle').innerText = chapterTitle;
+            document.getElementById('readerModal').classList.remove('hidden');
+            document.getElementById('readerModal').classList.add('flex');
+        }
+
+        function closeReader() {
+            document.getElementById('readerModal').classList.add('hidden');
+            document.getElementById('readerModal').classList.remove('flex');
+        }
+    </script>
+</body>
+            </html>
+    
                 <!-- CARD CONTAINER -->
                 <div class="relative bg-surface rounded-3xl border border-white/10 p-8 md:p-12 overflow-hidden">
                     
