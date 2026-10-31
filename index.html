@@ -46,6 +46,10 @@
             background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.25) 0%, rgba(7, 6, 11, 0) 70%);
         }
 
+        .purple-glow-card {
+            box-shadow: 0 0 30px -5px rgba(124, 58, 237, 0.25);
+        }
+
         .s-logo-handwritten {
             font-family: 'Caveat', cursive;
             line-height: 1;
@@ -70,7 +74,7 @@
             <!-- DESKTOP MENU -->
             <nav class="hidden md:flex items-center gap-8">
                 <a href="index.html#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
-                <a href="novels.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Novels</a>
+                <a href="novels.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Webnovels</a>
                 <a href="index.html#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
                 <a href="index.html#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
             </nav>
@@ -89,7 +93,7 @@
         </button>
         
         <a href="index.html#home" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Home</a>
-        <a href="novels.html" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">My Novels</a>
+        <a href="novels.html" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">My Webnovels</a>
         <a href="index.html#about" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">About Me</a>
         <a href="index.html#contact" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Contact</a>
     </div>
@@ -116,12 +120,44 @@
                 </p>
 
                 <div class="pt-4 flex flex-wrap gap-4 justify-center">
-                    <a href="novels.html" class="px-8 py-3.5 rounded-xl bg-brand-purple text-white font-semibold hover:bg-brand-glow transition-all shadow-lg shadow-brand-purple/25">
-                        Read My Novels
+                    <!-- CHANGED BUTTON TO "My Creations" linking to the sliding section below -->
+                    <a href="#creations-showcase" class="px-8 py-3.5 rounded-xl bg-brand-purple text-white font-semibold hover:bg-brand-glow transition-all shadow-lg shadow-brand-purple/25 flex items-center gap-2">
+                        <span>My Creations</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </a>
                     <a href="#about" class="px-8 py-3.5 rounded-xl bg-surface-light text-gray-200 border border-white/10 font-semibold hover:border-brand-purple/50 transition-all">
                         About Me
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- MY CREATIONS SHOWCASE SECTION (Sliding layout) -->
+        <section id="creations-showcase" class="py-20 px-6 bg-surface/30 border-t border-white/5">
+            <div class="max-w-4xl mx-auto space-y-10">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">My Creations</h2>
+                    <p class="text-gray-400">Categories of projects I am building as I learn.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- WEB NOVELS SLIDE CARD -->
+                    <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                        <div class="flex items-center gap-5 text-left">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
+                                <i data-lucide="book-open" class="w-7 h-7"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <span class="text-xs font-bold uppercase tracking-wider text-brand-light">Library Category</span>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white">Read My Original Web Novels</h3>
+                            </div>
+                        </div>
+                        <a href="novels.html" class="w-full sm:w-auto px-7 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center">
+                            Read
+                        </a>
+                    </div>
+
+                    <!-- Future creation slides (Games, Apps) can be added here later -->
                 </div>
             </div>
         </section>
