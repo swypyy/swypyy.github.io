@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Novels | SWYPYY</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#07060b',
+                        surface: '#120f1d',
+                        'surface-light': '#1c172e',
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #07060b;
+            color: #f3f4f6;
+        }
+
+        .purple-glow-card {
+            box-shadow: 0 0 35px -5px rgba(124, 58, 237, 0.35);
+        }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
+
+    <!-- HEADER NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <!-- BRAND LOGO HEADER -->
+            <a href="index.html" class="flex items-center group">
+                <img src="Assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
+            </a>
+
+            <!-- DESKTOP MENU -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="index.html#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
+                <a href="novels.html" class="text-sm font-semibold text-brand-glow transition-colors">My Novels</a>
+                <a href="index.html#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
+                <a href="index.html#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
+            </nav>
+
+            <!-- MOBILE HAMBURGER BUTTON -->
+            <button id="menuBtn" class="md:hidden p-2 text-gray-300 hover:text-brand-glow focus:outline-none" aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- FULLSCREEN MOBILE MENU OVERLAY -->
+    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-8 md:hidden hidden transition-all duration-300">
+        <button id="closeMenuBtn" class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        
+        <a href="index.html#home" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Home</a>
+        <a href="novels.html" class="mobile-nav-link text-2xl font-bold text-brand-glow">My Novels</a>
+        <a href="index.html#about" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">About Me</a>
+        <a href="index.html#contact" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Contact</a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow py-16 px-6">
+        <div class="max-w-5xl mx-auto space-y-12">
+            
+            <div class="text-center space-y-3">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white">My Web Novels</h1>
+                <p class="text-gray-400">Original serials & stories written by Swypyy</p>
+            </div>
+
+            <!-- NOVEL SHOWCASE CARD -->
+            <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-8 items-center md:items-start hover:border-brand-purple/40 transition-all purple-glow-card">
+                
+                <!-- COVER ART CONTAINER (600x800 Aspect Ratio) -->
+                <div class="w-full max-w-[280px] sm:max-w-[320px] md:w-80 aspect-[3/4] bg-surface-light rounded-2xl border border-brand-purple/30 overflow-hidden shadow-2xl relative group shrink-0">
+                    <img src="Assets/novel-cover.png" alt="Just A Dream Cover Art" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.src='assets/novel-cover.png';">
+                </div>
+
+                <!-- NOVEL DETAILS -->
+                <div class="flex-grow space-y-6 text-left">
+                    <div class="space-y-2">
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Mystery</span>
+                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Psychological</span>
+                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Ongoing</span>
+                        </div>
+                        
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Just A Dream</h2>
+                        <p class="text-brand-light font-medium italic text-sm sm:text-base">"I think, right?"</p>
+                        <p class="text-xs text-gray-400">Author: <span class="text-white font-semibold">Swypyy</span></p>
+                    </div>
+
+                    <!-- SYNOPSIS PLACEHOLDER -->
+                    <div class="bg-surface-light/50 rounded-2xl p-4 sm:p-5 border border-white/5 space-y-2">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-brand-glow">Synopsis</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Synopsis coming soon! We will update this section with your official story summary whenever you are ready.
+                        </p>
+                    </div>
+
+                    <!-- CHAPTER SELECTOR -->
+                    <div class="pt-2 space-y-3">
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Select Chapter</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="openReader('Chapter 1: The Beginning')" class="px-5 py-3 bg-brand-purple hover:bg-brand-glow text-white text-sm font-semibold rounded-xl transition-all shadow-md flex items-center gap-2">
+                                <i data-lucide="book-open" class="w-4 h-4"></i> Chapter 1
+                            </button>
+                            <button onclick="openReader('Chapter 2')" class="px-5 py-3 bg-surface-light hover:bg-brand-purple text-gray-300 hover:text-white text-sm font-semibold rounded-xl border border-white/10 transition-all flex items-center gap-2">
+                                <i data-lucide="file-text" class="w-4 h-4"></i> Chapter 2
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
+        <div class="max-w-6xl mx-auto px-6">
+            <p>&copy; 2026 SWYPYY. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- E-READER MODAL -->
+    <div id="readerModal" class="fixed inset-0 bg-void/95 backdrop-blur-xl z-50 hidden flex-col justify-between p-6 overflow-y-auto">
+        <div class="max-w-3xl mx-auto w-full space-y-6">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                <h3 id="modalChapterTitle" class="text-xl font-bold text-white">Chapter Title</h3>
+                <button onclick="closeReader()" class="p-2 text-gray-400 hover:text-white">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
+                <p>Paste your story text here when you're ready to publish Chapter 1!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        lucide.createIcons();
+
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+        closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        function openReader(chapterTitle) {
+            document.getElementById('modalChapterTitle').innerText = chapterTitle;
+            document.getElementById('readerModal').classList.remove('hidden');
+            document.getElementById('readerModal').classList.add('flex');
+        }
+
+        function closeReader() {
+            document.getElementById('readerModal').classList.add('hidden');
+            document.getElementById('readerModal').classList.remove('flex');
+        }
+    </script>
+</body>
+  </html>
+      
