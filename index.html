@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWYPYY | Creator & Writer</title>
+    <title>SWYPYY | Creator & Learning Hub</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -46,10 +46,6 @@
             background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.25) 0%, rgba(7, 6, 11, 0) 70%);
         }
 
-        .purple-glow-card {
-            box-shadow: 0 0 25px -5px rgba(124, 58, 237, 0.3);
-        }
-
         .s-logo-handwritten {
             font-family: 'Caveat', cursive;
             line-height: 1;
@@ -63,7 +59,7 @@
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             
             <!-- BRAND LOGO HEADER -->
-            <a href="#home" class="flex items-center group">
+            <a href="index.html" class="flex items-center group">
                 <img src="Assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
                 <div id="textBrandLogo" class="hidden items-center gap-1">
                     <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
@@ -71,12 +67,12 @@
                 </div>
             </a>
 
-            <!-- DESKTOP MENU (Hidden on mobile) -->
+            <!-- DESKTOP MENU -->
             <nav class="hidden md:flex items-center gap-8">
-                <a href="#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
-                <a href="#novels" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Novels</a>
-                <a href="#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
-                <a href="#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
+                <a href="index.html#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
+                <a href="novels.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Novels</a>
+                <a href="index.html#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
+                <a href="index.html#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
             </nav>
 
             <!-- MOBILE HAMBURGER BUTTON -->
@@ -92,22 +88,22 @@
             <i data-lucide="x" class="w-8 h-8"></i>
         </button>
         
-        <a href="#home" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Home</a>
-        <a href="#novels" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">My Novels</a>
-        <a href="#about" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">About Me</a>
-        <a href="#contact" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Contact</a>
+        <a href="index.html#home" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Home</a>
+        <a href="novels.html" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">My Novels</a>
+        <a href="index.html#about" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">About Me</a>
+        <a href="index.html#contact" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Contact</a>
     </div>
 
     <!-- MAIN CONTENT -->
     <main class="flex-grow">
         
         <!-- HERO SECTION -->
-        <section id="home" class="relative py-20 md:py-32 px-6 purple-glow-bg flex items-center justify-center">
+        <section id="home" class="relative py-24 md:py-36 px-6 purple-glow-bg flex items-center justify-center">
             <div class="max-w-4xl mx-auto text-center space-y-6">
                 
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-light border border-brand-purple/30 text-brand-light text-xs sm:text-sm font-medium">
                     <span class="w-2 h-2 rounded-full bg-brand-purple animate-pulse"></span>
-                    Digital Creator & Author
+                    Digital Creator & Learning Hub
                 </div>
 
                 <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
@@ -116,65 +112,16 @@
                 </h1>
 
                 <p class="text-base sm:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
-                    Welcome to my official portfolio. Explore my original web novels, future projects, and creative experiments.
+                    Welcome to my official digital hub. Follow along as I learn new creative skills and build games, apps, software, and original web novels.
                 </p>
 
                 <div class="pt-4 flex flex-wrap gap-4 justify-center">
-                    <a href="#novels" class="px-8 py-3.5 rounded-xl bg-brand-purple text-white font-semibold hover:bg-brand-glow transition-all shadow-lg shadow-brand-purple/25">
+                    <a href="novels.html" class="px-8 py-3.5 rounded-xl bg-brand-purple text-white font-semibold hover:bg-brand-glow transition-all shadow-lg shadow-brand-purple/25">
                         Read My Novels
                     </a>
                     <a href="#about" class="px-8 py-3.5 rounded-xl bg-surface-light text-gray-200 border border-white/10 font-semibold hover:border-brand-purple/50 transition-all">
                         About Me
                     </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- MY NOVELS SECTION -->
-        <section id="novels" class="py-20 px-6 bg-surface/50 border-y border-white/5">
-            <div class="max-w-5xl mx-auto space-y-12">
-                <div class="text-center space-y-3">
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">My Novels</h2>
-                    <p class="text-gray-400">Read my latest ongoing and completed stories.</p>
-                </div>
-
-                <!-- NOVEL CARD -->
-                <div class="bg-surface rounded-2xl border border-white/10 p-6 md:p-8 flex flex-col md:flex-row gap-8 items-start hover:border-brand-purple/40 transition-all purple-glow-card">
-                    
-                    <!-- NOVEL COVER PLACEHOLDER -->
-                    <div class="w-full md:w-56 h-72 sm:h-80 bg-surface-light rounded-xl border border-brand-purple/30 flex flex-col items-center justify-center p-6 text-center relative overflow-hidden shrink-0 group">
-                        <div class="absolute inset-0 bg-gradient-to-b from-brand-purple/20 to-transparent opacity-50"></div>
-                        <i data-lucide="book-open" class="w-12 h-12 text-brand-glow mb-4"></i>
-                        <span class="text-xl font-bold text-white z-10">Web Novel Title</span>
-                        <span class="text-xs text-brand-light mt-2 z-10">By Swypyy</span>
-                    </div>
-
-                    <!-- NOVEL DETAILS -->
-                    <div class="flex-grow space-y-4">
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Fantasy</span>
-                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Adventure</span>
-                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Ongoing</span>
-                        </div>
-
-                        <h3 class="text-2xl font-bold text-white">Web Novel Title</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">
-                            This is where your web novel's plot summary or synopsis will go. Write a captivating hook about your story's world, main characters, and central conflict to get readers excited.
-                        </p>
-
-                        <!-- CHAPTER SELECTOR -->
-                        <div class="pt-4 border-t border-white/5 space-y-3">
-                            <h4 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Chapters</h4>
-                            <div class="flex flex-wrap gap-3">
-                                <button onclick="openReader('Chapter 1: The Beginning')" class="px-4 py-2 bg-surface-light hover:bg-brand-purple hover:text-white text-gray-200 text-sm font-medium rounded-lg border border-white/5 transition-colors flex items-center gap-2">
-                                    <i data-lucide="file-text" class="w-4 h-4"></i> Chapter 1
-                                </button>
-                                <button onclick="openReader('Chapter 2: The Journey')" class="px-4 py-2 bg-surface-light hover:bg-brand-purple hover:text-white text-gray-200 text-sm font-medium rounded-lg border border-white/5 transition-colors flex items-center gap-2">
-                                    <i data-lucide="file-text" class="w-4 h-4"></i> Chapter 2
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -206,10 +153,13 @@
                         <div class="md:col-span-8 space-y-4 text-left">
                             <h2 class="text-3xl font-extrabold text-white">About Me</h2>
                             <p class="text-gray-300 leading-relaxed">
-                                Hello! I'm <strong class="text-brand-light">Swypyy</strong>. I am a passionate creator focused on writing immersive web novels, designing innovative web projects, and building digital tools.
+                                Hey, I'm <strong class="text-brand-light">Swypyy</strong>. I’m just starting out on a journey to learn all the creative skills I’ve ever been curious about—drawing, animation, coding, and building games, apps, websites, and software. I’m not a master at any of this yet; I’m literally learning every skill I like from scratch as I go.
                             </p>
                             <p class="text-gray-400 leading-relaxed text-sm">
-                                This site serves as my official home base where I publish all my works directly for readers and visitors.
+                                This site is where I'll be sharing that learning process—my web novel, early art, small game and app experiments, and whatever project I pick up next. No master plan, just diving into cool ideas, figuring them out, and seeing where it goes.
+                            </p>
+                            <p class="text-gray-300 text-sm font-medium pt-2">
+                                If you want to follow along while I learn and build things, welcome in :)
                             </p>
                         </div>
                     </div>
@@ -244,26 +194,10 @@
         </div>
     </footer>
 
-    <!-- E-READER MODAL -->
-    <div id="readerModal" class="fixed inset-0 bg-void/95 backdrop-blur-xl z-50 hidden flex-col justify-between p-6 overflow-y-auto">
-        <div class="max-w-3xl mx-auto w-full space-y-6">
-            <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                <h3 id="modalChapterTitle" class="text-xl font-bold text-white">Chapter Title</h3>
-                <button onclick="closeReader()" class="p-2 text-gray-400 hover:text-white">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            <div class="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                <p>Paste your chapter content here. This viewer lets visitors read your novel cleanly in dark mode without distractions.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT FOR MOBILE MENU & E-READER -->
+    <!-- JAVASCRIPT FOR MOBILE MENU -->
     <script>
         lucide.createIcons();
 
-        // Mobile Menu Logic
         const menuBtn = document.getElementById('menuBtn');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -272,19 +206,7 @@
         menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
         closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-
-        // Reader Modal Logic
-        function openReader(chapterTitle) {
-            document.getElementById('modalChapterTitle').innerText = chapterTitle;
-            document.getElementById('readerModal').classList.remove('hidden');
-            document.getElementById('readerModal').classList.add('flex');
-        }
-
-        function closeReader() {
-            document.getElementById('readerModal').classList.add('hidden');
-            document.getElementById('readerModal').classList.remove('flex');
-        }
     </script>
 </body>
-                </html>
-    
+    </html>
+                    
