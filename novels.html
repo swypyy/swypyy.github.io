@@ -42,10 +42,6 @@
             color: #f3f4f6;
         }
 
-        .purple-glow-card {
-            box-shadow: 0 0 35px -5px rgba(124, 58, 237, 0.35);
-        }
-
         .s-logo-handwritten {
             font-family: 'Caveat', cursive;
             line-height: 1;
@@ -96,56 +92,32 @@
 
     <!-- MAIN CONTENT -->
     <main class="flex-grow py-16 px-6">
-        <div class="max-w-5xl mx-auto space-y-12">
+        <div class="max-w-6xl mx-auto space-y-12">
             
             <div class="text-center space-y-3">
                 <h1 class="text-4xl sm:text-5xl font-extrabold text-white">My Web Novels</h1>
                 <p class="text-gray-400">Original serials & stories written by Swypyy</p>
             </div>
 
-            <!-- NOVEL SHOWCASE CARD -->
-            <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-8 items-center md:items-start hover:border-brand-purple/40 transition-all purple-glow-card">
+            <!-- NOVELS GRID: 2 on mobile, 4 on PC -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
                 
-                <!-- COVER ART CONTAINER (600x800 Aspect Ratio) -->
-                <div class="w-full max-w-[280px] sm:max-w-[320px] md:w-80 aspect-[3/4] bg-surface-light rounded-2xl border border-brand-purple/30 overflow-hidden shadow-2xl relative group shrink-0">
-                    <img src="Assets/novel-cover.png" alt="Just A Dream Cover Art" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.src='assets/novel-cover.png';">
-                </div>
-
-                <!-- NOVEL DETAILS -->
-                <div class="flex-grow space-y-6 text-left">
-                    <div class="space-y-2">
-                        <div class="flex flex-wrap gap-2 mb-2">
-                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Mystery</span>
-                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Psychological</span>
-                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Ongoing</span>
-                        </div>
-                        
-                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Just A Dream</h2>
-                        <p class="text-brand-light font-medium italic text-sm sm:text-base">"I think, right?"</p>
-                        <p class="text-xs text-gray-400">Author: <span class="text-white font-semibold">Swypyy</span></p>
+                <!-- NOVEL CARD 1: JUST A DREAM -->
+                <div onclick="openReader('Just A Dream')" class="group cursor-pointer flex flex-col gap-3">
+                    <!-- Cover Image -->
+                    <div class="w-full aspect-[3/4] bg-surface-light rounded-xl border border-white/10 overflow-hidden relative shadow-lg group-hover:border-brand-purple/50 transition-all duration-300">
+                        <img src="Assets/Novel-cover/Just-A-Dream.png" alt="Just A Dream Cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.src='assets/Novel-cover/Just-A-Dream.png';">
+                        <!-- Dark overlay on hover -->
+                        <div class="absolute inset-0 bg-brand-purple/0 group-hover:bg-brand-purple/10 transition-colors duration-300"></div>
                     </div>
-
-                    <!-- SYNOPSIS PLACEHOLDER -->
-                    <div class="bg-surface-light/50 rounded-2xl p-4 sm:p-5 border border-white/5 space-y-2">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-brand-glow">Synopsis</h3>
-                        <p class="text-gray-300 text-sm leading-relaxed">
-                            Synopsis coming soon! We will update this section with your official story summary whenever you are ready.
-                        </p>
-                    </div>
-
-                    <!-- CHAPTER SELECTOR -->
-                    <div class="pt-2 space-y-3">
-                        <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Select Chapter</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <button onclick="openReader('Chapter 1: The Beginning')" class="px-5 py-3 bg-brand-purple hover:bg-brand-glow text-white text-sm font-semibold rounded-xl transition-all shadow-md flex items-center gap-2">
-                                <i data-lucide="book-open" class="w-4 h-4"></i> Chapter 1
-                            </button>
-                            <button onclick="openReader('Chapter 2')" class="px-5 py-3 bg-surface-light hover:bg-brand-purple text-gray-300 hover:text-white text-sm font-semibold rounded-xl border border-white/10 transition-all flex items-center gap-2">
-                                <i data-lucide="file-text" class="w-4 h-4"></i> Chapter 2
-                            </button>
-                        </div>
+                    <!-- Title & Subtitle -->
+                    <div class="space-y-1 text-center md:text-left">
+                        <h2 class="text-base sm:text-lg font-bold text-white group-hover:text-brand-glow transition-colors">Just A Dream</h2>
+                        <p class="text-xs sm:text-sm text-brand-light italic">"I think, right?"</p>
                     </div>
                 </div>
+
+                <!-- Future novels will add a new card block right here! -->
 
             </div>
 
@@ -159,7 +131,7 @@
         </div>
     </footer>
 
-    <!-- E-READER MODAL -->
+    <!-- E-READER MODAL (Temporary) -->
     <div id="readerModal" class="fixed inset-0 bg-void/95 backdrop-blur-xl z-50 hidden flex-col justify-between p-6 overflow-y-auto">
         <div class="max-w-3xl mx-auto w-full space-y-6">
             <div class="flex justify-between items-center border-b border-white/10 pb-4">
@@ -169,7 +141,7 @@
                 </button>
             </div>
             <div class="prose prose-invert max-w-none text-gray-300 leading-relaxed space-y-4">
-                <p>Paste your story text here when you're ready to publish Chapter 1!</p>
+                <p>Chapter content will go here. Once you are ready to publish on Wattpad or elsewhere, we can easily link this card directly there!</p>
             </div>
         </div>
     </div>
@@ -199,5 +171,5 @@
         }
     </script>
 </body>
-  </html>
-      
+    </html>
+                
