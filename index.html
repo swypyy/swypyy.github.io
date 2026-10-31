@@ -46,9 +46,20 @@
             background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.25) 0%, rgba(7, 6, 11, 0) 70%);
         }
 
+        .purple-glow-card {
+            box-shadow: 0 0 30px -5px rgba(124, 58, 237, 0.25);
+        }
+
         .s-logo-handwritten {
             font-family: 'Caveat', cursive;
             line-height: 1;
+        }
+
+        /* Dropdown hover behavior */
+        .dropdown-container:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -70,7 +81,20 @@
             <!-- DESKTOP MENU -->
             <nav class="hidden md:flex items-center gap-8">
                 <a href="index.html#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
-                <a href="novels.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Novels</a>
+                
+                <!-- MY CREATIONS DROPDOWN -->
+                <div class="relative dropdown-container py-4">
+                    <button class="flex items-center gap-1.5 text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors focus:outline-none">
+                        My Creations <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <!-- Submenu items -->
+                    <div class="dropdown-menu absolute top-full left-0 w-48 py-2 bg-surface border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transform -translate-y-2 transition-all duration-200">
+                        <a href="novels.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-brand-purple/20 transition-colors">My Novels</a>
+                        <!-- Future submenus like games/apps can go right here -->
+                    </div>
+                </div>
+
+                <a href="index.html#creations-showcase" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Featured</a>
                 <a href="index.html#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
                 <a href="index.html#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
             </nav>
@@ -83,22 +107,23 @@
     </header>
 
     <!-- FULLSCREEN MOBILE MENU OVERLAY -->
-    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-8 md:hidden hidden transition-all duration-300">
+    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden transition-all duration-300">
         <button id="closeMenuBtn" class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow">
             <i data-lucide="x" class="w-8 h-8"></i>
         </button>
         
-        <a href="index.html#home" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Home</a>
-        <a href="novels.html" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">My Novels</a>
-        <a href="index.html#about" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">About Me</a>
-        <a href="index.html#contact" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Contact</a>
+        <a href="index.html#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
+        <a href="novels.html" class="mobile-nav-link text-xl font-bold text-brand-glow">My Novels (My Creations)</a>
+        <a href="index.html#creations-showcase" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Featured Creations</a>
+        <a href="index.html#about" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">About Me</a>
+        <a href="index.html#contact" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Contact</a>
     </div>
 
     <!-- MAIN CONTENT -->
     <main class="flex-grow">
         
         <!-- HERO SECTION -->
-        <section id="home" class="relative py-24 md:py-36 px-6 purple-glow-bg flex items-center justify-center">
+        <section id="home" class="relative py-20 md:py-32 px-6 purple-glow-bg flex items-center justify-center">
             <div class="max-w-4xl mx-auto text-center space-y-6">
                 
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-light border border-brand-purple/30 text-brand-light text-xs sm:text-sm font-medium">
@@ -117,11 +142,50 @@
 
                 <div class="pt-4 flex flex-wrap gap-4 justify-center">
                     <a href="novels.html" class="px-8 py-3.5 rounded-xl bg-brand-purple text-white font-semibold hover:bg-brand-glow transition-all shadow-lg shadow-brand-purple/25">
-                        Read My Novels
+                        Explore My Novels
                     </a>
                     <a href="#about" class="px-8 py-3.5 rounded-xl bg-surface-light text-gray-200 border border-white/10 font-semibold hover:border-brand-purple/50 transition-all">
                         About Me
                     </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- MY CREATIONS SECTION (Vertical Slides / Cards) -->
+        <section id="creations-showcase" class="py-20 px-6 bg-surface/40 border-y border-white/5">
+            <div class="max-w-4xl mx-auto space-y-10">
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">My Creations</h2>
+                    <p class="text-gray-400">Explore categories of everything I'm building as I learn.</p>
+                </div>
+
+                <!-- VERTICAL CREATIONS SLIDE / CARD -->
+                <div class="space-y-6">
+                    
+                    <!-- Novels Category Slide -->
+                    <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-8 items-center justify-between purple-glow-card hover:border-brand-purple/40 transition-all">
+                        <div class="space-y-4 text-center md:text-left max-w-lg">
+                            <span class="px-3 py-1 rounded-md text-xs font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30 uppercase tracking-widest">Library</span>
+                            <h3 class="text-2xl sm:text-3xl font-bold text-white">Web Novels</h3>
+                            <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+                                Dive into my original web novels and story serials, starting with psychological mystery <strong class="text-white">Just A Dream</strong>.
+                            </p>
+                            <div class="pt-2">
+                                <a href="novels.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white text-sm font-semibold transition-all shadow-md">
+                                    <span>Browse Novels</span>
+                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Mini preview cover art stack -->
+                        <div class="w-40 sm:w-48 aspect-[3/4] bg-surface-light rounded-xl border border-brand-purple/30 overflow-hidden shadow-2xl shrink-0 transform rotate-2 hover:rotate-0 transition-transform">
+                            <img src="Assets/Novel-cover/Just-A-Dream.png" alt="Just A Dream Cover" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='assets/Novel-cover/Just-A-Dream.png';">
+                        </div>
+                    </div>
+
+                    <!-- Future categories (Games, Apps, Software) will stack vertically right down here as new slides later! -->
+
                 </div>
             </div>
         </section>
@@ -208,5 +272,5 @@
         mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
     </script>
 </body>
-    </html>
-                    
+                    </html>
+    
