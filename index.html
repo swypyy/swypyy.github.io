@@ -109,20 +109,23 @@
         <section id="home" class="relative py-24 md:py-36 px-6 purple-glow-bg flex items-center justify-center">
             <div class="max-w-4xl mx-auto text-center space-y-6">
                 
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-light border border-brand-purple/30 text-brand-light text-xs sm:text-sm font-medium">
-                    <span class="w-2 h-2 rounded-full bg-brand-purple animate-pulse"></span>
-                    Digital Creator & Learning Hub
+                <!-- TOP BADGE WITH LOGO -->
+                <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-surface-light border border-brand-purple/30 shadow-lg">
+                    <img src="Assets/logo.png" alt="Swypyy Logo" class="h-6 w-auto object-contain" onerror="this.style.display='none';">
+                    <span class="text-brand-light text-xs sm:text-sm font-medium tracking-wide">Digital Creator & Learning Hub</span>
                 </div>
 
-                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
-                    <span>Stories & Ideas by</span>
-                    <span class="text-brand-glow">Swypyy</span>
+                <!-- HERO HEADING -->
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white">
+                    Jack of All Trades
                 </h1>
 
+                <!-- SUBTITLE / PARAGRAPH -->
                 <p class="text-base sm:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
-                    Welcome to my official digital hub. Follow along as I learn new creative skills and build games, apps, software, and original web novels.
+                    Master of none, but oftentimes better than a master of one. Welcome to my digital hub where I learn and build everything from scratch.
                 </p>
 
+                <!-- CTA BUTTONS -->
                 <div class="pt-4 flex flex-wrap gap-4 justify-center">
                     <a href="#creations-showcase" class="px-8 py-3.5 rounded-xl bg-brand-purple text-white font-semibold hover:bg-brand-glow transition-all shadow-lg shadow-brand-purple/25 flex items-center gap-2">
                         <span>My Creations</span>
@@ -281,5 +284,5 @@
         mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
     </script>
 </body>
-                    </html>
-        
+    </html>
+    
