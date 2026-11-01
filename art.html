@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWYPYY // Art Gallery</title>
+    <title>My Art Gallery | SWYPYY</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,39 +42,23 @@
             color: #f3f4f6;
         }
 
-        .purple-glow-bg {
-            background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.20) 0%, rgba(7, 6, 11, 0) 70%);
-        }
-
         .s-logo-handwritten {
             font-family: 'Caveat', cursive;
             line-height: 1;
         }
 
-        .dropdown-container:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .art-card {
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s ease;
-        }
-        .art-card:hover {
-            border-color: rgba(124, 58, 237, 0.5);
-            box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.3);
-            transform: translateY(-4px);
+        .purple-glow-card {
+            box-shadow: 0 0 35px -5px rgba(124, 58, 237, 0.3);
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
 
-    <!-- HEADER NAVIGATION -->
+    <!-- TOP HEADER -->
     <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             
-            <!-- BRAND LOGO HEADER -->
+            <!-- BRAND LOGO HEADER (LEFT ALIGNED) -->
             <a href="index.html" class="flex items-center group">
                 <img src="Assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
                 <div id="textBrandLogo" class="hidden items-center gap-1">
@@ -83,176 +67,47 @@
                 </div>
             </a>
 
-            <!-- DESKTOP MENU -->
-            <nav class="hidden md:flex items-center gap-8">
-                <a href="index.html#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
-                
-                <!-- MY CREATIONS DROPDOWN -->
-                <div class="relative dropdown-container py-4">
-                    <button class="flex items-center gap-1.5 text-sm font-semibold text-brand-glow transition-colors focus:outline-none">
-                        My Creations <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                    </button>
-                    <!-- Submenu items -->
-                    <div class="dropdown-menu absolute top-full left-0 w-48 py-2 bg-surface border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transform -translate-y-2 transition-all duration-200">
-                        <a href="novels.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-brand-purple/20 transition-colors">My Webnovels</a>
-                        <a href="art.html" class="block px-4 py-2 text-sm text-white bg-brand-purple/20 transition-colors">Art Gallery</a>
-                    </div>
-                </div>
-
-                <a href="index.html#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
-                <a href="index.html#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
-            </nav>
-
-            <!-- MOBILE HAMBURGER BUTTON -->
-            <button id="menuBtn" class="md:hidden p-2 text-gray-300 hover:text-brand-glow focus:outline-none" aria-label="Toggle Menu">
-                <i data-lucide="menu" class="w-7 h-7"></i>
-            </button>
         </div>
     </header>
 
-    <!-- FULLSCREEN MOBILE MENU OVERLAY -->
-    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden transition-all duration-300">
-        <button id="closeMenuBtn" class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow">
-            <i data-lucide="x" class="w-8 h-8"></i>
-        </button>
-        
-        <a href="index.html#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
-        <a href="novels.html" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Webnovels</a>
-        <a href="art.html" class="mobile-nav-link text-xl font-bold text-brand-glow">Art Gallery</a>
-        <a href="index.html#about" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">About Me</a>
-        <a href="index.html#contact" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Contact</a>
-    </div>
-
     <!-- MAIN CONTENT -->
-    <main class="flex-grow py-16 px-6 purple-glow-bg">
-        <div class="max-w-6xl mx-auto space-y-12">
+    <main class="flex-grow pb-16 px-6">
+        
+        <!-- BACK BUTTON (TUCKED DIRECTLY UNDER HEADER WITH NO SPACE) -->
+        <div class="max-w-6xl mx-auto px-6 pt-4">
+            <a href="index.html" class="text-gray-400 hover:text-brand-glow transition-colors inline-flex items-center" aria-label="Back to Home">
+                <i data-lucide="arrow-left" class="w-7 h-7"></i>
+            </a>
+        </div>
+
+        <div class="max-w-6xl mx-auto space-y-8 pt-4">
             
-            <!-- SECTION HEADER -->
-            <div class="text-center space-y-4 max-w-2xl mx-auto">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface border border-brand-purple/30 text-brand-light text-xs sm:text-sm font-medium">
-                    <span class="w-2 h-2 rounded-full bg-brand-purple animate-pulse"></span>
-                    Visual Showcase & Sketches
-                </div>
-                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">Art Gallery</h1>
-                <p class="text-gray-400 text-sm sm:text-base">
-                    A growing collection of digital art, concept sketches, and visual studies as I learn drawing and character design from scratch.
-                </p>
+            <div class="text-center space-y-3">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white">My Art Gallery</h1>
+                <p class="text-gray-400">Drawings and digital art pieces created by Swypyy</p>
             </div>
 
-            <!-- ART GRID (Pre-wired for art1.jpg through art10.jpg) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <!-- Slot 1 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art1.jpg" alt="Artwork 1" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art1.jpg...%3C/text%3E%3C/svg%3E';">
+            <!-- ART GALLERY GRID -->
+            <div class="max-w-xs mx-auto sm:max-w-none grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 pt-4">
+                
+                <!-- ART CARD EXAMPLE (Repeat this block for each new piece of art) -->
+                <div class="group cursor-pointer flex flex-col gap-3" onclick="openArtModal('Assets/Art/artwork-1.jpg', 'First Artwork Title')">
+                    <!-- Image Container -->
+                    <div class="w-full aspect-[4/3] bg-surface-light rounded-2xl border border-white/10 overflow-hidden relative shadow-xl group-hover:border-brand-purple/60 group-hover:shadow-brand-purple/20 transition-all duration-300">
+                        <img src="Assets/Art/artwork-1.jpg" alt="Artwork 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.src='assets/Art/artwork-1.jpg';">
+                        <!-- Dark overlay on hover -->
+                        <div class="absolute inset-0 bg-brand-purple/0 group-hover:bg-brand-purple/10 transition-colors duration-300"></div>
                     </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#01 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
-
-                <!-- Slot 2 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art2.jpg" alt="Artwork 2" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art2.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#02 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
+                    <!-- Title -->
+                    <div class="text-left px-1">
+                        <h2 class="text-base sm:text-lg font-bold text-white group-hover:text-brand-glow transition-colors">First Artwork Title</h2>
                     </div>
                 </div>
 
-                <!-- Slot 3 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art3.jpg" alt="Artwork 3" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art3.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#03 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
-
-                <!-- Slot 4 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art4.jpg" alt="Artwork 4" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art4.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#04 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
-
-                <!-- Slot 5 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art5.jpg" alt="Artwork 5" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art5.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#05 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
-
-                <!-- Slot 6 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art6.jpg" alt="Artwork 6" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art6.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#06 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
-
-                <!-- Slot 7 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art7.jpg" alt="Artwork 7" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art7.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#07 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
-
-                <!-- Slot 8 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art8.jpg" alt="Artwork 8" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art8.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#08 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
-
-                <!-- Slot 9 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art9.jpg" alt="Artwork 9" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art9.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#09 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
-
-                <!-- Slot 10 -->
-                <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
-                    <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art10.jpg" alt="Artwork 10" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art10.jpg...%3C/text%3E%3C/svg%3E';">
-                    </div>
-                    <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
-                        <span>#10 // Study</span>
-                        <span class="text-brand-light">Digital Art</span>
-                    </div>
-                </div>
+                <!-- You can add more art cards here following the exact same structure! -->
 
             </div>
+
         </div>
     </main>
 
@@ -263,19 +118,46 @@
         </div>
     </footer>
 
+    <!-- ART LIGHTBOX / PREVIEW MODAL -->
+    <div id="artModal" class="fixed inset-0 bg-void/90 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="relative max-w-4xl w-full bg-surface border border-brand-purple/40 rounded-3xl p-4 sm:p-6 text-center space-y-4 purple-glow-card">
+            
+            <!-- CLOSE BUTTON (X) -->
+            <button onclick="closeArtModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 bg-surface-light rounded-full border border-white/10 focus:outline-none z-10">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <!-- FULL IMAGE PREVIEW -->
+            <div class="overflow-hidden rounded-2xl max-h-[70vh] flex items-center justify-center bg-void">
+                <img id="modalArtImage" src="" alt="Art Preview" class="max-h-[70vh] w-auto object-contain">
+            </div>
+
+            <!-- TITLE -->
+            <h3 id="modalArtTitle" class="text-xl font-bold text-white">Artwork Title</h3>
+
+        </div>
+    </div>
+
     <!-- JAVASCRIPT -->
     <script>
         lucide.createIcons();
 
-        const menuBtn = document.getElementById('menuBtn');
-        const closeMenuBtn = document.getElementById('closeMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+        // Modal Logic to view art larger
+        function openArtModal(imageSrc, artTitle) {
+            document.getElementById('modalArtImage').src = imageSrc;
+            document.getElementById('modalArtTitle').innerText = artTitle;
+            
+            const modal = document.getElementById('artModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
 
-        menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
-        closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-        mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        function closeArtModal() {
+            const modal = document.getElementById('artModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
     </script>
 </body>
-                        </html>
+                </html>
     
