@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta name="copyright" content="SWYPYY. All rights reserved.">
-    <meta name="robots" content="index, follow">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SWYPYY | Creator & Learning Hub</title>
     
+    <!-- Proprietary Copyright Ownership Protection Meta Tags -->
+    <meta name="copyright" content="SWYPYY. All rights reserved.">
+    <meta name="robots" content="index, follow">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -200,10 +201,16 @@
                                 <p class="text-xs sm:text-sm text-gray-400">Anonymous, ephemeral real-time chat with self-destructing rooms.</p>
                             </div>
                         </div>
-                        <a href="https://swypyy-messenger.onrender.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-7 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center shrink-0 flex items-center justify-center gap-2">
-                            <span>Open App</span>
-                            <i data-lucide="external-link" class="w-4 h-4"></i>
-                        </a>
+                        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
+                            <a href="https://github.com/swypyy/ephemeral-chat" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2">
+                                <i data-lucide="code" class="w-4 h-4 text-brand-glow"></i>
+                                <span>GitHub Repo</span>
+                            </a>
+                            <a href="https://swypyy-messenger.onrender.com" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2">
+                                <span>Open App</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
                     </div>
 
                 </div>
@@ -228,7 +235,7 @@
                         <div class="hidden md:flex md:col-span-4 items-center justify-center">
                             <div class="relative group">
                                 <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl group-hover:bg-brand-purple/50 transition-all"></div>
-                                <img src="Assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/s-logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('fallbackSLogo').style.display='block';};">
+                                <img src="Assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/s-logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='block';};">
                                 <span id="fallbackSLogo" class="hidden s-logo-handwritten text-[160px] text-brand-purple leading-none select-none relative z-10">S</span>
                             </div>
                         </div>
@@ -294,10 +301,10 @@
         const currentYear = new Date().getFullYear();
         document.getElementById('footer-container').innerHTML = `
             <div class="max-w-6xl mx-auto px-6">
-                <p>&copy; ${currentYear} SWYPYY. All rights reserved.</p>
+                <p>&copy; ${currentYear} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
             </div>
         `;
     </script>
 </body>
-    </html>
-                    
+                    </html>
+    
