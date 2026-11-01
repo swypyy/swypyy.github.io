@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWYPYY | Art Gallery</title>
+    <title>SWYPYY // Art Gallery</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -51,7 +51,12 @@
             line-height: 1;
         }
 
-        /* Card glow effect */
+        .dropdown-container:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
         .art-card {
             border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s ease;
@@ -81,9 +86,21 @@
             <!-- DESKTOP MENU -->
             <nav class="hidden md:flex items-center gap-8">
                 <a href="index.html#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
-                <a href="novels.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Novels</a>
-                <a href="art.html" class="text-sm font-semibold text-brand-glow transition-colors">Art Gallery</a>
+                
+                <!-- MY CREATIONS DROPDOWN -->
+                <div class="relative dropdown-container py-4">
+                    <button class="flex items-center gap-1.5 text-sm font-semibold text-brand-glow transition-colors focus:outline-none">
+                        My Creations <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <!-- Submenu items -->
+                    <div class="dropdown-menu absolute top-full left-0 w-48 py-2 bg-surface border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transform -translate-y-2 transition-all duration-200">
+                        <a href="novels.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-brand-purple/20 transition-colors">My Webnovels</a>
+                        <a href="art.html" class="block px-4 py-2 text-sm text-white bg-brand-purple/20 transition-colors">Art Gallery</a>
+                    </div>
+                </div>
+
                 <a href="index.html#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
+                <a href="index.html#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
             </nav>
 
             <!-- MOBILE HAMBURGER BUTTON -->
@@ -94,15 +111,16 @@
     </header>
 
     <!-- FULLSCREEN MOBILE MENU OVERLAY -->
-    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-8 md:hidden hidden transition-all duration-300">
+    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden transition-all duration-300">
         <button id="closeMenuBtn" class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow">
             <i data-lucide="x" class="w-8 h-8"></i>
         </button>
         
-        <a href="index.html#home" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Home</a>
-        <a href="novels.html" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">My Novels</a>
-        <a href="art.html" class="mobile-nav-link text-2xl font-bold text-brand-glow">Art Gallery</a>
-        <a href="index.html#about" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">About Me</a>
+        <a href="index.html#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
+        <a href="novels.html" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Webnovels</a>
+        <a href="art.html" class="mobile-nav-link text-xl font-bold text-brand-glow">Art Gallery</a>
+        <a href="index.html#about" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">About Me</a>
+        <a href="index.html#contact" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Contact</a>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -111,7 +129,7 @@
             
             <!-- SECTION HEADER -->
             <div class="text-center space-y-4 max-w-2xl mx-auto">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-light border border-brand-purple/30 text-brand-light text-xs sm:text-sm font-medium">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface border border-brand-purple/30 text-brand-light text-xs sm:text-sm font-medium">
                     <span class="w-2 h-2 rounded-full bg-brand-purple animate-pulse"></span>
                     Visual Showcase & Sketches
                 </div>
@@ -215,7 +233,7 @@
                 <!-- Slot 9 -->
                 <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
                     <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art9.jpg" alt="Artwork 9" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art9.jpg...%3E%3C/text%3E%3C/svg%3E';">
+                        <img src="Assets/Art/art9.jpg" alt="Artwork 9" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art9.jpg...%3C/text%3E%3C/svg%3E';">
                     </div>
                     <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
                         <span>#09 // Study</span>
@@ -226,7 +244,7 @@
                 <!-- Slot 10 -->
                 <div class="art-card bg-surface rounded-2xl overflow-hidden flex flex-col">
                     <div class="bg-black/40 flex items-center justify-center overflow-hidden p-2">
-                        <img src="Assets/Art/art10.jpg" alt="Artwork 10" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art10.jpg...%3E%3C/text%3E%3C/svg%3E';">
+                        <img src="Assets/Art/art10.jpg" alt="Artwork 10" class="w-full h-auto object-contain rounded-xl max-h-[500px]" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23120f1d%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%2394a3b8%22 font-family=%22sans-serif%22 font-size=%2214%22 dy=%2210.5%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22%3EAwaiting art10.jpg...%3C/text%3E%3C/svg%3E';">
                     </div>
                     <div class="p-4 mt-auto border-t border-white/5 flex justify-between items-center text-xs text-gray-400">
                         <span>#10 // Study</span>
@@ -259,5 +277,5 @@
         mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
     </script>
 </body>
-  </html>
-                  
+                        </html>
+    
