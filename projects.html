@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GitHub Projects | SWYPYY</title>
+    
+    <!-- Proprietary Copyright Ownership Protection Meta Tags -->
+    <meta name="copyright" content="SWYPYY. All rights reserved.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#07060b',
+                        surface: '#120f1d',
+                        'surface-light': '#1c172e',
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #07060b;
+            color: #f3f4f6;
+        }
+
+        .purple-glow-bg {
+            background: radial-gradient(circle at 50% 20%, rgba(124, 58, 237, 0.25) 0%, rgba(7, 6, 11, 0) 70%);
+        }
+
+        .purple-glow-card {
+            box-shadow: 0 0 30px -5px rgba(124, 58, 237, 0.25);
+        }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
+
+    <!-- HEADER NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            
+            <!-- BRAND LOGO HEADER -->
+            <a href="index.html" class="flex items-center group">
+                <img src="Assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
+            </a>
+
+            <!-- QUICK BACK HOME BUTTON (DESKTOP) -->
+            <a href="index.html" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-light border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/50 transition-all text-sm font-semibold">
+                <i data-lucide="arrow-left" class="w-4 h-4 text-brand-glow"></i>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow purple-glow-bg py-12 px-6">
+        <div class="max-w-4xl mx-auto space-y-10">
+            
+            <!-- TOP BACK BUTTON (MOBILE & PAGE ACTION) -->
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/50 transition-all text-sm font-semibold">
+                    <i data-lucide="arrow-left" class="w-4 h-4 text-brand-glow"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+
+            <!-- PAGE HEADING & SUBTITLE -->
+            <div class="text-center space-y-4">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-light border border-brand-purple/30 text-brand-light text-xs font-semibold uppercase tracking-wider">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span>Open Source Work</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+                    My GitHub Projects
+                </h1>
+                <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
+                    A collection of open-source web applications and tools built from scratch as part of my continuous learning journey.
+                </p>
+            </div>
+
+            <!-- GITHUB PROJECTS CARDS LIST -->
+            <div class="space-y-6 pt-4">
+
+                <!-- 1. SWYPYY MESSENGER CARD -->
+                <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                    <div class="flex items-center gap-5 text-left">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
+                            <i data-lucide="message-square" class="w-7 h-7"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-light">Web App / Real-Time Tool</span>
+                            <h2 class="text-xl sm:text-2xl font-bold text-white">Swypyy Messenger</h2>
+                            <p class="text-xs sm:text-sm text-gray-400">Anonymous, ephemeral real-time chat with self-destructing rooms.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
+                        <a href="https://github.com/swypyy/ephemeral-chat" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2">
+                            <i data-lucide="code" class="w-4 h-4 text-brand-glow"></i>
+                            <span>GitHub Repo</span>
+                        </a>
+                        <a href="https://swypyy-messenger.onrender.com" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2">
+                            <span>Open App</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. ANONYMOUS DROP CARD -->
+                <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                    <div class="flex items-center gap-5 text-left">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
+                            <i data-lucide="globe" class="w-7 h-7"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-light">Web App / Community Tool</span>
+                            <h2 class="text-xl sm:text-2xl font-bold text-white">Anonymous Drop</h2>
+                            <p class="text-xs sm:text-sm text-gray-400">Zero-friction anonymous blogging and commenting wall for everyone.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
+                        <a href="https://github.com/swypyy/Anonymous-Blogger-repo" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2">
+                            <i data-lucide="code" class="w-4 h-4 text-brand-glow"></i>
+                            <span>GitHub Repo</span>
+                        </a>
+                        <a href="blog.html" class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2">
+                            <span>Open App</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER WITH HARDCODED JS COPYRIGHT PROTECTION -->
+    <footer id="footer-container" class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
+        <!-- Injected via JavaScript below -->
+    </footer>
+
+    <!-- JAVASCRIPT FOR LUCIDE ICONS & COPYRIGHT -->
+    <script>
+        lucide.createIcons();
+
+        // Hardcoded Copyright Injection
+        const currentYear = new Date().getFullYear();
+        document.getElementById('footer-container').innerHTML = `
+            <div class="max-w-6xl mx-auto px-6">
+                <p>&copy; ${currentYear} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
+            </div>
+        `;
+    </script>
+</body>
+  </html>
