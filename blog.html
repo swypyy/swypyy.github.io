@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swypyy Anonymous Blog</title>
+    <title>Anonymous Drop</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -25,35 +25,37 @@
         }
     </script>
 </head>
-<body class="bg-void text-white min-h-screen relative flex flex-col">
+<body class="bg-void text-white min-h-screen relative flex flex-col selection:bg-brand-purple selection:text-white">
 
     <!-- Top Navigation Bar -->
     <header class="w-full max-w-3xl mx-auto p-6 flex justify-between items-center border-b border-white/5">
-        <h1 class="text-2xl sm:text-3xl font-bold text-brand-light tracking-wide">Swypyy Blog</h1>
+        <div class="flex items-center gap-2">
+            <span class="text-2xl">💧</span>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-brand-light tracking-wide">Anonymous Drop</h1>
+        </div>
         <a href="index.html" class="text-xs sm:text-sm bg-white/10 px-4 py-2 rounded-xl hover:bg-white/20 transition-all">← Home</a>
     </header>
 
-    <!-- Main Full-Screen Feed Section -->
+    <!-- Main Feed Section -->
     <main class="flex-1 w-full max-w-3xl mx-auto p-4 sm:p-6 space-y-4 pb-24">
         <div id="posts-container" class="space-y-4">
-            <div class="text-center py-12 text-gray-400 animate-pulse">Loading posts...</div>
+            <div class="text-center py-16 text-gray-400 animate-pulse">Loading drops...</div>
         </div>
     </main>
 
     <!-- Floating Action Button (+) in Bottom Right -->
-    <div class="fixed bottom-6 right-6 z-40">
-        <button onclick="openModal()" class="w-14 h-14 bg-brand-purple hover:bg-brand-glow text-white text-3xl font-bold rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-brand-purple/50">
+    <div class="fixed bottom-6 right-6 z-30">
+        <button onclick="openCreateModal()" class="w-14 h-14 bg-brand-purple hover:bg-brand-glow text-white text-3xl font-bold rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 shadow-brand-purple/50">
             +
         </button>
     </div>
 
-    <!-- Pop-up Modal (Hidden by Default) -->
-    <div id="post-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="bg-surface border border-white/10 w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl relative animate-in fade-in zoom-in duration-200">
-            
+    <!-- 1. POP-UP MODAL: CREATE NEW POST -->
+    <div id="create-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-surface border border-white/10 w-full max-w-lg rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl relative">
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold text-white">Create Anonymous Post</h2>
-                <button onclick="closeModal()" class="text-gray-400 hover:text-white text-xl font-bold px-2 py-1">&times;</button>
+                <h2 class="text-xl font-bold text-white">Create Anonymous Drop</h2>
+                <button onclick="closeCreateModal()" class="text-gray-400 hover:text-white text-xl font-bold px-2 py-1">&times;</button>
             </div>
 
             <div class="space-y-4">
@@ -69,40 +71,88 @@
                     <label class="block text-xs font-mono text-gray-400 mb-1">CONTENT</label>
                     <textarea id="content" placeholder="Write anything you want..." rows="4" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple text-sm"></textarea>
                 </div>
-                
-                <p id="cooldown-notice" class="text-xs text-amber-400 text-center hidden"></p>
 
                 <div class="flex gap-3 pt-2">
-                    <button onclick="closeModal()" class="flex-1 bg-white/10 hover:bg-white/15 font-semibold py-3 rounded-xl transition-all text-sm">Cancel</button>
-                    <button onclick="createPost()" class="flex-1 bg-brand-purple hover:bg-brand-glow text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand-purple/20 text-sm">Publish</button>
+                    <button onclick="closeCreateModal()" class="flex-1 bg-white/10 hover:bg-white/15 font-semibold py-3 rounded-xl transition-all text-sm">Cancel</button>
+                    <button onclick="createPost()" class="flex-1 bg-brand-purple hover:bg-brand-glow text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand-purple/20 text-sm">Publish Drop</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- 2. FULL-SCREEN READER & COMMENTS MODAL -->
+    <div id="read-modal" class="fixed inset-0 bg-void z-50 hidden flex-col w-full h-full overflow-hidden">
+        
+        <!-- Reader Header -->
+        <header class="w-full max-w-3xl mx-auto p-4 flex justify-between items-center border-b border-white/10 shrink-0">
+            <button onclick="closeReadModal()" class="flex items-center gap-2 text-brand-light hover:text-white text-sm font-semibold">
+                ← Back to Drops
+            </button>
+            <span class="text-xs font-mono text-gray-400">Anonymous Drop</span>
+        </header>
+
+        <!-- Reader Scrollable Content & Comments Section -->
+        <div class="flex-1 overflow-y-auto w-full max-w-3xl mx-auto p-4 sm:p-6 space-y-8 pb-28">
+            
+            <!-- Full Post Display -->
+            <article class="bg-surface border border-white/10 p-6 rounded-3xl space-y-4 shadow-xl">
+                <div class="flex justify-between items-center text-xs text-gray-400 font-mono border-b border-white/5 pb-3">
+                    <span id="read-author" class="text-brand-light font-bold"></span>
+                    <span id="read-date"></span>
+                </div>
+                <h2 id="read-title" class="text-2xl sm:text-3xl font-extrabold text-white"></h2>
+                <p id="read-content" class="text-gray-200 whitespace-pre-wrap leading-relaxed text-base sm:text-lg"></p>
+            </article>
+
+            <!-- Comments Section -->
+            <section class="space-y-4 pt-4">
+                <h3 class="text-xl font-bold text-brand-light flex items-center gap-2 border-b border-white/10 pb-2">
+                    💬 Comments (<span id="comment-count">0</span>)
+                </h3>
+                
+                <div id="comments-list" class="space-y-3">
+                    <!-- Comments render here dynamically -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Sticky Chat-Like Input Bar at Bottom -->
+        <div class="fixed bottom-0 left-0 right-0 bg-surface border-t border-white/10 p-3 sm:p-4 z-50">
+            <div class="max-w-3xl mx-auto flex items-center gap-2">
+                <input type="text" id="comment-input" placeholder="Type a comment anonymously..." class="flex-1 bg-black/50 border border-white/10 px-4 py-3 rounded-full text-white text-sm outline-none focus:border-brand-purple">
+                <button onclick="sendComment()" class="bg-brand-purple hover:bg-brand-glow text-white font-bold px-5 py-3 rounded-full transition-all shadow-md text-sm shrink-0 flex items-center gap-1">
+                    Send 🚀
+                </button>
+            </div>
+        </div>
+
+    </div>
+
     <!-- JavaScript Logic -->
     <script>
         const API_URL = 'https://anonymous-blogger-djqp.onrender.com';
+        let allPosts = [];
+        let currentPostId = null;
         let lastPostTime = 0;
-        const COOLDOWN_TIME = 60 * 1000; // 1 minute in milliseconds
+        const COOLDOWN_TIME = 60 * 1000; // 1-minute rate limit
 
-        function openModal() {
+        function openCreateModal() {
             const now = Date.now();
             const timeElapsed = now - lastPostTime;
 
             if (timeElapsed < COOLDOWN_TIME) {
                 const secondsLeft = Math.ceil((COOLDOWN_TIME - timeElapsed) / 1000);
-                alert(`Please wait ${secondsLeft} more seconds before posting again (1-minute limit).`);
+                alert(`Please wait ${secondsLeft} more seconds before dropping another post (1-minute limit).`);
                 return;
             }
 
-            document.getElementById('post-modal').classList.remove('hidden');
-            document.getElementById('post-modal').classList.add('flex');
+            document.getElementById('create-modal').classList.remove('hidden');
+            document.getElementById('create-modal').classList.add('flex');
         }
 
-        function closeModal() {
-            document.getElementById('post-modal').classList.remove('flex');
-            document.getElementById('post-modal').classList.add('hidden');
+        function closeCreateModal() {
+            document.getElementById('create-modal').classList.remove('flex');
+            document.getElementById('create-modal').classList.add('hidden');
         }
 
         async function fetchPosts() {
@@ -110,27 +160,120 @@
             try {
                 const res = await fetch(`${API_URL}/api/posts`);
                 if (!res.ok) throw new Error('Failed to fetch');
-                const posts = await res.json();
+                allPosts = await res.json();
                 
-                if (!posts || posts.length === 0) {
-                    container.innerHTML = '<div class="text-center py-16 text-gray-400 bg-surface/50 border border-white/5 rounded-2xl">No posts yet. Tap the <b>+</b> button below to write the first one!</div>';
+                if (!allPosts || allPosts.length === 0) {
+                    container.innerHTML = '<div class="text-center py-16 text-gray-400 bg-surface/50 border border-white/5 rounded-2xl">No drops yet. Tap the <b>+</b> button below to be the first!</div>';
                     return;
                 }
 
-                container.innerHTML = posts.map(p => `
-                    <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-2 shadow-lg">
-                        <div class="flex justify-between text-xs text-gray-400 font-mono">
-                            <span class="text-brand-light font-bold">By: ${escapeHtml(p.author || 'Anonymous')}</span>
-                            <span>${p.date}</span>
+                container.innerHTML = allPosts.map(p => {
+                    const fullText = p.content || '';
+                    const isLong = fullText.length > 40;
+                    const previewText = isLong ? fullText.substring(0, 40) + '...' : fullText;
+
+                    return `
+                        <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-3 shadow-lg">
+                            <div class="flex justify-between text-xs text-gray-400 font-mono">
+                                <span class="text-brand-light font-bold">By: ${escapeHtml(p.author || 'Anonymous')}</span>
+                                <span>${p.date}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">${escapeHtml(p.title)}</h3>
+                            <p class="text-gray-300 leading-relaxed text-sm">${escapeHtml(previewText)}</p>
+                            ${isLong ? `
+                                <button onclick="openReadModal(${p.id})" class="inline-block text-xs font-bold text-brand-glow hover:underline pt-1">
+                                    Read More →
+                                </button>
+                            ` : `
+                                <button onclick="openReadModal(${p.id})" class="inline-block text-xs font-bold text-brand-light hover:underline pt-1">
+                                    View & Comment →
+                                </button>
+                            `}
                         </div>
-                        <h3 class="text-xl font-bold text-white">${escapeHtml(p.title)}</h3>
-                        <p class="text-gray-300 whitespace-pre-wrap leading-relaxed text-sm">${escapeHtml(p.content)}</p>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             } catch (e) {
                 container.innerHTML = '<div class="text-center py-12 text-red-400 bg-surface/50 border border-white/5 rounded-2xl">Render server is waking up or offline. Please refresh in a moment.</div>';
             }
         }
+
+        async function openReadModal(postId) {
+            const post = allPosts.find(p => p.id === postId);
+            if (!post) return;
+
+            currentPostId = postId;
+            document.getElementById('read-author').innerText = `By: ${post.author || 'Anonymous'}`;
+            document.getElementById('read-date').innerText = post.date;
+            document.getElementById('read-title').innerText = post.title;
+            document.getElementById('read-content').innerText = post.content;
+
+            await fetchAndRenderComments(postId);
+
+            document.getElementById('read-modal').classList.remove('hidden');
+            document.getElementById('read-modal').classList.add('flex');
+        }
+
+        function closeReadModal() {
+            document.getElementById('read-modal').classList.remove('flex');
+            document.getElementById('read-modal').classList.add('hidden');
+            currentPostId = null;
+        }
+
+        async function fetchAndRenderComments(postId) {
+            const listEl = document.getElementById('comments-list');
+            listEl.innerHTML = '<p class="text-xs text-gray-400 italic py-2 animate-pulse">Loading comments...</p>';
+            
+            try {
+                const res = await fetch(`${API_URL}/api/comments/${postId}`);
+                const comments = await res.json();
+                document.getElementById('comment-count').innerText = comments.length;
+
+                if (!comments || comments.length === 0) {
+                    listEl.innerHTML = '<p class="text-xs text-gray-500 italic py-2">No comments yet. Type one below!</p>';
+                    return;
+                }
+
+                listEl.innerHTML = comments.map(c => `
+                    <div class="bg-surface-light border border-white/5 p-3 rounded-xl space-y-1">
+                        <div class="flex justify-between text-[10px] font-mono text-brand-light">
+                            <span>Anonymous</span>
+                            <span>${c.time}</span>
+                        </div>
+                        <p class="text-xs text-gray-200 leading-normal">${escapeHtml(c.text)}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                listEl.innerHTML = '<p class="text-xs text-red-400 italic py-2">Failed to load comments.</p>';
+            }
+        }
+
+        async function sendComment() {
+            const input = document.getElementById('comment-input');
+            const text = input.value.trim();
+            if (!text || !currentPostId) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/comments/${currentPostId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+
+                if (res.ok) {
+                    input.value = '';
+                    fetchAndRenderComments(currentPostId);
+                } else {
+                    alert('Error sending comment.');
+                }
+            } catch (err) {
+                alert('Network error while posting comment.');
+            }
+        }
+
+        // Allow sending comment with Enter key
+        document.getElementById('comment-input')?.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') sendComment();
+        });
 
         async function createPost() {
             const author = document.getElementById('author').value.trim();
@@ -138,7 +281,7 @@
             const content = document.getElementById('content').value.trim();
 
             if (!title || !content) {
-                alert('Please fill out both the title and content fields!');
+                alert('Please fill out both title and content fields!');
                 return;
             }
 
@@ -150,19 +293,14 @@
                 });
 
                 if (res.ok) {
-                    // Record timestamp for 1-minute cooldown
                     lastPostTime = Date.now();
-
-                    // Clear inputs and close modal
                     document.getElementById('author').value = '';
                     document.getElementById('title').value = '';
                     document.getElementById('content').value = '';
-                    closeModal();
-
-                    // Refresh feed immediately
+                    closeCreateModal();
                     fetchPosts();
                 } else {
-                    alert('Error publishing post. Try again.');
+                    alert('Error publishing drop.');
                 }
             } catch (err) {
                 alert('Network error. Render server might be waking up, please try again.');
@@ -175,8 +313,9 @@
             );
         }
 
-        // Load posts on page launch
+        // Fetch drops on launch
         fetchPosts();
     </script>
 </body>
-            </html>
+        </html>
+            
