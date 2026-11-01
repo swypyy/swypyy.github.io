@@ -156,25 +156,25 @@
             </div>
         </section>
 
-        <!-- MY CREATIONS HORIZONTAL SLIDER SECTION -->
+        <!-- MY CREATIONS HORIZONTAL SLIDER SECTION (2 VERTICAL CARDS PER SLIDE) -->
         <section id="creations-showcase" class="py-20 px-6 bg-surface/30 border-t border-white/5 overflow-hidden">
             <div class="max-w-4xl mx-auto space-y-10">
                 <div class="text-center space-y-3">
                     <h2 class="text-3xl sm:text-4xl font-extrabold text-white">My Creations</h2>
-                    <p class="text-gray-400">Swipe or use arrows to explore my interactive projects.</p>
+                    <p class="text-gray-400">Swipe or use arrows to explore my interactive projects and library.</p>
                 </div>
 
-                <!-- SLIDER WRAPPER -->
+                <!-- SLIDER WRAPPER WITH HOVER/TOUCH PAUSE CONTROLS -->
                 <div class="relative group" id="sliderWrapper">
                     
                     <!-- HORIZONTAL SLIDER TRACK -->
                     <div id="sliderTrack" class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth py-4">
                         
-                        <!-- SLIDE 1: 3 VERTICAL CARDS (Web Novels, Art, Swypyy Messenger) -->
+                        <!-- SLIDE 1: 2 CARDS STACKED VERTICALLY (Web Novels & Art Gallery) -->
                         <div class="w-full shrink-0 snap-center flex flex-col gap-6">
                             
-                            <!-- 1. WEB NOVELS SLIDE CARD -->
-                            <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                            <!-- 1. WEB NOVELS CARD -->
+                            <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
                                 <div class="flex items-center gap-5 text-left">
                                     <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
                                         <i data-lucide="book-open" class="w-7 h-7"></i>
@@ -189,8 +189,8 @@
                                 </a>
                             </div>
 
-                            <!-- 2. MY ARTS SLIDE CARD -->
-                            <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                            <!-- 2. MY ARTS CARD -->
+                            <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
                                 <div class="flex items-center gap-5 text-left">
                                     <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
                                         <i data-lucide="palette" class="w-7 h-7"></i>
@@ -205,8 +205,13 @@
                                 </a>
                             </div>
 
-                            <!-- 3. WEB APPS SLIDE CARD (SWYPYY MESSENGER) -->
-                            <div class="bg-surface rounded-3xl border border-white/10 p-5 sm:p-8 md:p-10 flex flex-col gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                        </div>
+
+                        <!-- SLIDE 2: 2 CARDS STACKED VERTICALLY (Swypyy Messenger & Anonymous Drop) -->
+                        <div class="w-full shrink-0 snap-center flex flex-col gap-6">
+                            
+                            <!-- 3. SWYPYY MESSENGER CARD -->
+                            <div class="bg-surface rounded-3xl border border-white/10 p-5 sm:p-8 flex flex-col gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
                                 <div class="flex items-center gap-4 sm:gap-5 text-left">
                                     <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
                                         <i data-lucide="message-square" class="w-6 h-6 sm:w-7 sm:h-7"></i>
@@ -229,13 +234,8 @@
                                 </div>
                             </div>
 
-                        </div>
-
-                        <!-- SLIDE 2: ANONYMOUS DROP ONLY -->
-                        <div class="w-full shrink-0 snap-center flex flex-col gap-6">
-                            
                             <!-- 4. ANONYMOUS DROP CARD -->
-                            <div class="bg-surface rounded-3xl border border-white/10 p-5 sm:p-8 md:p-10 flex flex-col gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                            <div class="bg-surface rounded-3xl border border-white/10 p-5 sm:p-8 flex flex-col gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
                                 <div class="flex items-center gap-4 sm:gap-5 text-left">
                                     <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
                                         <i data-lucide="globe" class="w-6 h-6 sm:w-7 sm:h-7"></i>
@@ -298,5 +298,4 @@
                         <div class="hidden md:flex md:col-span-4 items-center justify-center">
                             <div class="relative group">
                                 <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl group-hover:bg-brand-purple/50 transition-all"></div>
-                                <img src="Assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/s-logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='block';};">
-                                <span id="
+                                <img src="Assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/s-logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display
