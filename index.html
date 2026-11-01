@@ -158,7 +158,7 @@
                 <div class="space-y-6">
                     
                     <!-- 1. WEB NOVELS SLIDE CARD -->
-                    <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                    <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
                         <div class="flex items-center gap-5 text-left">
                             <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
                                 <i data-lucide="book-open" class="w-7 h-7"></i>
@@ -168,13 +168,13 @@
                                 <h3 class="text-xl sm:text-2xl font-bold text-white">Read My Original Webnovels</h3>
                             </div>
                         </div>
-                        <a href="novels.html" class="w-full sm:w-auto px-7 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center shrink-0">
+                        <a href="novels.html" class="w-full md:w-auto px-7 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center shrink-0">
                             Read
                         </a>
                     </div>
 
                     <!-- 2. MY ARTS SLIDE CARD -->
-                    <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                    <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
                         <div class="flex items-center gap-5 text-left">
                             <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
                                 <i data-lucide="palette" class="w-7 h-7"></i>
@@ -184,15 +184,15 @@
                                 <h3 class="text-xl sm:text-2xl font-bold text-white">View My Art Gallery</h3>
                             </div>
                         </div>
-                        <a href="art.html" class="w-full sm:w-auto px-7 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center shrink-0">
+                        <a href="art.html" class="w-full md:w-auto px-7 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center shrink-0">
                             View
                         </a>
                     </div>
 
                     <!-- 3. WEB APPS SLIDE CARD (SWYPYY MESSENGER) -->
-                    <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
-                        <div class="flex items-center gap-5 text-left">
-                            <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
+                    <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+                        <div class="flex items-start sm:items-center gap-5 text-left">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow mt-1 sm:mt-0">
                                 <i data-lucide="message-square" class="w-7 h-7"></i>
                             </div>
                             <div class="space-y-1">
@@ -202,9 +202,9 @@
                             </div>
                         </div>
                         
-                        <!-- DUAL BUTTONS: GITHUB REPO & OPEN APP -->
-                        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
-                            <a href="https://github.com/swypyy/ephemeral-chat" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2">
+                        <!-- DUAL BUTTONS: GITHUB REPO & OPEN APP (ALWAYS VISIBLE SIDE-BY-SIDE OR STACKED RESPONSIVELY) -->
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto shrink-0">
+                            <a href="https://github.com/swypyy/ephemeral-chat" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2 hover:text-white">
                                 <i data-lucide="code" class="w-4 h-4 text-brand-glow"></i>
                                 <span>GitHub Repo</span>
                             </a>
@@ -287,7 +287,12 @@
 
     <!-- JAVASCRIPT FOR MOBILE MENU & HARDCODED COPYRIGHT -->
     <script>
-        lucide.createIcons();
+        // Initialize Lucide icons
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
 
         // Mobile menu toggle logic
         const menuBtn = document.getElementById('menuBtn');
@@ -295,17 +300,22 @@
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-        menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
-        closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-        mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        if (menuBtn && closeMenuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+            closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        }
 
         // Hardcoded Copyright Injection
         const currentYear = new Date().getFullYear();
-        document.getElementById('footer-container').innerHTML = `
-            <div class="max-w-6xl mx-auto px-6">
-                <p>&copy; ${currentYear} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
-            </div>
-        `;
+        const footerContainer = document.getElementById('footer-container');
+        if (footerContainer) {
+            footerContainer.innerHTML = `
+                <div class="max-w-6xl mx-auto px-6">
+                    <p>&copy; ${currentYear} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
+                </div>
+            `;
+        }
     </script>
 </body>
-                        </html>
+</html>
