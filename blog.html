@@ -1,119 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swypyy Anonymous Blog</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        void: '#07060b',
-                        surface: '#120f1d',
-                        'surface-light': '#1c172e',
-                        brand: {
-                            purple: '#7c3aed',
-                            light: '#a78bfa',
-                            glow: '#c084fc'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swypyy Anonymous Blog</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+void: '#07060b',
+surface: '#120f1d',
+'surface-light': '#1c172e',
+brand: {
+purple: '#7c3aed',
+light: '#a78bfa',
+glow: '#c084fc'
+}
+}
+}
+}
+}
+</script>
+<style>
+body {
+background-color: #07060b;
+color: #f3f4f6;
+}
+.purple-glow-card {
+box-shadow: 0 0 35px -5px rgba(124, 58, 237, 0.35);
+}
+</style>
 </head>
-<body class="bg-[#07060b] text-white min-h-screen p-6">
-    <div class="max-w-2xl mx-auto space-y-8">
-        <div class="flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-brand-light">Swypyy Anonymous Blog</h1>
-            <a href="index.html" class="text-sm bg-white/10 px-4 py-2 rounded-xl hover:bg-white/20 transition-all">← Home</a>
-        </div>
-        
-        <!-- Post Submission Form -->
-        <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-4 shadow-xl">
-            <h2 class="text-xl font-semibold">Drop a Post (No Account Needed)</h2>
-            <input type="text" id="author" placeholder="Your Name (Optional)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple">
-            <input type="text" id="title" placeholder="Post Title" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple">
-            <textarea id="content" placeholder="Write anything you want..." rows="4" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple"></textarea>
-            <button onclick="createPost()" class="w-full bg-brand-purple hover:bg-brand-glow text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand-purple/20">Publish Post</button>
-        </div>
-
-        <!-- Posts Feed -->
-        <div id="posts-container" class="space-y-4">
-            <p class="text-gray-400 text-center">Loading posts...</p>
-        </div>
-    </div>
-
-    <script>
-        // Your live Render backend URL
-        const API_URL = 'https://anonymous-blogger-djqp.onrender.com';
-
-        async function fetchPosts() {
-            try {
-                const res = await fetch(`${API_URL}/api/posts`);
-                const posts = await res.json();
-                const container = document.getElementById('posts-container');
-                
-                if (posts.length === 0) {
-                    container.innerHTML = '<p class="text-gray-400 text-center py-6">No posts yet. Be the first to write something!</p>';
-                    return;
-                }
-
-                container.innerHTML = posts.map(p => `
-                    <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-2 shadow-lg">
-                        <div class="flex justify-between text-xs text-gray-400 font-mono">
-                            <span>By: ${escapeHtml(p.author)}</span>
-                            <span>${p.date}</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-brand-light">${escapeHtml(p.title)}</h3>
-                        <p class="text-gray-300 whitespace-pre-wrap leading-relaxed">${escapeHtml(p.content)}</p>
-                    </div>
-                `).join('');
-            } catch (e) {
-                document.getElementById('posts-container').innerHTML = '<p class="text-red-400 text-center">Failed to load posts. Render server might be waking up.</p>';
-            }
-        }
-
-        async function createPost() {
-            const author = document.getElementById('author').value;
-            const title = document.getElementById('title').value;
-            const content = document.getElementById('content').value;
-
-            if (!title || !content) {
-                alert('Please fill out the title and content!');
-                return;
-            }
-
-            try {
-                const res = await fetch(`${API_URL}/api/posts`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ author, title, content })
-                });
-
-                if (res.ok) {
-                    document.getElementById('author').value = '';
-                    document.getElementById('title').value = '';
-                    document.getElementById('content').value = '';
-                    fetchPosts();
-                } else {
-                    alert('Error publishing post.');
-                }
-            } catch (err) {
-                alert('Network error. Render server might be waking up from sleep mode, please try again in a few seconds.');
-            }
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
-        }
-
-        fetchPosts();
-    </script>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white relative">
+<!-- STICKY TOP HEADER -->
+<header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5 py-4 px-6">
+<div class="max-w-4xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<a href="index.html" class="text-gray-400 hover:text-brand-glow transition-colors p-1" aria-label="Back to Home">
+<i data-lucide="arrow-left" class="w-6 h-6"></i>
+</a>
+<h1 class="text-xl sm:text-2xl font-extrabold text-brand-light">Anonymous Feed</h1>
+</div>
+<button onclick="fetchPosts()" class="p-2 text-gray-400 hover:text-white bg-surface-light rounded-xl border border-white/10 transition-all" title="Refresh Feed">
+<i data-lucide="rotate-cw" class="w-5 h-5"></i>
+</button>
+</div>
+</header>
+<!-- FULLSCREEN POSTS FEED -->
+<main class="flex-grow max-w-4xl w-full mx-auto p-4 sm:p-6 space-y-4 pb-24">
+<div id="posts-container" class="space-y-4">
+<div class="text-center py-12 text-gray-400 space-y-2">
+<i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto text-brand-glow"></i>
+<p>Loading posts...</p>
+</div>
+</div>
+</main>
+<!-- FLOATING ACTION BUTTON (+) IN BOTTOM RIGHT -->
+<div class="fixed bottom-6 right-6 z-40">
+<button id="fabBtn" onclick="openPostModal()" class="w-14 h-14 rounded-full bg-brand-purple hover:bg-brand-glow text-white flex items-center justify-center shadow-2xl shadow-brand-purple/50 border border-brand-light/30 transition-all transform hover:scale-110 active:scale-95">
+<i data-lucide="plus" class="w-8 h-8"></i>
+</button>
+</div>
+<!-- CREATE POST POP-UP MODAL -->
+<div id="postModal" class="fixed inset-0 bg-void/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+<div class="bg-surface border border-brand-purple/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-5 purple-glow-card relative transform transition-all">
+<!-- CLOSE BUTTON -->
+<button onclick="closePostModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/5 transition-all">
+<i data-lucide="x" class="w-6 h-6"></i>
+</button>
+<!-- MODAL HEADER -->
+<div class="space-y-1 pr-8">
+<h2 class="text-2xl font-extrabold text-white">Create New Post</h2>
+<p class="text-xs text-gray-400">Share your thoughts anonymously—no account required.</p>
+</div>
+<!-- FORM INPUTS -->
+<div class="space-y-4">
+<div>
+<label class="block text-xs font-semibold text-gray-400 mb-1">YOUR NAME (OPTIONAL)</label>
+<input type="text" id="author" placeholder="Anonymous" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple transition-colors text-sm">
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-400 mb-1">TITLE</label>
+<input type="text" id="title" placeholder="What's on your mind?" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple transition-colors text-sm">
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-400 mb-1">CONTENT</label>
+<textarea id="content" placeholder="Write anything you want..." rows="4" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple transition-colors text-sm leading-relaxed"></textarea>
+</div>
+</div>
+<!-- RATE LIMIT COOLDOWN NOTICE -->
+<div id="cooldownNotice" class="hidden text-xs text-amber-400 bg-amber-500/10 border border-amber-500/20 p-3 rounded-xl flex items-center gap-2">
+<i data-lucide="clock" class="w-4 h-4 shrink-0"></i>
+<span>Please wait <strong id="cooldownTimer">60</strong>s before publishing another post.</span>
+</div>
+<!-- SUBMIT BUTTON -->
+<button id="publishBtn" onclick="createPost()" class="w-full bg-brand-purple hover:bg-brand-glow text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-brand-purple/30 flex items-center justify-center gap-2">
+<i data-lucide="send" class="w-4 h-4"></i>
+<span>Publish Post</span>
+</button>
+</div>
+</div>
+<!-- JAVASCRIPT LOGIC -->
+<script>
+// Render Backend API URL
+const API_URL = 'https://anonymous-blogger-djqp.onrender.com';
+// 1-minute Rate Limit Tracking
+let lastPostTime = 0;
+const COOLDOWN_MS = 60000; // 60 seconds
+let countdownInterval = null;
+lucide.createIcons();
+// Modal Controls
+function openPostModal() {
+const modal = document.getElementById('postModal');
+modal.classList.remove('hidden');
+modal.classList.add('flex');
+checkCooldown();
+}
+function closePostModal() {
+const modal = document.getElementById('postModal');
+modal.classList.add('hidden');
+modal.classList.remove('flex');
+clearInterval(countdownInterval);
+}
+// Fetch Posts from Render API
+async function fetchPosts() {
+const container = document.getElementById('posts-container');
+try {
+const res = await fetch(${API_URL}/api/posts);
+const posts = await res.json();
+if (posts.length === 0) {
+container.innerHTML = <div class="text-center py-16 text-gray-400 space-y-3 bg-surface rounded-3xl border border-white/5"> <i data-lucide="message-square-plus" class="w-12 h-12 mx-auto text-brand-light/50"></i> <p class="text-lg font-semibold text-white">No posts yet!</p> <p class="text-xs text-gray-500">Tap the + button in the bottom right corner to create the first post.</p> </div>;
+lucide.createIcons();
+return;
+}
+container.innerHTML = posts.map(p => <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-3 shadow-lg hover:border-brand-purple/40 transition-all"> <div class="flex items-center justify-between text-xs text-gray-400"> <span class="flex items-center gap-1 font-mono text-brand-light"> <i data-lucide="user" class="w-3.5 h-3.5"></i> ${escapeHtml(p.author)} </span> <span class="text-gray-500">${p.date}</span> </div> <h3 class="text-xl font-bold text-white leading-snug">${escapeHtml(p.title)}</h3> <p class="text-gray-300 text-sm whitespace-pre-wrap leading-relaxed">${escapeHtml(p.content)}</p> </div>).join('');
+lucide.createIcons();
+} catch (e) {
+container.innerHTML = <div class="text-center py-12 text-red-400 space-y-2 bg-surface rounded-2xl border border-red-500/20"> <i data-lucide="wifi-off" class="w-8 h-8 mx-auto"></i> <p>Failed to load posts. Render server might be waking up.</p> <button onclick="fetchPosts()" class="text-xs bg-white/10 px-4 py-2 rounded-xl text-white hover:bg-white/20 mt-2">Try Again</button> </div>;
+lucide.createIcons();
+}
+}
+// Rate Limit Check
+function checkCooldown() {
+const now = Date.now();
+const timePassed = now - lastPostTime;
+const publishBtn = document.getElementById('publishBtn');
+const notice = document.getElementById('cooldownNotice');
+const timerSpan = document.getElementById('cooldownTimer');
+if (lastPostTime && timePassed < COOLDOWN_MS) {
+publishBtn.disabled = true;
+publishBtn.classList.add('opacity-50', 'cursor-not-allowed');
+notice.classList.remove('hidden');
+let secondsLeft = Math.ceil((COOLDOWN_MS - timePassed) / 1000);
+timerSpan.innerText = secondsLeft;
+clearInterval(countdownInterval);
+countdownInterval = setInterval(() => {
+secondsLeft--;
+timerSpan.innerText = secondsLeft;
+if (secondsLeft <= 0) {
+clearInterval(countdownInterval);
+publishBtn.disabled = false;
+publishBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+notice.classList.add('hidden');
+}
+}, 1000);
+} else {
+publishBtn.disabled = false;
+publishBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+notice.classList.add('hidden');
+}
+}
+// Submit New Post
+async function createPost() {
+const now = Date.now();
+if (lastPostTime && (now - lastPostTime < COOLDOWN_MS)) {
+alert('Please wait 1 minute before submitting another post!');
+return;
+}
+const authorInput = document.getElementById('author');
+const titleInput = document.getElementById('title');
+const contentInput = document.getElementById('content');
+const author = authorInput.value.trim();
+const title = titleInput.value.trim();
+const content = contentInput.value.trim();
+if (!title || !content) {
+alert('Please enter both a title and post content!');
+return;
+}
+const publishBtn = document.getElementById('publishBtn');
+publishBtn.disabled = true;
+publishBtn.innerText = 'Publishing...';
+try {
+const res = await fetch(${API_URL}/api/posts, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ author, title, content })
+});
+if (res.ok) {
+lastPostTime = Date.now();
+authorInput.value = '';
+titleInput.value = '';
+contentInput.value = '';
+closePostModal();
+fetchPosts();
+} else {
+alert('Error publishing post. Please try again.');
+}
+} catch (err) {
+alert('Network error. Render server might be asleep, please try again in a few seconds.');
+} finally {
+publishBtn.innerText = 'Publish Post';
+publishBtn.disabled = false;
+}
+}
+// Utility: Escape HTML tags to prevent XSS
+function escapeHtml(str) {
+return (str || '').replace(/[&<>'"]/g,
+tag => ({ '&': '&', '<': '<', '>': '>', "'": ''', '"': '"' }[tag] || tag)
+);
+}
+// Initial Feed Load
+fetchPosts();
+</script>
 </body>
-</html>
+    </html>
