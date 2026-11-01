@@ -25,7 +25,7 @@
         }
     </script>
 </head>
-<body class="bg-[#07060b] text-white min-h-screen p-6">
+<body class="bg-[#07060b] text-white min-h-screen p-6 selection:bg-brand-purple selection:text-white">
 
     <!-- Warning Modal -->
     <div id="warning-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
@@ -48,30 +48,58 @@
         </div>
     </div>
 
-    <div class="max-w-2xl mx-auto space-y-8">
-        <div class="flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-brand-light">Swypyy Anonymous Blog</h1>
-            <a href="index.html" class="text-sm bg-white/10 px-4 py-2 rounded-xl hover:bg-white/20 transition-all">← Home</a>
-        </div>
+    <div class="max-w-2xl mx-auto space-y-6 pb-20">
         
-        <!-- Post Submission Form -->
-        <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-4 shadow-xl">
-            <h2 class="text-xl font-semibold">Drop a Post (No Account Needed)</h2>
-            <input type="text" id="author" placeholder="Your Name (Optional)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple">
-            <input type="text" id="title" placeholder="Post Title" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple">
-            <textarea id="content" placeholder="Write anything you want..." rows="4" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple"></textarea>
-            <button onclick="createPost()" class="w-full bg-brand-purple hover:bg-brand-glow text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand-purple/20">Publish Post</button>
+        <!-- Header Section -->
+        <div class="flex flex-col space-y-3">
+            <a href="index.html" class="inline-flex items-center text-sm text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl transition-all w-fit">
+                ← Back to Home
+            </a>
+            <h1 class="text-3xl font-extrabold text-brand-light tracking-tight">Anonymous Drop</h1>
         </div>
 
-        <!-- Posts Feed -->
-        <div id="posts-container" class="space-y-6">
-            <p class="text-gray-400 text-center">Loading posts...</p>
+        <!-- MAIN FEED VIEW -->
+        <div id="feed-view" class="space-y-4">
+            <div id="posts-container" class="space-y-4">
+                <p class="text-gray-400 text-center py-10">Loading drops...</p>
+            </div>
         </div>
+
+        <!-- CREATE POST VIEW (Hidden by default) -->
+        <div id="create-view" class="hidden space-y-6">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold text-brand-light">Create New Drop</h2>
+                <button onclick="showFeedView()" class="text-sm bg-white/10 px-4 py-2 rounded-xl hover:bg-white/20 transition">Cancel</button>
+            </div>
+            <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-4 shadow-xl">
+                <input type="text" id="author" placeholder="Your Name (Optional)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple">
+                <input type="text" id="title" placeholder="Post Title" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple">
+                <textarea id="content" placeholder="Write anything you want into the void..." rows="6" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple"></textarea>
+                <button onclick="createPost()" class="w-full bg-brand-purple hover:bg-brand-glow text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand-purple/20">Publish Drop</button>
+            </div>
+        </div>
+
+        <!-- SINGLE POST DETAIL VIEW (Hidden by default) -->
+        <div id="detail-view" class="hidden space-y-6">
+            <button onclick="showFeedView()" class="inline-flex items-center text-sm text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl transition-all">
+                ← Back to Feed
+            </button>
+            <div id="single-post-container" class="space-y-6">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
     </div>
+
+    <!-- Floating "+" Action Button (Bottom Right) -->
+    <button onclick="showCreateView()" class="fixed bottom-6 right-6 bg-brand-purple hover:bg-brand-glow text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl shadow-brand-purple/50 text-3xl font-light transition-all transform hover:scale-105 z-40">
+        +
+    </button>
 
     <script>
         // Your live Render backend URL
         const API_URL = 'https://anonymous-blogger-djqp.onrender.com';
+        let allPostsData = [];
 
         // Warning Modal Logic
         function acceptTerms() {
@@ -92,74 +120,124 @@
             document.getElementById('warning-modal').style.display = 'none';
         }
 
-        // Fetch Posts and their Comments
+        // View Switchers
+        function showFeedView() {
+            document.getElementById('feed-view').classList.remove('hidden');
+            document.getElementById('create-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+            fetchPosts();
+        }
+
+        function showCreateView() {
+            document.getElementById('feed-view').classList.add('hidden');
+            document.getElementById('create-view').classList.remove('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+        }
+
+        function showDetailView(postId) {
+            document.getElementById('feed-view').classList.add('hidden');
+            document.getElementById('create-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.remove('hidden');
+            renderSinglePost(postId);
+        }
+
+        // Fetch and Render Feed
         async function fetchPosts() {
             try {
                 const res = await fetch(`${API_URL}/api/posts`);
-                const posts = await res.json();
+                allPostsData = await res.json();
                 const container = document.getElementById('posts-container');
                 
-                if (posts.length === 0) {
-                    container.innerHTML = '<p class="text-gray-400 text-center py-6">No posts yet. Be the first to write something!</p>';
+                if (allPostsData.length === 0) {
+                    container.innerHTML = '<p class="text-gray-400 text-center py-10">No drops yet. Be the first to share something!</p>';
                     return;
                 }
 
-                container.innerHTML = '';
-                for (let p of posts) {
-                    const postDiv = document.createElement('div');
-                    postDiv.className = 'bg-surface border border-white/10 p-6 rounded-2xl space-y-4 shadow-lg';
-                    postDiv.innerHTML = `
-                        <div class="flex justify-between text-xs text-gray-400 font-mono">
-                            <span>By: ${escapeHtml(p.author)}</span>
-                            <span>${p.date}</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-brand-light">${escapeHtml(p.title)}</h3>
-                        <p class="text-gray-300 whitespace-pre-wrap leading-relaxed">${escapeHtml(p.content)}</p>
-                        
-                        <!-- Comments Section -->
-                        <div class="border-t border-white/10 pt-4 mt-4 space-y-3">
-                            <h4 class="text-sm font-semibold text-gray-400">Comments</h4>
-                            <div id="comments-${p.id}" class="space-y-2 text-sm">
-                                <p class="text-gray-500 italic">Loading comments...</p>
+                container.innerHTML = allPostsData.map(p => {
+                    const cleanContent = escapeHtml(p.content);
+                    const isLong = cleanContent.length > 100;
+                    const previewText = isLong ? cleanContent.substring(0, 100) + '...' : cleanContent;
+
+                    return `
+                        <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-3 shadow-lg hover:border-white/20 transition cursor-pointer" onclick="if(event.target.tagName !== 'BUTTON') showDetailView(${p.id})">
+                            <div class="flex justify-between text-xs text-gray-400 font-mono">
+                                <span>By: ${escapeHtml(p.author)}</span>
+                                <span>${p.date}</span>
                             </div>
-                            <div class="flex gap-2 pt-2">
-                                <input type="text" id="comment-input-${p.id}" placeholder="Write an anonymous comment..." class="flex-1 bg-black/40 border border-white/10 px-3 py-2 rounded-xl text-sm text-white outline-none focus:border-brand-purple">
-                                <button onclick="addComment(${p.id})" class="bg-brand-purple hover:bg-brand-glow px-4 py-2 rounded-xl text-sm font-medium transition">Reply</button>
-                            </div>
+                            <h3 class="text-xl font-bold text-brand-light">${escapeHtml(p.title)}</h3>
+                            <p class="text-gray-300 leading-relaxed">${previewText}</p>
+                            ${isLong ? `<div class="pt-2"><button onclick="showDetailView(${p.id})" class="text-xs bg-brand-purple/20 hover:bg-brand-purple/30 text-brand-light border border-brand-purple/40 px-3 py-1.5 rounded-lg transition font-medium">Read More</button></div>` : ''}
                         </div>
                     `;
-                    container.appendChild(postDiv);
-                    fetchComments(p.id);
-                }
+                }).join('');
             } catch (e) {
-                document.getElementById('posts-container').innerHTML = '<p class="text-red-400 text-center">Failed to load posts. Render server might be waking up.</p>';
+                document.getElementById('posts-container').innerHTML = '<p class="text-red-400 text-center py-10">Failed to load posts. Render server might be waking up.</p>';
             }
+        }
+
+        // Render Single Post & Comments View
+        async function renderSinglePost(postId) {
+            const p = allPostsData.find(item => item.id == postId);
+            const container = document.getElementById('single-post-container');
+
+            if (!p) {
+                container.innerHTML = '<p class="text-red-400">Post not found.</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-4 shadow-xl">
+                    <div class="flex justify-between text-xs text-gray-400 font-mono">
+                        <span>By: ${escapeHtml(p.author)}</span>
+                        <span>${p.date}</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-brand-light">${escapeHtml(p.title)}</h2>
+                    <p class="text-gray-300 whitespace-pre-wrap leading-relaxed text-base">${escapeHtml(p.content)}</p>
+                    
+                    <!-- Comments Section -->
+                    <div class="border-t border-white/10 pt-6 mt-6 space-y-4">
+                        <h4 class="text-md font-semibold text-gray-300">Comments</h4>
+                        <div id="single-comments-container" class="space-y-3 text-sm">
+                            <p class="text-gray-500 italic">Loading comments...</p>
+                        </div>
+                        <div class="flex gap-2 pt-2">
+                            <input type="text" id="single-comment-input" placeholder="Write an anonymous comment..." class="flex-1 bg-black/40 border border-white/10 px-4 py-3 rounded-xl text-sm text-white outline-none focus:border-brand-purple">
+                            <button onclick="addComment(${p.id})" class="bg-brand-purple hover:bg-brand-glow px-6 py-3 rounded-xl text-sm font-medium transition shadow-lg shadow-brand-purple/20">Reply</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            fetchComments(p.id);
         }
 
         async function fetchComments(postId) {
             try {
                 const res = await fetch(`${API_URL}/api/comments/${postId}`);
                 const comments = await res.json();
-                const container = document.getElementById(`comments-${postId}`);
+                const container = document.getElementById(`single-comments-container`);
                 
+                if (!container) return;
+
                 if (comments.length === 0) {
-                    container.innerHTML = '<p class="text-gray-500 text-xs italic">No comments yet. Be the first!</p>';
+                    container.innerHTML = '<p class="text-gray-500 text-xs italic">No comments yet. Be the first to reply!</p>';
                     return;
                 }
 
                 container.innerHTML = comments.map(c => `
-                    <div class="bg-black/30 p-3 rounded-xl border border-white/5 flex justify-between items-center">
+                    <div class="bg-black/30 p-3.5 rounded-xl border border-white/5 flex justify-between items-center">
                         <span class="text-gray-200">${escapeHtml(c.text)}</span>
                         <span class="text-[10px] text-gray-500 font-mono">${c.time}</span>
                     </div>
                 `).join('');
             } catch (e) {
-                document.getElementById(`comments-${postId}`).innerHTML = '<p class="text-red-400 text-xs">Failed to load comments.</p>';
+                const container = document.getElementById(`single-comments-container`);
+                if (container) container.innerHTML = '<p class="text-red-400 text-xs">Failed to load comments.</p>';
             }
         }
 
         async function addComment(postId) {
-            const input = document.getElementById(`comment-input-${postId}`);
+            const input = document.getElementById(`single-comment-input`);
             const text = input.value.trim();
 
             if (!text) return;
@@ -203,7 +281,7 @@
                     document.getElementById('author').value = '';
                     document.getElementById('title').value = '';
                     document.getElementById('content').value = '';
-                    fetchPosts();
+                    showFeedView();
                 } else {
                     alert('Error publishing post.');
                 }
@@ -219,6 +297,7 @@
             );
         }
 
+        // Initialize feed on load
         fetchPosts();
     </script>
 </body>
