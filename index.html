@@ -50,12 +50,6 @@
         .purple-glow-bg {
             background: radial-gradient(circle at 50% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(7, 6, 11, 0) 70%);
         }
-
-        .dropdown-container:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white purple-glow-bg">
@@ -65,7 +59,7 @@
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             
             <!-- BRAND LOGO HEADER -->
-            <a href="index.html" class="flex items-center group">
+            <a href="#home" class="flex items-center group">
                 <img src="Assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
                 <div id="textBrandLogo" class="hidden items-center gap-1">
                     <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
@@ -76,19 +70,8 @@
             <!-- DESKTOP MENU -->
             <nav class="hidden md:flex items-center gap-8">
                 <a href="#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
-                
-                <!-- MY CREATIONS DROPDOWN -->
-                <div class="relative dropdown-container py-4">
-                    <button class="flex items-center gap-1.5 text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors focus:outline-none">
-                        My Creations <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                    </button>
-                    <!-- Submenu items -->
-                    <div class="dropdown-menu absolute top-full left-0 w-48 py-2 bg-surface border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible transform -translate-y-2 transition-all duration-200">
-                        <a href="novels.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-brand-purple/20 transition-colors">My Webnovels</a>
-                        <a href="art.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-brand-purple/20 transition-colors">Art Gallery</a>
-                    </div>
-                </div>
-
+                <a href="novels.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Webnovels</a>
+                <a href="art.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Art Gallery</a>
                 <a href="#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
                 <a href="#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
             </nav>
@@ -129,7 +112,7 @@
                 Welcome to my digital workshop. I'm learning every creative skill from scratch—building games, apps, websites, software, and writing stories.
             </p>
             <div class="pt-4 flex justify-center gap-4">
-                <a href="#creations-showcase" class="px-8 py-3.5 rounded-xl bg-brand-purple hover:bg-brand-purple/80 text-white font-semibold transition shadow-lg shadow-brand-purple/25">
+                <a href="#creations" class="px-8 py-3.5 rounded-xl bg-brand-purple hover:bg-brand-purple/80 text-white font-semibold transition shadow-lg shadow-brand-purple/25">
                     My Creations
                 </a>
                 <a href="#about" class="px-8 py-3.5 rounded-xl bg-surface hover:bg-surface-light border border-white/10 text-gray-300 font-semibold transition">
@@ -138,16 +121,14 @@
             </div>
         </section>
 
-        <!-- MY CREATIONS SHOWCASE SECTION -->
-        <section id="creations-showcase" class="max-w-6xl mx-auto px-6 py-16 space-y-8 border-t border-white/5">
+        <!-- CREATIONS SHOWCASE SECTION -->
+        <section id="creations" class="max-w-6xl mx-auto px-6 py-16 space-y-8 border-t border-white/5">
             <div class="space-y-2">
-                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Featured Creations</h2>
-                <p class="text-gray-400 text-sm">Explore my ongoing projects, web novels, and art gallery.</p>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">My Creations</h2>
+                <p class="text-gray-400 text-sm">Explore my original web novels and projects.</p>
             </div>
 
-            <!-- Vertical Sliders / Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
                 <!-- Web Novels Card -->
                 <div class="bg-surface border border-white/10 rounded-2xl p-6 sm:p-8 flex flex-col justify-between gap-6 hover:border-brand-purple/50 transition duration-300">
                     <div class="flex items-start gap-4">
@@ -183,7 +164,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -193,23 +173,33 @@
                 <h2 class="text-3xl font-bold text-white">About Me</h2>
                 <p class="text-gray-400 text-sm">Who is Swypyy?</p>
             </div>
-            <div class="bg-surface border border-white/10 rounded-2xl p-8 sm:p-10 space-y-6 text-gray-300 leading-relaxed text-sm sm:text-base">
-                <p>
-                    Hey, I'm <strong class="text-white">Swypyy</strong>. I’m just starting out on a journey to learn all the creative skills I’ve ever been curious about—drawing, animation, coding, and building games, apps, websites, and software. I’m not a master at any of this yet; I’m literally learning every skill I like from scratch as I go.
-                </p>
-                <p>
-                    This site is where I'll be sharing that learning process—my web novels, early art, small game and app experiments, and whatever project I pick up next. No master plan, just diving into cool ideas, figuring them out, and seeing where it goes.
-                </p>
-                <p class="text-brand-light italic">
-                    If you want to follow along while I learn and build things, welcome in :)
-                </p>
+            
+            <div class="bg-surface border border-white/10 rounded-2xl p-8 sm:p-10 relative overflow-hidden grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                
+                <!-- Background Watermark Logo for Mobile / Left column on Desktop -->
+                <div class="absolute right-4 bottom-4 md:relative md:inset-auto flex justify-center opacity-10 md:opacity-100 pointer-events-none md:pointer-events-auto">
+                    <img src="Assets/s-logo.png" alt="S Logo" class="w-32 md:w-full h-auto object-contain filter drop-shadow-[0_0_15px_rgba(124,58,237,0.3)]" onerror="this.style.display='none';">
+                </div>
+
+                <!-- About Text on Right -->
+                <div class="md:col-span-2 space-y-4 text-gray-300 leading-relaxed text-sm sm:text-base relative z-10">
+                    <p>
+                        Hey, I'm <strong class="text-white">Swypyy</strong>. I’m just starting out on a journey to learn all the creative skills I’ve ever been curious about—drawing, animation, coding, and building games, apps, websites, and software. I’m not a master at any of this yet; I’m literally learning every skill I like from scratch as I go.
+                    </p>
+                    <p>
+                        This site is where I'll be sharing that learning process—my web novels, early art, small game and app experiments, and whatever project I pick up next. No master plan, just diving into cool ideas, figuring them out, and seeing where it goes.
+                    </p>
+                    <p class="text-brand-light italic">
+                        If you want to follow along while I learn and build things, welcome in :)
+                    </p>
+                </div>
             </div>
         </section>
 
         <!-- CONTACT SECTION -->
         <section id="contact" class="max-w-4xl mx-auto px-6 py-16 border-t border-white/5 text-center space-y-6">
             <h2 class="text-2xl font-bold text-white">Get in Touch</h2>
-            <p class="text-gray-400 text-sm">Want to reach out anonymously or drop feedback?</p>
+            <p class="text-gray-400 text-sm">Want to reach out or drop feedback?</p>
             <div class="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-surface border border-white/10 text-gray-300 text-sm">
                 <i data-lucide="mail" class="w-5 h-5 text-brand-glow"></i>
                 <span>swypyy@gmail.com</span>
@@ -239,5 +229,5 @@
         mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
     </script>
 </body>
-                </html>
-                        
+    </html>
+    
