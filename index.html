@@ -74,7 +74,9 @@
             <!-- DESKTOP MENU -->
             <nav class="hidden md:flex items-center gap-8">
                 <a href="index.html#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
+                <a href="index.html#creations-showcase" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Creations</a>
                 <a href="novels.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Webnovels</a>
+                <a href="art.html" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Arts</a>
                 <a href="index.html#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
                 <a href="index.html#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
             </nav>
@@ -87,15 +89,17 @@
     </header>
 
     <!-- FULLSCREEN MOBILE MENU OVERLAY -->
-    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-8 md:hidden hidden transition-all duration-300">
+    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden transition-all duration-300">
         <button id="closeMenuBtn" class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow">
             <i data-lucide="x" class="w-8 h-8"></i>
         </button>
         
-        <a href="index.html#home" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Home</a>
-        <a href="novels.html" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">My Webnovels</a>
-        <a href="index.html#about" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">About Me</a>
-        <a href="index.html#contact" class="mobile-nav-link text-2xl font-bold text-white hover:text-brand-glow">Contact</a>
+        <a href="index.html#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
+        <a href="index.html#creations-showcase" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Creations</a>
+        <a href="novels.html" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Webnovels</a>
+        <a href="art.html" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Arts</a>
+        <a href="index.html#about" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">About Me</a>
+        <a href="index.html#contact" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Contact</a>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -261,5 +265,5 @@
         mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
     </script>
 </body>
-                </html>
-    
+    </html>
+                    
