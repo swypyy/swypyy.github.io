@@ -54,40 +54,40 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
 
-    <!-- HEADER WITH LOGO ON TOP & BACK BUTTON BELOW -->
-    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5 py-4">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center gap-2">
+    <!-- TOP HEADER (EXACTLY LIKE HOMEPAGE: LOGO ON LEFT) -->
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             
-            <!-- TOP: CENTERED BRAND LOGO -->
+            <!-- BRAND LOGO HEADER (LEFT ALIGNED) -->
             <a href="index.html" class="flex items-center group">
-                <img src="Assets/logo.png" alt="Swypyy Logo" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
+                <img src="Assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
                 <div id="textBrandLogo" class="hidden items-center gap-1">
                     <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
                     <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
                 </div>
             </a>
 
-            <!-- BOTTOM: CLEAN BACK ARROW (NO OUTLINE, NO TEXT) -->
-            <div class="w-full max-w-6xl flex justify-start px-2">
-                <a href="index.html" class="text-gray-400 hover:text-brand-glow transition-colors p-1 flex items-center gap-1 text-sm font-medium" aria-label="Back to Home">
-                    <i data-lucide="arrow-left" class="w-6 h-6"></i>
-                </a>
-            </div>
-
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow py-16 px-6">
-        <div class="max-w-6xl mx-auto space-y-12">
+    <main class="flex-grow py-10 px-6">
+        <div class="max-w-6xl mx-auto space-y-8">
             
+            <!-- BACK BUTTON (OUTSIDE NAVBAR, BELOW HEADER) -->
+            <div class="flex justify-start">
+                <a href="index.html" class="text-gray-400 hover:text-brand-glow transition-colors p-2 -ml-2 inline-flex items-center" aria-label="Back to Home">
+                    <i data-lucide="arrow-left" class="w-7 h-7"></i>
+                </a>
+            </div>
+
             <div class="text-center space-y-3">
                 <h1 class="text-4xl sm:text-5xl font-extrabold text-white">My Webnovels</h1>
                 <p class="text-gray-400">Original serials & stories written by Swypyy</p>
             </div>
 
             <!-- NOVELS GRID -->
-            <div class="max-w-xs mx-auto sm:max-w-none grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+            <div class="max-w-xs mx-auto sm:max-w-none grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 pt-4">
                 
                 <!-- NOVEL CARD 1: JUST A DREAM -->
                 <div onclick="openComingSoonModal('Just A Dream')" class="group cursor-pointer flex flex-col gap-3">
@@ -195,5 +195,5 @@
         }
     </script>
 </body>
-            </html>
-        
+                    </html>
+    
