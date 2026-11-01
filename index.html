@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SWYPYY | Creator & Learning Hub</title>
-​<!-- Proprietary Copyright Ownership Protection Meta Tags -->
+<!-- Proprietary Copyright Ownership Protection Meta Tags -->
 <meta name="copyright" content="SWYPYY. All rights reserved.">
 <meta name="robots" content="index, follow">
-​<!-- Tailwind CSS -->
+<!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Lucide Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
-​<script>
+<script>
 tailwind.config = {
 theme: {
 extend: {
@@ -34,29 +34,29 @@ cursive: ['Caveat', 'cursive', 'sans-serif']
 }
 }
 </script>
-​<style>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
-​body {
+body {
 background-color: #07060b;
 color: #f3f4f6;
 }
-​.purple-glow-bg {
+.purple-glow-bg {
 background: radial-gradient(circle at 50% 30%, rgba(124, 58, 237, 0.25) 0%, rgba(7, 6, 11, 0) 70%);
 }
-​.purple-glow-card {
+.purple-glow-card {
 box-shadow: 0 0 30px -5px rgba(124, 58, 237, 0.25);
 }
-​.s-logo-handwritten {
+.s-logo-handwritten {
 font-family: 'Caveat', cursive;
 line-height: 1;
 }
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
-​<!-- HEADER NAVIGATION -->
+<!-- HEADER NAVIGATION -->
 <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
 <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-​<!-- BRAND LOGO HEADER -->
+<!-- BRAND LOGO HEADER -->
 <a href="index.html" class="flex items-center group">
 <img src="Assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};">
 <div id="textBrandLogo" class="hidden items-center gap-1">
@@ -64,7 +64,7 @@ line-height: 1;
 <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
 </div>
 </a>
-​<!-- DESKTOP MENU -->
+<!-- DESKTOP MENU -->
 <nav class="hidden md:flex items-center gap-8">
 <a href="index.html#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
 <a href="index.html#creations-showcase" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Creations</a>
@@ -73,47 +73,47 @@ line-height: 1;
 <a href="index.html#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
 <a href="index.html#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
 </nav>
-​<!-- MOBILE HAMBURGER BUTTON -->
+<!-- MOBILE HAMBURGER BUTTON -->
 <button id="menuBtn" class="md:hidden p-2 text-gray-300 hover:text-brand-glow focus:outline-none" aria-label="Toggle Menu">
 <i data-lucide="menu" class="w-7 h-7"></i>
 </button>
 </div>
 </header>
-​<!-- FULLSCREEN MOBILE MENU OVERLAY -->
+<!-- FULLSCREEN MOBILE MENU OVERLAY -->
 <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden transition-all duration-300">
 <button id="closeMenuBtn" class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow">
 <i data-lucide="x" class="w-8 h-8"></i>
 </button>
-​<a href="index.html#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
+<a href="index.html#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
 <a href="index.html#creations-showcase" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Creations</a>
 <a href="novels.html" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Webnovels</a>
 <a href="art.html" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Arts</a>
 <a href="index.html#about" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">About Me</a>
 <a href="index.html#contact" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Contact</a>
 </div>
-​<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT -->
 <main class="flex-grow">
-​<!-- HERO SECTION -->
+<!-- HERO SECTION -->
 <section id="home" class="relative py-24 md:py-36 px-6 purple-glow-bg flex items-center justify-center">
 <div class="max-w-4xl mx-auto text-center space-y-6">
-​<!-- TOP BADGE WITH WELCOME -->
+<!-- TOP BADGE WITH WELCOME -->
 <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-surface-light border border-brand-purple/30 shadow-lg">
 <img src="Assets/logo.png" alt="Swypyy Logo" class="h-6 w-auto object-contain" onerror="this.style.display='none';">
 <span class="text-brand-light text-xs sm:text-sm font-medium tracking-wide">Welcome</span>
 </div>
-​<!-- HERO HEADING -->
+<!-- HERO HEADING -->
 <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white">
 Jack of All Trades
 </h1>
-​<!-- SUBTITLE PARAGRAPH 1 -->
+<!-- SUBTITLE PARAGRAPH 1 -->
 <p class="text-lg sm:text-2xl text-brand-glow font-medium max-w-2xl mx-auto">
 Master of none, but oftentimes better than a master of one.
 </p>
-​<!-- SUBTITLE PARAGRAPH 2 -->
+<!-- SUBTITLE PARAGRAPH 2 -->
 <p class="text-sm sm:text-lg text-gray-400 max-w-xl mx-auto font-light leading-relaxed">
 Welcome to my digital hub where I learn and build everything from scratch.
 </p>
-​<!-- CTA BUTTONS -->
+<!-- CTA BUTTONS -->
 <div class="pt-4 flex flex-wrap gap-4 justify-center">
 <a href="#creations-showcase" class="px-8 py-3.5 rounded-xl bg-brand-purple text-white font-semibold hover:bg-brand-glow transition-all shadow-lg shadow-brand-purple/25 flex items-center gap-2">
 <span>My Creations</span>
@@ -125,15 +125,15 @@ About Me
 </div>
 </div>
 </section>
-​<!-- MY CREATIONS SHOWCASE SECTION -->
+<!-- MY CREATIONS SHOWCASE SECTION -->
 <section id="creations-showcase" class="py-20 px-6 bg-surface/30 border-t border-white/5">
 <div class="max-w-4xl mx-auto space-y-10">
 <div class="text-center space-y-3">
 <h2 class="text-3xl sm:text-4xl font-extrabold text-white">My Creations</h2>
 <p class="text-gray-400">Categories of projects I am building as I learn.</p>
 </div>
-​<div class="space-y-6">
-​<!-- 1. WEB NOVELS CARD WITH LOGO -->
+<div class="space-y-6">
+<!-- 1. WEB NOVELS CARD WITH LOGO -->
 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
 <div class="flex items-center gap-5 text-left">
 <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
@@ -148,7 +148,7 @@ About Me
 Read
 </a>
 </div>
-​<!-- 2. MY ARTS CARD WITH LOGO -->
+<!-- 2. MY ARTS CARD WITH LOGO -->
 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
 <div class="flex items-center gap-5 text-left">
 <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
@@ -163,7 +163,7 @@ Read
 View
 </a>
 </div>
-​<!-- 3. SWYPYY MESSENGER CARD WITH LOGO -->
+<!-- 3. SWYPYY MESSENGER CARD WITH LOGO -->
 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
 <div class="flex items-center gap-5 text-left">
 <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
@@ -186,7 +186,7 @@ View
 </a>
 </div>
 </div>
-​<!-- 4. ANONYMOUS DROP CARD WITH LOGO -->
+<!-- 4. ANONYMOUS DROP CARD WITH LOGO -->
 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
 <div class="flex items-center gap-5 text-left">
 <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
@@ -209,20 +209,20 @@ View
 </a>
 </div>
 </div>
-​</div>
+</div>
 </div>
 </section>
-​<!-- ABOUT ME SECTION -->
+<!-- ABOUT ME SECTION -->
 <section id="about" class="py-20 px-6">
 <div class="max-w-5xl mx-auto">
-​<!-- CARD CONTAINER -->
+<!-- CARD CONTAINER -->
 <div class="relative bg-surface rounded-3xl border border-white/10 p-8 md:p-12 overflow-hidden">
-​<!-- MOBILE ONLY BACKGROUND WATERMARK -->
+<!-- MOBILE ONLY BACKGROUND WATERMARK -->
 <div class="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
 <img src="Assets/s-logo.png" alt="S Logo Watermark" class="w-64 h-64 object-contain select-none" onerror="this.onerror=null; this.src='assets/s-logo.png';">
 </div>
-​<div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-​<!-- DESKTOP LEFT SIDE: LARGE S LOGO -->
+<div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+<!-- DESKTOP LEFT SIDE: LARGE S LOGO -->
 <div class="hidden md:flex md:col-span-4 items-center justify-center">
 <div class="relative group">
 <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl group-hover:bg-brand-purple/50 transition-all"></div>
@@ -230,7 +230,7 @@ View
 <span id="fallbackSLogo" class="hidden s-logo-handwritten text-[160px] text-brand-purple leading-none select-none relative z-10">S</span>
 </div>
 </div>
-​<!-- RIGHT SIDE CONTENT -->
+<!-- RIGHT SIDE CONTENT -->
 <div class="md:col-span-8 space-y-4 text-left">
 <h2 class="text-3xl font-extrabold text-white">About Me</h2>
 <p class="text-gray-300 leading-relaxed">
@@ -244,17 +244,17 @@ If you want to follow along while I learn and build things, welcome in :)
 </p>
 </div>
 </div>
-​</div>
+</div>
 </div>
 </section>
-​<!-- CONTACT SECTION -->
+<!-- CONTACT SECTION -->
 <section id="contact" class="py-20 px-6 bg-surface/30 border-t border-white/5">
 <div class="max-w-3xl mx-auto text-center space-y-8">
 <div class="space-y-3">
 <h2 class="text-3xl font-extrabold text-white">Get In Touch</h2>
 <p class="text-gray-400">Have feedback, questions, or just want to connect?</p>
 </div>
-​<div class="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-surface border border-white/10 hover:border-brand-purple/40 transition-all">
+<div class="inline-flex items-center gap-3 px-6 py-4 rounded-2xl bg-surface border border-white/10 hover:border-brand-purple/40 transition-all">
 <i data-lucide="mail" class="w-6 h-6 text-brand-glow"></i>
 <a href="mailto:swypyy@gmail.com" class="text-lg font-semibold text-white hover:text-brand-glow transition-colors">
 swypyy@gmail.com
@@ -262,25 +262,30 @@ swypyy@gmail.com
 </div>
 </div>
 </section>
-​</main>
-​<!-- FOOTER WITH HARDCODED JS COPYRIGHT PROTECTION -->
+</main>
+<!-- FOOTER WITH HARDCODED JS COPYRIGHT PROTECTION -->
 <footer id="footer-container" class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
 <!-- Injected via JavaScript below -->
 </footer>
-​<!-- JAVASCRIPT FOR MOBILE MENU & HARDCODED COPYRIGHT -->
+<!-- JAVASCRIPT FOR MOBILE MENU & HARDCODED COPYRIGHT -->
 <script>
 lucide.createIcons();
-​// Mobile menu toggle logic
+// Mobile menu toggle logic
 const menuBtn = document.getElementById('menuBtn');
 const closeMenuBtn = document.getElementById('closeMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-​menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
 closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
 mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-​// Hardcoded Copyright Injection
+// Hardcoded Copyright Injection
 const currentYear = new Date().getFullYear();
-document.getElementById('footer-container').innerHTML = <div class="max-w-6xl mx-auto px-6"> <p>&copy; ${currentYear} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p> </div>;
+document.getElementById('footer-container').innerHTML = `
+    <div class="max-w-6xl mx-auto px-6">
+        <p>&copy; ${currentYear} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
+    </div>
+`;
 </script>
 </body>
-</html>
+  </html>
+  
