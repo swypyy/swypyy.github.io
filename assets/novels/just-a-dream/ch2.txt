@@ -1,8 +1,29 @@
-CHAPTER 2 - THE START 2
+CHAPTER 2: The Loop
 
-  I'm completely with you. Let's lock in and build out reader.html right now, keeping everything matched to your exact ecosystem style (void background, sleek top-left logo, clean borderless back arrow button tucked right underneath with zero gap).
-Here is the exact plan for what reader.html will do:
- * URL Parameter Reading: Reads the query string (e.g., reader.html?novel=just-a-dream) to know which novel folder to look into under assets/novels/.
- * Dynamic Metadata (info.txt): Fetches assets/novels/[novel-name]/info.txt to load the correct title, author, and genre dynamically.
- * Dynamic Chapter Loading (ch1.txt, ch2.txt, etc.): Automatically fetches chapter text files, formats them into clean paragraphs, and provides smooth Previous and Next chapter controls.
-Whenever you're ready, tell me how you'd like to proceed or if you want the complete code for reader.html now!
+"Leo! Wake up, you're going to be late!"
+Leo bolted upright, gasping for air. Cold sweat clung to his skin. Sunlight streamed brightly through his bedroom window, warming the sheets.
+Footsteps rushed down the hall, and his mother pushed open the bedroom door, looking annoyed. "Did you just scream? What on earth is wrong with you?"
+With tears still stinging his eyes, Leo shook his head rapidly. "It... it was just a dream. A really scary dream."
+His mom rolled her eyes, letting out a short sigh. "You're sixteen years old, Leo, stop screaming like a kid. Get up, go brush your teeth, and come downstairs." She turned and walked away.
+Leo sat frozen on the edge of his bed, his chest heaving. The memory of the absolute darkness and his own screams felt too real to be fake. Shaking his head, he got up, walked into the bathroom, and mechanically brushed his teeth.
+He spit out the foam, rinsed his mouth, and walked down the stairs to the central hall.
+His parents were right there by the front door, dressed in new clothes, looking like they were ready to step outside. His dad gave him a quick wave.
+"We're heading out for a job," his dad said, grabbing his keys. "There's food in the fridge. Eat well, lock up, and make sure you sleep early tonight."
+Before Leo could say a word, they opened the door, stepped outside, and drove away in their car.
+Leo stood alone in the quiet hallway. As he watched the car disappear down the street, a cold wave of absolute dread washed over him.
+His heart stopped.
+Wait.
+In his nightmare last night—or whatever that horror had been—his parents hadn't been home at all. But today... today they were leaving for work. Just like a normal day.
+Except it wasn't a normal day. A terrifying, crystal-clear realization crashed into his mind: The nightmare wasn't just a dream. It was a vision of the future.
+Panic clawed at his throat. He didn't know what to do or how to stop it. Desperate to block out the creeping terror, Leo grabbed his phone, opened social media, and tried to distract himself. He even called a friend to see if they could hang out, but his friend was busy.
+With no other choice, Leo got ready for school, went through the long, agonizing hours of classes, and finally walked back home that afternoon.
+By the time he unlocked the front door and walked inside, he had almost convinced himself he was just going crazy.
+It was just a really vivid dream, he told himself, throwing his backpack onto the sofa. Everything is fine.
+He walked over to the living room, picked up the remote, and turned on the television to watch his favorite show.
+He got completely lost watching the screen, forgetting the time entirely.
+Then—
+The TV screen didn't just static. It flatlined. A sharp, high-pitched hum pierced the quiet room.
+Leo dropped the remote. Color drained completely from his face.
+Rrrrrring.
+The house phone on the coffee table blared to life.
+It was happening again.
