@@ -84,14 +84,20 @@
             </article>
 
             <!-- Chapter Bottom Navigation Footer -->
-            <div class="pt-8 border-t border-white/10 flex items-center justify-between">
-                <button onclick="changeChapter(-1)" id="prevBtn" class="px-5 py-2.5 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/40 font-semibold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed">
-                    Previous Chapter
-                </button>
-                <span id="chapterIndicator" class="text-xs text-gray-500 font-semibold">Ch. 1</span>
-                <button onclick="changeChapter(1)" id="nextBtn" class="px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-bold text-sm transition-all">
-                    Next Chapter
-                </button>
+            <div class="pt-8 border-t border-white/10 space-y-4">
+                <!-- Clean un-squeezed chapter indicator row -->
+                <div class="text-center">
+                    <span id="chapterIndicator" class="text-xs font-semibold tracking-wider text-gray-400 uppercase bg-surface px-3 py-1 rounded-full border border-white/10">Ch. 1</span>
+                </div>
+                <!-- Buttons Row -->
+                <div class="flex items-center justify-between">
+                    <button onclick="changeChapter(-1)" id="prevBtn" class="px-5 py-2.5 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/40 font-semibold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                        Previous Chapter
+                    </button>
+                    <button onclick="changeChapter(1)" id="nextBtn" class="px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-bold text-sm transition-all">
+                        Next Chapter
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -177,7 +183,7 @@
                         currentChapter = chapterNum - 1;
                         alert("You've reached the latest available chapter!");
                     } else {
-                        document.getElementById('chapterContent').innerHTML = "<p class='text-gray-400 italic'>Chapter content is currently empty or missing (ch1.txt).</p>";
+                        document.getElementById('chapterContent').innerHTML = "<p class='text-gray-400 italic'>Chapter content is currently empty or missing (ch1.txt). You can add ch1.txt to your GitHub folder whenever you're ready!</p>";
                     }
                 }
             } catch (err) {
@@ -203,4 +209,4 @@
     </script>
 </body>
                 </html>
-    
+        
