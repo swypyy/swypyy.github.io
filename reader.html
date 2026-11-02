@@ -111,19 +111,13 @@
     <main class="flex-grow py-8 px-6">
         <div class="max-w-3xl mx-auto space-y-8">
             
-            <!-- Novel Metadata Header -->
-            <div id="novelHeader" class="border-b border-white/10 pb-6 space-y-2">
-                <span id="novelGenre" class="text-xs font-bold tracking-wider text-brand-glow uppercase">Loading Genre...</span>
-                <h1 id="novelTitle" class="text-3xl sm:text-4xl font-extrabold text-white">Loading Novel...</h1>
-            </div>
-
             <!-- Chapter Text Container -->
             <article id="chapterContent" class="prose prose-invert max-w-none text-gray-300 font-serif text-lg leading-relaxed space-y-6">
-                <p class="animate-pulse text-gray-500">Loading chapter from file...</p>
+                <p class="animate-pulse text-gray-500">Validating novel link...</p>
             </article>
 
             <!-- Chapter Bottom Navigation Footer -->
-            <div class="pt-8 border-t border-white/10 space-y-4">
+            <div id="readerFooter" class="pt-8 border-t border-white/10 space-y-4">
                 <!-- Clean un-squeezed chapter indicator row -->
                 <div class="text-center">
                     <span id="chapterIndicator" class="text-xs font-semibold tracking-wider text-gray-400 uppercase bg-surface px-3 py-1 rounded-full border border-white/10">Ch. 1</span>
@@ -153,14 +147,16 @@
     <script>
         lucide.createIcons();
 
+        // Check if a novel parameter is provided in the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const novelFolder = urlParams.get('novel') || 'just-a-dream';
+        const novelFolder = urlParams.get('novel');
         
         let currentChapter = 1;
-        let maxAvailableChapter = 1; // Dynamically detected based on uploaded files
+        let maxAvailableChapter = 1;
 
         // --- SETTINGS MODAL FUNCTIONS ---
         function openSettingsMenu() {
+            if (!novelFolder) return;
             const modal = document.getElementById('settingsModal');
             const container = document.getElementById('modalContainer');
             modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -209,7 +205,7 @@
             buildChapterList(query);
         }
 
-        // --- AUTOMATICALLY DETECT LATEST UPLOADED CHAPTER ---
+        // --- AUTOMATICALLY DETECT LATEST UPLOADED CHAPTER FOR CURRENT NOVEL ---
         async function scanAvailableChapters() {
             const basePath = `assets/novels/${novelFolder}/`;
             let foundMax = 1;
@@ -231,46 +227,35 @@
 
         // --- NOVEL & CHAPTER LOADING ---
         async function loadNovel() {
-            const basePath = `assets/novels/${novelFolder}/`;
+            // STRICT ERROR CHECK: If no novel parameter is found in the URL
+            if (!novelFolder) {
+                document.getElementById('chapterContent').innerHTML = `
+                    <div class="text-center py-12 space-y-4">
+                        <div class="w-16 h-16 bg-red-500/10 border border-red-500/20 text-red-400 rounded-full flex items-center justify-center mx-auto">
+                            <i data-lucide="alert-circle" class="w-8 h-8"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">No Novel Specified</h2>
+                        <p class="text-gray-400 text-sm max-w-md mx-auto">Please select a story from the novels page or provide a valid novel parameter in the URL (e.g., <code class="text-brand-glow">reader.html?novel=your-novel-name</code>).</p>
+                        <div class="pt-2">
+                            <a href="novels.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-bold text-sm transition-all">
+                                <i data-lucide="arrow-left" class="w-4 h-4"></i> Return to Novels
+                            </a>
+                        </div>
+                    </div>
+                `;
+                // Hide navigation footer when showing error
+                document.getElementById('readerFooter').style.display = 'none';
+                lucide.createIcons();
+                return;
+            }
 
             try {
-                const infoRes = await fetch(basePath + 'info.txt');
-                if (infoRes.ok) {
-                    const infoText = await infoRes.text();
-                    parseInfo(infoText);
-                } else {
-                    document.getElementById('novelTitle').innerText = "Novel Not Found";
-                    document.getElementById('chapterContent').innerHTML = "<p>Could not locate info.txt inside assets/novels/" + novelFolder + "/</p>";
-                    return;
-                }
-
                 await scanAvailableChapters();
                 loadChapter(currentChapter);
-
             } catch (err) {
                 console.error("Error loading novel:", err);
-                document.getElementById('novelTitle').innerText = "Error Loading Content";
-                document.getElementById('chapterContent').innerHTML = "<p>Please ensure your folder and text files are correctly pushed to GitHub.</p>";
+                document.getElementById('chapterContent').innerHTML = "<p>Please ensure your novel folder and text files are correctly pushed to GitHub.</p>";
             }
-        }
-
-        function parseInfo(text) {
-            const lines = text.split('\n');
-            let title = "Web Novel";
-            let genre = "Fiction";
-
-            lines.forEach(line => {
-                const parts = line.split(':');
-                if (parts.length >= 2) {
-                    const key = parts[0].trim().toLowerCase();
-                    const val = parts.slice(1).join(':').trim();
-                    if (key === 'title') title = val;
-                    if (key === 'genre') genre = val;
-                }
-            });
-
-            document.getElementById('novelTitle').innerText = title;
-            document.getElementById('novelGenre').innerText = genre;
         }
 
         async function loadChapter(chapterNum) {
@@ -287,7 +272,6 @@
                     document.getElementById('prevBtn').disabled = (chapterNum <= 1);
                     document.getElementById('nextBtn').disabled = (chapterNum >= maxAvailableChapter);
                     
-                    // Automatically scroll to the top of the page when loading a chapter
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     document.getElementById('chapterContent').innerHTML = `<p class='text-gray-400 italic'>Chapter ${chapterNum} is not available yet.</p>`;
@@ -329,5 +313,5 @@
         loadNovel();
     </script>
 </body>
-    </html>
-    
+        </html>
+            
