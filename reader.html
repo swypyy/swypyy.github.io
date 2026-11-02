@@ -41,6 +41,12 @@
         body {
             background-color: #07060b;
             color: #f3f4f6;
+            user-select: none; /* Prevents awkward text selection while holding for 3s */
+        }
+
+        /* Allow selecting text inside the article body */
+        article {
+            user-select: text;
         }
 
         .s-logo-handwritten {
@@ -49,7 +55,49 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white relative">
+
+    <!-- ASSISTIVETOUCH FLOATING SETTINGS BUTTON (Hidden by default, shows on 3s hold) -->
+    <div id="assistiveTouchBtn" class="fixed right-4 top-1/2 -translate-y-1/2 z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <button onclick="openSettingsMenu()" class="w-12 h-12 rounded-full bg-surface/90 border border-white/20 shadow-2xl backdrop-blur-md flex items-center justify-center text-brand-glow hover:scale-110 hover:border-brand-purple transition-all shadow-brand-purple/20" aria-label="Open Chapter Settings">
+            <i data-lucide="settings" class="w-5 h-5 animate-spin-slow"></i>
+        </button>
+    </div>
+
+    <!-- CHAPTER SELECTOR MODAL / MENU -->
+    <div id="settingsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 p-4">
+        <div class="bg-surface border border-white/10 w-full max-w-md rounded-2xl p-6 shadow-2xl flex flex-col max-h-[80vh] transform scale-95 transition-transform duration-300" id="modalContainer">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-5 h-5 text-brand-glow"></i>
+                    <h3 class="text-lg font-bold text-white">Select Chapter</h3>
+                </div>
+                <button onclick="closeSettingsMenu()" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition-colors" aria-label="Close Menu">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Search Input -->
+            <div class="py-4">
+                <div class="relative">
+                    <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                    <input type="number" id="chapterSearchInput" placeholder="Search chapter number (e.g. 1, 2, 50)..." oninput="filterChapters()" class="w-full bg-void border border-white/10 rounded-xl px-4 py-2.5 pl-10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple transition-colors">
+                </div>
+            </div>
+
+            <!-- Endless Scroll Chapter List -->
+            <div id="chapterListContainer" class="overflow-y-auto space-y-2 pr-1 flex-grow custom-scrollbar max-h-60">
+                <!-- Dynamically populated via script -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="pt-4 border-t border-white/10 text-center text-xs text-gray-500">
+                Tap any chapter to jump instantly
+            </div>
+        </div>
+    </div>
 
     <!-- TOP HEADER -->
     <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
@@ -71,11 +119,10 @@
     <main class="flex-grow py-8 px-6">
         <div class="max-w-3xl mx-auto space-y-8">
             
-            <!-- Novel & Chapter Meta Header -->
+            <!-- Novel Metadata Header -->
             <div id="novelHeader" class="border-b border-white/10 pb-6 space-y-2">
                 <span id="novelGenre" class="text-xs font-bold tracking-wider text-brand-glow uppercase">Loading Genre...</span>
                 <h1 id="novelTitle" class="text-3xl sm:text-4xl font-extrabold text-white">Loading Novel...</h1>
-                <p id="chapterTitle" class="text-sm sm:text-base text-gray-400 font-medium pt-1">Chapter 1</p>
             </div>
 
             <!-- Chapter Text Container -->
@@ -114,28 +161,114 @@
     <script>
         lucide.createIcons();
 
-        // Parse novel name from URL e.g. reader.html?novel=just-a-dream
         const urlParams = new URLSearchParams(window.location.search);
         const novelFolder = urlParams.get('novel') || 'just-a-dream';
         
         let currentChapter = 1;
+        let totalKnownChapters = 50; // Max default endless scroll limit for the quick picker list
 
+        // --- 3-SECOND HOLD DETECTION FOR ASSISTIVETOUCH BUTTON ---
+        let holdTimer = null;
+        const assistiveBtn = document.getElementById('assistiveTouchBtn');
+
+        function startHold(e) {
+            // Ignore if clicking on interactive elements like buttons, inputs, or links
+            if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a')) return;
+
+            holdTimer = setTimeout(() => {
+                toggleAssistiveTouch();
+            }, 3000); // 3 seconds hold
+        }
+
+        function cancelHold() {
+            if (holdTimer) {
+                clearTimeout(holdTimer);
+                holdTimer = null;
+            }
+        }
+
+        function toggleAssistiveTouch() {
+            if (assistiveBtn.classList.contains('opacity-0')) {
+                assistiveBtn.classList.remove('opacity-0', 'pointer-events-none');
+                // Haptic feedback pulse if supported
+                if (navigator.vibrate) navigator.vibrate(50);
+            } else {
+                assistiveBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // Event listeners for touch and mouse holding
+        window.addEventListener('mousedown', startHold);
+        window.addEventListener('mouseup', cancelHold);
+        window.addEventListener('touchstart', startHold);
+        window.addEventListener('touchend', cancelHold);
+
+        // --- SETTINGS MODAL FUNCTIONS ---
+        function openSettingsMenu() {
+            const modal = document.getElementById('settingsModal');
+            const container = document.getElementById('modalContainer');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+            buildChapterList();
+        }
+
+        function closeSettingsMenu() {
+            const modal = document.getElementById('settingsModal');
+            const container = document.getElementById('modalContainer');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+        }
+
+        function buildChapterList(filterVal = '') {
+            const listContainer = document.getElementById('chapterListContainer');
+            listContainer.innerHTML = '';
+
+            for (let i = 1; i <= totalKnownChapters; i++) {
+                if (filterVal && !i.toString().includes(filterVal)) continue;
+
+                const btn = document.createElement('button0');
+                const isCurrent = (i === currentChapter);
+                
+                const item = document.createElement('button');
+                item.className = `w-full text-left px-4 py-3 rounded-xl flex items-center justify-between transition-all ${
+                    isCurrent ? 'bg-brand-purple text-white font-bold shadow-lg shadow-brand-purple/20' : 'bg-void/40 hover:bg-white/5 text-gray-300 border border-white/5'
+                }`;
+                item.innerHTML = `
+                    <span>Chapter ${i}</span>
+                    ${isCurrent ? '<span class="text-xs bg-white/20 px-2 py-0.5 rounded-full">Current</span>' : '<i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i>'}
+                `;
+                item.onclick = () => {
+                    currentChapter = i;
+                    loadChapter(currentChapter);
+                    closeSettingsMenu();
+                };
+                listContainer.appendChild(item);
+            }
+            lucide.createIcons();
+        }
+
+        function filterChapters() {
+            const query = document.getElementById('chapterSearchInput').value.trim();
+            buildChapterList(query);
+        }
+
+        // --- NOVEL & CHAPTER LOADING ---
         async function loadNovel() {
             const basePath = `assets/novels/${novelFolder}/`;
 
             try {
-                // 1. Fetch info.txt
                 const infoRes = await fetch(basePath + 'info.txt');
                 if (infoRes.ok) {
                     const infoText = await infoRes.text();
                     parseInfo(infoText);
                 } else {
                     document.getElementById('novelTitle').innerText = "Novel Not Found";
-                    document.getElementById('chapterContent').innerHTML = "<p>Could not locate info.txt for this novel inside assets/novels/" + novelFolder + "/</p>";
+                    document.getElementById('chapterContent').innerHTML = "<p>Could not locate info.txt inside assets/novels/" + novelFolder + "/</p>";
                     return;
                 }
 
-                // 2. Load Chapter 1
                 loadChapter(currentChapter);
 
             } catch (err) {
@@ -173,7 +306,6 @@
                 if (res.ok) {
                     const rawText = await res.text();
                     document.getElementById('chapterContent').innerHTML = formatText(rawText);
-                    document.getElementById('chapterTitle').innerText = `Chapter ${chapterNum}`;
                     document.getElementById('chapterIndicator').innerText = `Ch. ${chapterNum}`;
                     
                     document.getElementById('prevBtn').disabled = (chapterNum <= 1);
@@ -192,10 +324,24 @@
         }
 
         function formatText(rawText) {
-            return rawText
-                .split('\n\n')
-                .map(para => `<p>${para.trim().replace(/\n/g, '<br>')}</p>`)
-                .join('');
+            const lines = rawText.split('\n');
+            
+            if (lines.length > 0) {
+                const chapterHeading = lines[0].trim();
+                const bodyParagraphs = lines.slice(2);
+
+                let html = `<h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-6">${chapterHeading}</h2>`;
+                
+                html += bodyParagraphs
+                    .join('\n')
+                    .split('\n\n')
+                    .map(para => para.trim() ? `<p>${para.trim().replace(/\n/g, '<br>')}</p>` : '')
+                    .join('');
+
+                return html;
+            }
+
+            return `<p>${rawText}</p>`;
         }
 
         function changeChapter(dir) {
@@ -208,5 +354,5 @@
         loadNovel();
     </script>
 </body>
-                </html>
-        
+        </html>
+                        
