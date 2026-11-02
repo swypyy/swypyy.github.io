@@ -181,7 +181,6 @@
             const listContainer = document.getElementById('chapterListContainer');
             listContainer.innerHTML = '';
 
-            // Only list chapters up to what is actually uploaded in the folder
             for (let i = 1; i <= maxAvailableChapter; i++) {
                 if (filterVal && !i.toString().includes(filterVal)) continue;
 
@@ -215,14 +214,12 @@
             const basePath = `assets/novels/${novelFolder}/`;
             let foundMax = 1;
             
-            // Probing sequentially up to 100 to find existing chapter files
             for (let i = 1; i <= 100; i++) {
                 try {
                     const res = await fetch(`${basePath}ch${i}.txt`, { method: 'HEAD' });
                     if (res.ok) {
                         foundMax = i;
                     } else {
-                        // Stop checking once a chapter file is missing
                         break;
                     }
                 } catch (e) {
@@ -247,10 +244,7 @@
                     return;
                 }
 
-                // Scan how many chapters are actually uploaded
                 await scanAvailableChapters();
-
-                // Load initial chapter
                 loadChapter(currentChapter);
 
             } catch (err) {
@@ -292,6 +286,8 @@
                     
                     document.getElementById('prevBtn').disabled = (chapterNum <= 1);
                     document.getElementById('nextBtn').disabled = (chapterNum >= maxAvailableChapter);
+                    
+                    // Automatically scroll to the top of the page when loading a chapter
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     document.getElementById('chapterContent').innerHTML = `<p class='text-gray-400 italic'>Chapter ${chapterNum} is not available yet.</p>`;
@@ -333,5 +329,5 @@
         loadNovel();
     </script>
 </body>
-                </html>
-                        
+    </html>
+    
