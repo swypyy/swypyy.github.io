@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Novels - SWYPYY</title>
+    <title>My Webnovels - SWYPYY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -13,9 +13,8 @@
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#0b0b0e',
-                        cardBg: '#13131a',
-                        accentRed: '#e11d48',
+                        darkBg: '#07060b',
+                        cardBg: '#0f0e17',
                         accentPurple: '#7c3aed',
                     },
                     fontFamily: {
@@ -27,33 +26,23 @@
     </script>
     <style>
         body {
-            background-color: #0b0b0e;
+            background-color: #07060b;
             color: #f8fafc;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-purple-600 selection:text-white">
 
-    <!-- Top Navigation Header -->
+    <!-- Top Navigation Header (Logo Only, No Menu) -->
     <header class="w-full border-b border-white/10 bg-darkBg/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2 group">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-900/30 group-hover:scale-105 transition-transform">
-                    <span class="text-white font-extrabold text-lg">S</span>
-                </div>
-                <span class="font-extrabold text-xl tracking-wider text-white">SWYPYY</span>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-start">
+            <a href="index.html" class="flex items-center group">
+                <img src="Assets/logo.png" alt="Swypyy Logo" class="h-8 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png';">
             </a>
-            
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-                <a href="index.html" class="hover:text-white transition-colors">Home</a>
-                <a href="novels.html" class="text-white font-semibold">My Novels</a>
-                <a href="index.html#about" class="hover:text-white transition-colors">About Me</a>
-                <a href="index.html#contact" class="hover:text-white transition-colors">Contact</a>
-            </nav>
         </div>
     </header>
 
-    <!-- Back Button directly under the header with zero gap -->
+    <!-- Back Button directly under header with zero gap -->
     <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4">
         <a href="index.html" class="inline-flex items-center text-slate-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
             <i data-lucide="arrow-left" class="w-5 h-5"></i>
@@ -61,9 +50,9 @@
     </div>
 
     <!-- Main Library Content -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
-        <div class="mb-8">
-            <h1 class="text-3xl font-extrabold tracking-tight text-white">My Web Novels</h1>
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 w-full">
+        <div class="mb-6">
+            <h1 class="text-3xl font-extrabold tracking-tight text-white">My Webnovels</h1>
             <p class="text-sm text-slate-400 mt-1">Explore my published and ongoing serialized web novels.</p>
         </div>
 
@@ -71,7 +60,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             
             <!-- Novel Card: Just A Dream -->
-            <div onclick="openReader('Just A Dream')" class="group cursor-pointer bg-cardBg rounded-2xl p-3 border border-white/10 hover:border-purple-500/50 transition-all duration-300 flex flex-col shadow-xl">
+            <div onclick="openComingSoon('Just A Dream')" class="group cursor-pointer bg-cardBg rounded-2xl p-3 border border-white/10 hover:border-purple-500/50 transition-all duration-300 flex flex-col shadow-xl">
                 <div class="aspect-[3/4] w-full overflow-hidden rounded-xl bg-black/40 relative">
                     <img src="Assets/Novel-cover/Just-A-Dream.png" alt="Just A Dream Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                 </div>
@@ -80,25 +69,66 @@
                 </div>
             </div>
 
-            <!-- Future novel cards will automatically slot in right here next to it -->
+            <!-- Future novels will slot in here as new cards -->
 
         </div>
     </main>
+
+    <!-- Coming Soon Modal -->
+    <div id="comingSoonModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden px-4">
+        <div class="bg-cardBg border border-purple-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl text-center relative animate-in fade-in zoom-in duration-200">
+            <div class="w-12 h-12 rounded-full bg-purple-600/20 text-purple-400 flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="book-open" class="w-6 h-6"></i>
+            </div>
+            <h3 id="modalTitle" class="text-xl font-bold text-white mb-2">Coming Soon!</h3>
+            <p class="text-sm text-slate-300 mb-6">This web novel is currently in development. Chapters will be available to read here soon!</p>
+            
+            <!-- Countdown Timer Notice -->
+            <div class="text-xs text-slate-400 mb-5 bg-black/30 py-2 px-3 rounded-lg border border-white/5">
+                Closing automatically in <span id="countdownTimer" class="font-bold text-purple-400">5</span> seconds...
+            </div>
+
+            <button onclick="closeModal()" class="w-full py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-semibold text-sm transition-colors shadow-lg shadow-purple-900/30">
+                Close Now
+            </button>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="border-t border-white/10 py-8 mt-12 bg-darkBg text-center text-xs text-slate-500">
         <p>&copy; 2026 SWYPYY. All rights reserved.</p>
     </footer>
 
-    <!-- Reader Modal / Placeholder Logic -->
+    <!-- Script for Icons and Coming Soon Popup Countdown -->
     <script>
         lucide.createIcons();
 
-        function openReader(novelTitle) {
-            // Placeholder for when you link to the reader or external site later
-            alert("Opening reader for: " + novelTitle);
+        let countdownInterval;
+
+        function openComingSoon(novelTitle) {
+            document.getElementById('modalTitle').innerText = novelTitle + " - Coming Soon!";
+            const modal = document.getElementById('comingSoonModal');
+            modal.classList.remove('hidden');
+
+            let timeLeft = 5;
+            document.getElementById('countdownTimer').innerText = timeLeft;
+
+            clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('countdownTimer').innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    closeModal();
+                }
+            }, 1000);
+        }
+
+        function closeModal() {
+            clearInterval(countdownInterval);
+            document.getElementById('comingSoonModal').classList.add('hidden');
         }
     </script>
 </body>
-                </html>
-                
+    </html>
+    
