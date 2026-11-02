@@ -1,0 +1,10 @@
+
+
+
+
+I'm completely with you. Let's lock in and build out reader.html right now, keeping everything matched to your exact ecosystem style (void background, sleek top-left logo, clean borderless back arrow button tucked right underneath with zero gap).
+Here is the exact plan for what reader.html will do:
+ * URL Parameter Reading: Reads the query string (e.g., reader.html?novel=just-a-dream) to know which novel folder to look into under assets/novels/.
+ * Dynamic Metadata (info.txt): Fetches assets/novels/[novel-name]/info.txt to load the correct title, author, and genre dynamically.
+ * Dynamic Chapter Loading (ch1.txt, ch2.txt, etc.): Automatically fetches chapter text files, formats them into clean paragraphs, and provides smooth Previous and Next chapter controls.
+Whenever you're ready, tell me how you'd like to proceed or if you want the complete code for reader.html now!
