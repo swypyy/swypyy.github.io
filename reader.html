@@ -1,133 +1,144 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reader - SWYPYY</title>
+    <title>Reader | SWYPYY</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#07060b',
-                        cardBg: '#0f0e17',
-                        accentPurple: '#7c3aed',
+                        void: '#07060b',
+                        surface: '#120f1d',
+                        'surface-light': '#1c172e',
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
+                        }
                     },
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                         serif: ['Merriweather', 'serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+    
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+
         body {
             background-color: #07060b;
-            color: #f8fafc;
+            color: #f3f4f6;
+        }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-purple-600 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
 
-    <!-- Top Navigation Header with Logo -->
-    <header class="w-full border-b border-white/10 bg-darkBg/90 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- TOP HEADER -->
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="index.html" class="flex items-center group">
-                <img src="Assets/logo.png" alt="Swypyy Logo" class="h-8 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/logo.png';">
+                <img src="assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='Assets/logo.png';">
             </a>
-            
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-                <a href="index.html" class="hover:text-white transition-colors">Home</a>
-                <a href="novels.html" class="text-white font-semibold">My Novels</a>
-                <a href="projects.html" class="hover:text-white transition-colors">Projects</a>
-                <a href="index.html#about" class="hover:text-white transition-colors">About Me</a>
-                <a href="index.html#contact" class="hover:text-white transition-colors">Contact</a>
-            </nav>
         </div>
     </header>
 
-    <!-- Back Button directly under header with zero whitespace -->
-    <div class="max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4">
-        <a href="novels.html" class="inline-flex items-center text-slate-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+    <!-- BACK BUTTON DIRECTLY UNDER HEADER WITH NO GAP -->
+    <div class="max-w-4xl mx-auto w-full px-6 pt-4">
+        <a href="novels.html" class="text-gray-400 hover:text-brand-glow transition-colors inline-flex items-center" aria-label="Back to Novels">
+            <i data-lucide="arrow-left" class="w-7 h-7"></i>
         </a>
     </div>
 
-    <!-- Main Reader Content Area -->
-    <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
-        
-        <!-- Novel & Chapter Header Info -->
-        <div id="novelHeader" class="mb-8 border-b border-white/10 pb-6">
-            <span id="novelGenre" class="text-xs font-bold tracking-wider text-purple-400 uppercase">Loading Genre...</span>
-            <h1 id="novelTitle" class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-1">Loading Novel...</h1>
-            <p id="chapterTitle" class="text-base text-slate-400 mt-2 font-medium">Chapter 1</p>
+    <!-- MAIN READER CONTENT -->
+    <main class="flex-grow py-8 px-6">
+        <div class="max-w-3xl mx-auto space-y-8">
+            
+            <!-- Novel & Chapter Meta Header -->
+            <div id="novelHeader" class="border-b border-white/10 pb-6 space-y-2">
+                <span id="novelGenre" class="text-xs font-bold tracking-wider text-brand-glow uppercase">Loading Genre...</span>
+                <h1 id="novelTitle" class="text-3xl sm:text-4xl font-extrabold text-white">Loading Novel...</h1>
+                <p id="chapterTitle" class="text-sm sm:text-base text-gray-400 font-medium pt-1">Chapter 1</p>
+            </div>
+
+            <!-- Chapter Text Container -->
+            <article id="chapterContent" class="prose prose-invert max-w-none text-gray-300 font-serif text-lg leading-relaxed space-y-6">
+                <p class="animate-pulse text-gray-500">Loading chapter from file...</p>
+            </article>
+
+            <!-- Chapter Bottom Navigation Footer -->
+            <div class="pt-8 border-t border-white/10 flex items-center justify-between">
+                <button onclick="changeChapter(-1)" id="prevBtn" class="px-5 py-2.5 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/40 font-semibold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                    Previous Chapter
+                </button>
+                <span id="chapterIndicator" class="text-xs text-gray-500 font-semibold">Ch. 1</span>
+                <button onclick="changeChapter(1)" id="nextBtn" class="px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-bold text-sm transition-all">
+                    Next Chapter
+                </button>
+            </div>
+
         </div>
-
-        <!-- Chapter Text Content Container -->
-        <article id="chapterContent" class="prose prose-invert max-w-none text-slate-300 font-serif text-lg leading-relaxed space-y-6">
-            <p class="animate-pulse text-slate-500">Loading chapter content from files...</p>
-        </article>
-
-        <!-- Chapter Navigation Footer -->
-        <div class="mt-16 pt-8 border-t border-white/10 flex items-center justify-between">
-            <button onclick="changeChapter(-1)" id="prevBtn" class="px-5 py-2.5 rounded-xl bg-cardBg border border-white/10 text-slate-300 hover:text-white hover:border-purple-500/50 font-semibold text-sm transition-all disabled:opacity-40 disabled:cursor-not-allowed">
-                Previous Chapter
-            </button>
-            <span id="chapterIndicator" class="text-xs text-slate-500 font-semibold">Ch. 1</span>
-            <button onclick="changeChapter(1)" id="nextBtn" class="px-5 py-2.5 rounded-xl bg-accentPurple hover:bg-purple-700 text-white font-bold text-sm transition-all">
-                Next Chapter
-            </button>
-        </div>
-
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/10 py-8 mt-16 bg-darkBg text-center text-xs text-slate-500">
-        <p>&copy; 2026 SWYPYY. All rights reserved.</p>
+    <!-- FOOTER -->
+    <footer class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
+        <div class="max-w-4xl mx-auto px-6">
+            <p>&copy; 2026 SWYPYY. All rights reserved.</p>
+        </div>
     </footer>
 
-    <!-- Script to Load info.txt and Chapter Files -->
+    <!-- READER LOGIC SCRIPT -->
     <script>
         lucide.createIcons();
 
-        // Get novel slug from URL parameters e.g., reader.html?novel=just-a-dream
+        // Parse novel name from URL e.g. reader.html?novel=just-a-dream
         const urlParams = new URLSearchParams(window.location.search);
         const novelFolder = urlParams.get('novel') || 'just-a-dream';
         
         let currentChapter = 1;
-        let totalChapters = 1; // Will try to detect or loop through files
 
-        async function loadNovelData() {
-            const basePath = `Assets/novels/${novelFolder}/`;
+        async function loadNovel() {
+            const basePath = `assets/novels/${novelFolder}/`;
 
             try {
                 // 1. Fetch info.txt
-                const infoResponse = await fetch(basePath + 'info.txt');
-                if (infoResponse.ok) {
-                    const infoText = await infoResponse.text();
+                const infoRes = await fetch(basePath + 'info.txt');
+                if (infoRes.ok) {
+                    const infoText = await infoRes.text();
                     parseInfo(infoText);
                 } else {
                     document.getElementById('novelTitle').innerText = "Novel Not Found";
-                    document.getElementById('chapterContent').innerHTML = "<p>Could not locate info.txt for this novel.</p>";
+                    document.getElementById('chapterContent').innerHTML = "<p>Could not locate info.txt for this novel inside assets/novels/" + novelFolder + "/</p>";
                     return;
                 }
 
-                // 2. Load initial chapter (ch1.txt)
+                // 2. Load Chapter 1
                 loadChapter(currentChapter);
 
-            } catch (error) {
-                console.error("Error loading novel data:", error);
+            } catch (err) {
+                console.error("Error loading novel:", err);
                 document.getElementById('novelTitle').innerText = "Error Loading Content";
-                document.getElementById('chapterContent').innerHTML = "<p>Please ensure your folder structure and text files are correctly uploaded to GitHub.</p>";
+                document.getElementById('chapterContent').innerHTML = "<p>Please ensure your folder and text files are correctly pushed to GitHub.</p>";
             }
         }
 
-        // Simple parser for info.txt key-value pairs (e.g. Title: Just A Dream)
         function parseInfo(text) {
             const lines = text.split('\n');
             let title = "Web Novel";
@@ -147,53 +158,49 @@
             document.getElementById('novelGenre').innerText = genre;
         }
 
-        // Fetch and display specific chapter file (ch1.txt, ch2.txt, etc.)
         async function loadChapter(chapterNum) {
-            const basePath = `Assets/novels/${novelFolder}/`;
+            const basePath = `assets/novels/${novelFolder}/`;
             const chapterFile = `${basePath}ch${chapterNum}.txt`;
 
             try {
-                const response = await fetch(chapterFile);
-                if (response.ok) {
-                    const text = formatChapterText(await response.text());
-                    document.getElementById('chapterContent').innerHTML = text;
+                const res = await fetch(chapterFile);
+                if (res.ok) {
+                    const rawText = await res.text();
+                    document.getElementById('chapterContent').innerHTML = formatText(rawText);
                     document.getElementById('chapterTitle').innerText = `Chapter ${chapterNum}`;
                     document.getElementById('chapterIndicator').innerText = `Ch. ${chapterNum}`;
                     
-                    // Update button states
                     document.getElementById('prevBtn').disabled = (chapterNum <= 1);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     if (chapterNum > 1) {
-                        // If next chapter file doesn't exist, cap it
                         currentChapter = chapterNum - 1;
                         alert("You've reached the latest available chapter!");
                     } else {
-                        document.getElementById('chapterContent').innerHTML = "<p>Chapter content is currently empty or missing.</p>";
+                        document.getElementById('chapterContent').innerHTML = "<p class='text-gray-400 italic'>Chapter content is currently empty or missing (ch1.txt).</p>";
                     }
                 }
-            } catch (error) {
-                console.error("Error loading chapter:", error);
+            } catch (err) {
+                console.error("Error loading chapter:", err);
             }
         }
 
-        // Formats raw text paragraphs into clean HTML paragraphs
-        function formatChapterText(rawText) {
+        function formatText(rawText) {
             return rawText
                 .split('\n\n')
                 .map(para => `<p>${para.trim().replace(/\n/g, '<br>')}</p>`)
                 .join('');
         }
 
-        function changeChapter(direction) {
-            currentChapter += direction;
+        function changeChapter(dir) {
+            currentChapter += dir;
             if (currentChapter < 1) currentChapter = 1;
             loadChapter(currentChapter);
         }
 
-        // Initialize loader on page start
-        loadNovelData();
+        // Initialize reader
+        loadNovel();
     </script>
 </body>
-                    </html>
-                    
+                </html>
+    
