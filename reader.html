@@ -41,12 +41,6 @@
         body {
             background-color: #07060b;
             color: #f3f4f6;
-            user-select: none; /* Prevents awkward text selection while holding for 3s */
-        }
-
-        /* Allow selecting text inside the article body */
-        article {
-            user-select: text;
         }
 
         .s-logo-handwritten {
@@ -56,13 +50,6 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white relative">
-
-    <!-- ASSISTIVETOUCH FLOATING SETTINGS BUTTON (Hidden by default, shows on 3s hold) -->
-    <div id="assistiveTouchBtn" class="fixed right-4 top-1/2 -translate-y-1/2 z-50 opacity-0 pointer-events-none transition-opacity duration-300">
-        <button onclick="openSettingsMenu()" class="w-12 h-12 rounded-full bg-surface/90 border border-white/20 shadow-2xl backdrop-blur-md flex items-center justify-center text-brand-glow hover:scale-110 hover:border-brand-purple transition-all shadow-brand-purple/20" aria-label="Open Chapter Settings">
-            <i data-lucide="settings" class="w-5 h-5 animate-spin-slow"></i>
-        </button>
-    </div>
 
     <!-- CHAPTER SELECTOR MODAL / MENU -->
     <div id="settingsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 p-4">
@@ -83,7 +70,7 @@
             <div class="py-4">
                 <div class="relative">
                     <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
-                    <input type="number" id="chapterSearchInput" placeholder="Search chapter number (e.g. 1, 2, 50)..." oninput="filterChapters()" class="w-full bg-void border border-white/10 rounded-xl px-4 py-2.5 pl-10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple transition-colors">
+                    <input type="number" id="chapterSearchInput" placeholder="Search chapter number (e.g. 1, 2, 5)..." oninput="filterChapters()" class="w-full bg-void border border-white/10 rounded-xl px-4 py-2.5 pl-10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-purple transition-colors">
                 </div>
             </div>
 
@@ -99,12 +86,17 @@
         </div>
     </div>
 
-    <!-- TOP HEADER -->
+    <!-- TOP HEADER WITH LOGO ON LEFT & SETTINGS ON RIGHT -->
     <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
         <div class="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo (Left) -->
             <a href="index.html" class="flex items-center group">
                 <img src="assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='Assets/logo.png';">
             </a>
+            <!-- Settings Button (Right) -->
+            <button onclick="openSettingsMenu()" class="w-10 h-10 rounded-xl bg-surface border border-white/10 flex items-center justify-center text-brand-glow hover:border-brand-purple hover:scale-105 transition-all shadow-md" aria-label="Open Chapter Settings">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+            </button>
         </div>
     </header>
 
@@ -165,43 +157,7 @@
         const novelFolder = urlParams.get('novel') || 'just-a-dream';
         
         let currentChapter = 1;
-        let totalKnownChapters = 50; // Max default endless scroll limit for the quick picker list
-
-        // --- 3-SECOND HOLD DETECTION FOR ASSISTIVETOUCH BUTTON ---
-        let holdTimer = null;
-        const assistiveBtn = document.getElementById('assistiveTouchBtn');
-
-        function startHold(e) {
-            // Ignore if clicking on interactive elements like buttons, inputs, or links
-            if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a')) return;
-
-            holdTimer = setTimeout(() => {
-                toggleAssistiveTouch();
-            }, 3000); // 3 seconds hold
-        }
-
-        function cancelHold() {
-            if (holdTimer) {
-                clearTimeout(holdTimer);
-                holdTimer = null;
-            }
-        }
-
-        function toggleAssistiveTouch() {
-            if (assistiveBtn.classList.contains('opacity-0')) {
-                assistiveBtn.classList.remove('opacity-0', 'pointer-events-none');
-                // Haptic feedback pulse if supported
-                if (navigator.vibrate) navigator.vibrate(50);
-            } else {
-                assistiveBtn.classList.add('opacity-0', 'pointer-events-none');
-            }
-        }
-
-        // Event listeners for touch and mouse holding
-        window.addEventListener('mousedown', startHold);
-        window.addEventListener('mouseup', cancelHold);
-        window.addEventListener('touchstart', startHold);
-        window.addEventListener('touchend', cancelHold);
+        let maxAvailableChapter = 1; // Dynamically detected based on uploaded files
 
         // --- SETTINGS MODAL FUNCTIONS ---
         function openSettingsMenu() {
@@ -225,10 +181,10 @@
             const listContainer = document.getElementById('chapterListContainer');
             listContainer.innerHTML = '';
 
-            for (let i = 1; i <= totalKnownChapters; i++) {
+            // Only list chapters up to what is actually uploaded in the folder
+            for (let i = 1; i <= maxAvailableChapter; i++) {
                 if (filterVal && !i.toString().includes(filterVal)) continue;
 
-                const btn = document.createElement('button0');
                 const isCurrent = (i === currentChapter);
                 
                 const item = document.createElement('button');
@@ -254,6 +210,28 @@
             buildChapterList(query);
         }
 
+        // --- AUTOMATICALLY DETECT LATEST UPLOADED CHAPTER ---
+        async function scanAvailableChapters() {
+            const basePath = `assets/novels/${novelFolder}/`;
+            let foundMax = 1;
+            
+            // Probing sequentially up to 100 to find existing chapter files
+            for (let i = 1; i <= 100; i++) {
+                try {
+                    const res = await fetch(`${basePath}ch${i}.txt`, { method: 'HEAD' });
+                    if (res.ok) {
+                        foundMax = i;
+                    } else {
+                        // Stop checking once a chapter file is missing
+                        break;
+                    }
+                } catch (e) {
+                    break;
+                }
+            }
+            maxAvailableChapter = foundMax;
+        }
+
         // --- NOVEL & CHAPTER LOADING ---
         async function loadNovel() {
             const basePath = `assets/novels/${novelFolder}/`;
@@ -269,6 +247,10 @@
                     return;
                 }
 
+                // Scan how many chapters are actually uploaded
+                await scanAvailableChapters();
+
+                // Load initial chapter
                 loadChapter(currentChapter);
 
             } catch (err) {
@@ -309,14 +291,10 @@
                     document.getElementById('chapterIndicator').innerText = `Ch. ${chapterNum}`;
                     
                     document.getElementById('prevBtn').disabled = (chapterNum <= 1);
+                    document.getElementById('nextBtn').disabled = (chapterNum >= maxAvailableChapter);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
-                    if (chapterNum > 1) {
-                        currentChapter = chapterNum - 1;
-                        alert("You've reached the latest available chapter!");
-                    } else {
-                        document.getElementById('chapterContent').innerHTML = "<p class='text-gray-400 italic'>Chapter content is currently empty or missing (ch1.txt). You can add ch1.txt to your GitHub folder whenever you're ready!</p>";
-                    }
+                    document.getElementById('chapterContent').innerHTML = `<p class='text-gray-400 italic'>Chapter ${chapterNum} is not available yet.</p>`;
                 }
             } catch (err) {
                 console.error("Error loading chapter:", err);
@@ -347,6 +325,7 @@
         function changeChapter(dir) {
             currentChapter += dir;
             if (currentChapter < 1) currentChapter = 1;
+            if (currentChapter > maxAvailableChapter) currentChapter = maxAvailableChapter;
             loadChapter(currentChapter);
         }
 
@@ -354,5 +333,5 @@
         loadNovel();
     </script>
 </body>
-        </html>
+                </html>
                         
