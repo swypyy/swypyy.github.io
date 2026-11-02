@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just A Dream | Reader - SWYPYY</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#07060b',
+                        surface: '#12111a',
+                        'surface-light': '#1c1829',
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#38bdf8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Merriweather', 'Georgia', 'serif'],
+                        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+
+        /* Theme Styles */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Reading Themes */
+        body.theme-void {
+            background-color: #07060b;
+            color: #e2e8f0;
+        }
+        body.theme-void .reader-content-card {
+            background-color: #12111a;
+            border-color: rgba(255, 255, 255, 0.07);
+        }
+
+        body.theme-sepia {
+            background-color: #1a1612;
+            color: #d7c4b7;
+        }
+        body.theme-sepia .reader-content-card {
+            background-color: #241e18;
+            border-color: rgba(215, 196, 183, 0.1);
+        }
+
+        body.theme-oled {
+            background-color: #000000;
+            color: #d1d5db;
+        }
+        body.theme-oled .reader-content-card {
+            background-color: #080808;
+            border-color: #1c1c1c;
+        }
+
+        body.theme-light {
+            background-color: #f1f5f9;
+            color: #1e293b;
+        }
+        body.theme-light .reader-content-card {
+            background-color: #ffffff;
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
+        }
+        body.theme-light .reading-text-block p {
+            color: #334155;
+        }
+
+        /* Reading Typography Options */
+        .font-sans-mode { font-family: 'Inter', sans-serif; }
+        .font-serif-mode { font-family: 'Merriweather', serif; }
+        .font-mono-mode { font-family: 'JetBrains Mono', monospace; }
+        .font-dyslexic-mode { font-family: 'Arial', sans-serif; letter-spacing: 0.05em; word-spacing: 0.1em; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07060b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #261f38;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
+        }
+
+        /* Auto Scroll Floating Indicator */
+        .autoscroll-active {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(124, 58, 237, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+        }
+    </style>
+</head>
+<body class="theme-void min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white relative">
+
+    <!-- READING PROGRESS BAR (FIXED TOP) -->
+    <div class="fixed top-0 left-0 w-full h-1 bg-white/5 z-50">
+        <div id="progressBar" class="h-full bg-gradient-to-r from-brand-purple via-brand-glow to-brand-accent w-0 transition-all duration-150"></div>
+    </div>
+
+    <!-- MAIN READER NAVBAR -->
+    <header id="mainHeader" class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+            
+            <!-- LEFT: BACK TO LIBRARY & TITLE -->
+            <div class="flex items-center gap-3">
+                <a href="novels.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/40 transition-all text-xs sm:text-sm font-semibold shrink-0">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Library</span>
+                </a>
+                
+                <div class="h-4 w-[1px] bg-white/10 hidden sm:block"></div>
+                
+                <div class="truncate">
+                    <span class="text-xs text-brand-light font-medium block sm:inline">Just A Dream</span>
+                    <span class="text-xs text-gray-400 hidden sm:inline"> • </span>
+                    <span id="headerChapterLabel" class="text-xs text-gray-300 truncate">Chapter 1: The First Awakening</span>
+                </div>
+            </div>
+
+            <!-- RIGHT: CONTROLS TOGGLES -->
+            <div class="flex items-center gap-2">
+                <!-- TOC Drawer Button -->
+                <button onclick="toggleTocSidebar()" class="p-2 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/40 transition-all" title="Table of Contents">
+                    <i data-lucide="list" class="w-5 h-5"></i>
+                </button>
+
+                <!-- Settings Drawer Button -->
+                <button onclick="toggleSettingsPanel()" class="p-2 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/40 transition-all relative" title="Reading Settings">
+                    <i data-lucide="sliders" class="w-5 h-5"></i>
+                </button>
+
+                <!-- Fullscreen Toggle -->
+                <button onclick="toggleFullscreen()" class="p-2 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/40 transition-all hidden sm:flex" title="Toggle Fullscreen">
+                    <i data-lucide="maximize" class="w-5 h-5" id="fullscreenIcon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- FLOATING SETTINGS TOOLBAR PANEL -->
+    <div id="settingsPanel" class="fixed top-20 right-4 sm:right-8 z-50 w-80 sm:w-96 bg-surface/95 backdrop-blur-xl border border-brand-purple/30 rounded-3xl p-6 shadow-2xl hidden space-y-6 text-gray-200 transition-all">
+        <div class="flex justify-between items-center border-b border-white/10 pb-3">
+            <h3 class="font-bold text-white flex items-center gap-2">
+                <i data-lucide="settings" class="w-4 h-4 text-brand-glow"></i> Display Settings
+            </h3>
+            <button onclick="toggleSettingsPanel()" class="text-gray-400 hover:text-white p-1">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- FONT FAMILY -->
+        <div class="space-y-2">
+            <label class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Font Style</label>
+            <div class="grid grid-cols-4 gap-2">
+                <button onclick="setFontFamily('sans')" id="fontBtn-sans" class="px-2 py-2 text-xs rounded-xl border border-brand-purple/50 bg-brand-purple/20 text-white font-sans font-medium">Sans</button>
+                <button onclick="setFontFamily('serif')" id="fontBtn-serif" class="px-2 py-2 text-xs rounded-xl border border-white/10 bg-surface-light text-gray-300 hover:border-white/30 font-serif">Serif</button>
+                <button onclick="setFontFamily('mono')" id="fontBtn-mono" class="px-2 py-2 text-xs rounded-xl border border-white/10 bg-surface-light text-gray-300 hover:border-white/30 font-mono">Mono</button>
+                <button onclick="setFontFamily('dyslexic')" id="fontBtn-dyslexic" class="px-2 py-2 text-xs rounded-xl border border-white/10 bg-surface-light text-gray-300 hover:border-white/30 font-sans">Accessible</button>
+            </div>
+        </div>
+
+        <!-- FONT SIZE -->
+        <div class="space-y-2">
+            <div class="flex justify-between text-xs font-semibold text-gray-400">
+                <span class="uppercase tracking-wider">Font Size</span>
+                <span id="fontSizeDisplay" class="text-brand-light font-bold">18px</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="adjustFontSize(-2)" class="p-2 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple text-white"><i data-lucide="minus" class="w-4 h-4"></i></button>
+                <input type="range" id="fontSizeSlider" min="14" max="28" value="18" oninput="setFontSize(this.value)" class="w-full accent-brand-purple cursor-pointer">
+                <button onclick="adjustFontSize(2)" class="p-2 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple text-white"><i data-lucide="plus" class="w-4 h-4"></i></button>
+            </div>
+        </div>
+
+        <!-- THEME MODES -->
+        <div class="space-y-2">
+            <label class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Reader Theme</label>
+            <div class="grid grid-cols-4 gap-2">
+                <button onclick="setTheme('void')" id="themeBtn-void" class="px-2 py-2 text-xs rounded-xl border border-brand-purple bg-[#07060b] text-white font-medium">Void</button>
+                <button onclick="setTheme('sepia')" id="themeBtn-sepia" class="px-2 py-2 text-xs rounded-xl border border-white/10 bg-[#1a1612] text-[#d7c4b7] hover:border-white/30">Sepia</button>
+                <button onclick="setTheme('oled')" id="themeBtn-oled" class="px-2 py-2 text-xs rounded-xl border border-white/10 bg-[#000000] text-gray-300 hover:border-white/30">OLED</button>
+                <button onclick="setTheme('light')" id="themeBtn-light" class="px-2 py-2 text-xs rounded-xl border border-white/10 bg-[#f1f5f9] text-slate-800 hover:border-white/30">Light</button>
+            </div>
+        </div>
+
+        <!-- CONTENT WIDTH & LINE HEIGHT -->
+        <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+                <label class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Page Width</label>
+                <select id="widthSelect" onchange="setContentWidth(this.value)" class="w-full bg-surface-light border border-white/10 text-xs rounded-xl p-2 text-gray-200 focus:outline-none focus:border-brand-purple">
+                    <option value="max-w-2xl">Narrow</option>
+                    <option value="max-w-3xl" selected>Medium</option>
+                    <option value="max-w-5xl">Wide</option>
+                </select>
+            </div>
+            <div class="space-y-2">
+                <label class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Line Spacing</label>
+                <select id="lineHeightSelect" onchange="setLineHeight(this.value)" class="w-full bg-surface-light border border-white/10 text-xs rounded-xl p-2 text-gray-200 focus:outline-none focus:border-brand-purple">
+                    <option value="leading-normal">Compact</option>
+                    <option value="leading-relaxed" selected>Comfortable</option>
+                    <option value="leading-loose">Spacious</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- UTILITY TOOLS -->
+        <div class="pt-2 border-t border-white/10 flex justify-between items-center">
+            <button onclick="toggleAutoScroll()" id="autoScrollBtn" class="px-3 py-2 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple text-xs font-semibold text-gray-300 flex items-center gap-2">
+                <i data-lucide="play" class="w-3.5 h-3.5 text-brand-glow"></i> Auto-Scroll
+            </button>
+            <button onclick="saveBookmark()" class="px-3 py-2 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple text-xs font-semibold text-gray-300 flex items-center gap-2">
+                <i data-lucide="bookmark" class="w-3.5 h-3.5 text-brand-accent"></i> Save Bookmark
+            </button>
+        </div>
+    </div>
+
+    <!-- SIDEBAR TABLE OF CONTENTS DRAWER -->
+    <div id="tocSidebar" class="fixed inset-y-0 right-0 z-50 w-80 sm:w-96 bg-surface/98 backdrop-blur-2xl border-l border-white/10 p-6 shadow-2xl transform translate-x-full transition-transform duration-300 overflow-y-auto flex flex-col justify-between">
+        <div class="space-y-6">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                <h3 class="font-bold text-white text-lg flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-5 h-5 text-brand-purple"></i> Table of Contents
+                </h3>
+                <button onclick="toggleTocSidebar()" class="text-gray-400 hover:text-white p-1">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- SEARCH / QUICK JUMP -->
+            <div class="space-y-2">
+                <div class="relative">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-gray-500"></i>
+                    <input type="text" id="chapterSearch" onkeyup="filterChapters()" placeholder="Search chapter title..." class="w-full bg-surface-light border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-brand-purple">
+                </div>
+            </div>
+
+            <!-- CHAPTER LIST -->
+            <div id="chapterListContainer" class="space-y-2 max-h-[60vh] overflow-y-auto pr-1">
+                <!-- Chapters dynamically inserted via JS -->
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-white/10 text-center">
+            <p class="text-xs text-gray-500">Just A Dream • Written by Swypyy</p>
+        </div>
+    </div>
+
+    <!-- MAIN READER WORKSPACE CONTAINER -->
+    <main class="flex-grow py-8 sm:py-12 px-4 sm:px-6">
+        <div id="contentContainer" class="max-w-3xl mx-auto space-y-8 transition-all duration-300">
+            
+            <!-- NOVEL HEADER CARD & METADATA -->
+            <div class="reader-content-card rounded-3xl border p-6 sm:p-8 space-y-6 transition-all shadow-xl">
+                <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start text-center sm:text-left">
+                    
+                    <!-- COVER IMAGE -->
+                    <div class="w-28 h-36 sm:w-36 sm:h-48 rounded-2xl bg-surface-light border border-brand-purple/30 overflow-hidden shrink-0 shadow-lg relative group">
+                        <img src="Assets/Novel-cover/Just-A-Dream.png" alt="Just A Dream Cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/300x400/07060b/7c3aed?text=Just+A+Dream';">
+                    </div>
+
+                    <!-- METADATA DETAILS -->
+                    <div class="space-y-3 flex-grow">
+                        <div class="flex flex-wrap justify-center sm:justify-start gap-2">
+                            <span class="px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Psychological</span>
+                            <span class="px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Mystery</span>
+                            <span class="px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Thriller</span>
+                            <span class="px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-brand-purple/20 text-brand-light border border-brand-purple/30">Supernatural</span>
+                            <span class="px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Ongoing</span>
+                        </div>
+
+                        <div>
+                            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Just A Dream</h1>
+                            <p class="text-brand-light italic text-sm mt-0.5">"I think, right?"</p>
+                        </div>
+
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs text-gray-400 pt-1">
+                            <span class="flex items-center gap-1.5"><i data-lucide="user" class="w-3.5 h-3.5 text-brand-purple"></i> Author: <strong class="text-white">Swypyy</strong></span>
+                            <span class="flex items-center gap-1.5"><i data-lucide="book-open" class="w-3.5 h-3.5 text-brand-accent"></i> <span id="chapterCountBadge">3 Chapters</span></span>
+                            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5 text-brand-glow"></i> Updated Weekly</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- READER TEXT CONTENT CARD -->
+            <article class="reader-content-card rounded-3xl border p-6 sm:p-12 transition-all shadow-2xl relative">
+                
+                <!-- CHAPTER TITLE HEADER -->
+                <div class="border-b border-white/10 pb-6 mb-8 text-center space-y-2">
+                    <span id="chapterNumberSubLabel" class="text-xs uppercase tracking-widest text-brand-glow font-semibold">Chapter 1</span>
+                    <h2 id="activeChapterTitle" class="text-2xl sm:text-3xl font-extrabold">The First Awakening</h2>
+                    <p id="activeChapterDate" class="text-xs text-gray-500">Published by Swypyy • Oct 24, 2026</p>
+                </div>
+
+                <!-- DYNAMIC CHAPTER BODY TEXT -->
+                <div id="chapterBody" class="reading-text-block font-sans-mode leading-relaxed space-y-6 text-base transition-all">
+                    <!-- Chapter content rendered via JS -->
+                </div>
+
+                <!-- END OF CHAPTER BANNER -->
+                <div class="mt-12 pt-8 border-t border-white/10 text-center space-y-4">
+                    <p class="text-xs text-gray-400 italic">You've reached the end of this chapter.</p>
+                    
+                    <!-- REACTION / LIKE PLACEHOLDER -->
+                    <div class="flex justify-center items-center gap-3 py-2">
+                        <button onclick="toggleReaction('like')" id="likeBtn" class="px-4 py-2 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple text-xs font-semibold flex items-center gap-2 transition-all">
+                            <i data-lucide="heart" class="w-4 h-4 text-pink-500"></i> <span id="likeCount">142</span>
+                        </button>
+                        <button onclick="toggleReaction('bookmark')" id="bookmarkBtn" class="px-4 py-2 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple text-xs font-semibold flex items-center gap-2 transition-all">
+                            <i data-lucide="bookmark" class="w-4 h-4 text-brand-accent"></i> Bookmark
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- STICKY BOTTOM CHAPTER NAVIGATION -->
+            <div class="sticky bottom-6 z-30 bg-surface/90 backdrop-blur-xl border border-white/10 rounded-2xl p-3 shadow-2xl flex items-center justify-between gap-4">
+                <button id="prevChapterBtn" onclick="navigateChapter(-1)" class="px-4 py-2.5 rounded-xl bg-surface-light hover:bg-brand-purple text-gray-300 hover:text-white text-xs sm:text-sm font-semibold border border-white/10 transition-all flex items-center gap-2 disabled:opacity-40 disabled:pointer-events-none">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i> Previous
+                </button>
+
+                <div class="hidden sm:flex items-center gap-2">
+                    <select id="quickJumpSelect" onchange="jumpToChapter(this.value)" class="bg-surface-light border border-white/10 text-xs text-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:border-brand-purple">
+                        <!-- Options generated dynamically -->
+                    </select>
+                </div>
+
+                <button id="nextChapterBtn" onclick="navigateChapter(1)" class="px-4 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white text-xs sm:text-sm font-semibold transition-all shadow-lg flex items-center gap-2 disabled:opacity-40 disabled:pointer-events-none">
+                    Next <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- READER COMMENTS / FEEDBACK SECTION PLACEHOLDER -->
+            <section class="reader-content-card rounded-3xl border p-6 sm:p-8 space-y-6">
+                <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                    <h3 class="text-lg font-bold flex items-center gap-2">
+                        <i data-lucide="message-square" class="w-5 h-5 text-brand-purple"></i> Reader Reactions & Comments
+                    </h3>
+                    <span class="text-xs text-gray-400">3 Comments</span>
+                </div>
+
+                <!-- ADD COMMENT BOX -->
+                <div class="space-y-3">
+                    <textarea id="commentInput" rows="3" placeholder="Share your thoughts on this chapter (Anonymous posting enabled)..." class="w-full bg-surface-light border border-white/10 rounded-2xl p-4 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-purple resize-none"></textarea>
+                    <div class="flex justify-end">
+                        <button onclick="postComment()" class="px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white text-xs font-semibold transition-all">
+                            Post Reaction
+                        </button>
+                    </div>
+                </div>
+
+                <!-- COMMENT LIST -->
+                <div id="commentsList" class="space-y-4 pt-4 border-t border-white/5">
+                    <div class="bg-surface-light/50 rounded-2xl p-4 border border-white/5 space-y-1.5">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-brand-light">NightReader_99</span>
+                            <span class="text-gray-500">2 hours ago</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-300">The atmosphere in this opening chapter is eerie! Can't wait to see where Swypyy takes this mystery.</p>
+                    </div>
+
+                    <div class="bg-surface-light/50 rounded-2xl p-4 border border-white/5 space-y-1.5">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-brand-light">CipherVoid</span>
+                            <span class="text-gray-500">1 day ago</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-300">That twist at the end of the corridor... definitely didn't see it coming. Great pacing!</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
+        <div class="max-w-6xl mx-auto px-6 space-y-2">
+            <p>&copy; 2026 SWYPYY. All rights reserved.</p>
+            <p class="text-[11px] text-gray-600">Just A Dream — An original web novel serial created by Swypyy.</p>
+        </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATION POPUP -->
+    <div id="toast" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-surface-light border border-brand-purple/50 text-white px-5 py-2.5 rounded-2xl text-xs font-medium shadow-2xl opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center gap-2">
+        <i data-lucide="check-circle" class="w-4 h-4 text-brand-glow"></i>
+        <span id="toastMsg">Notification message</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // CHAPTER DATA STORE
+        const CHAPTERS = [
+            {
+                id: 1,
+                title: "Chapter 1: The First Awakening",
+                date: "Oct 24, 2026",
+                content: `
+                    <p>The streetlamp flickered in rhythmic intervals—three long blinks, one short pause, then total darkness for two seconds. I counted them. In a city where everything felt engineered to mask reality, the flickering lamp was the only honest thing left.</p>
+                    <p>I pulled the collar of my coat higher against the cold drizzle. Rain in this district always tasted faintly of copper. Ahead, the street dissolved into a fog so thick it swallowed the headlights of passing vehicles long before they could reach me.</p>
+                    <p>"Just a dream," I whispered to myself, letting the words roll off my tongue like a familiar mantra. "I think, right?"</p>
+                    <p>It was the third time this week I had found myself standing on this exact corner with no memory of how I got here. No bus ticket in my pocket. No notification on my phone. Just the sudden realization that I was awake, standing in the rain, watching the light flicker.</p>
+                    <p>A shadow detached itself from the doorway of the abandoned bookstore across the pavement. It didn't move like a person—it moved like an ink drop spreading across wet paper, slow and deliberate.</p>
+                    <p>I reached into my pocket and touched the cold edge of the brass key I had found under my pillow this morning. It didn't belong to my apartment. It didn't belong to anything I owned. But as the shadow took a step toward me under the flickering lamp, I knew I would have to find the lock before sunrise.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Chapter 2: Echoes in the Corridor",
+                date: "Oct 28, 2026",
+                content: `
+                    <p>The brass key fit into the heavy iron lock of the subterranean entrance with a satisfying, metallic click. The door hadn't been opened in decades—the rusted hinges screamed in protest as I pushed it inward into the darkness.</p>
+                    <p>A wave of dry, preserved air washed over me. It smelled of old parchment, ozone, and something unnaturally sweet. I clicked on my pocket flashlight, its pale beam cutting through clouds of swirling dust motes.</p>
+                    <p>The corridor stretched far beyond what the architecture above ground should have allowed. Tiles lined the walls in intricate geometric patterns that seemed to shift slightly whenever I looked at them through my peripheral vision.</p>
+                    <p>"Is anyone down here?" my voice bounced down the hallway, returning a fraction of a second too late—as if the echoes were being delayed by someone listening before sending them back.</p>
+                    <p>I kept walking. Step by step. Twenty paces. Fifty. At the hundredth step, the hallway opened into a circular gallery lined with glass display cases. Inside each case sat a single item: an antique pocket watch stopped at 3:14 AM, a shattered pair of spectacles, a leather notebook filled with my own handwriting in a language I had never learned to read.</p>
+                    <p>And on the far pedestal sat a second key—identical to the one in my hand, except glowing with a faint, pulse-like violet light.</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Chapter 3: The Boundary of Memory",
+                date: "Nov 02, 2026",
+                content: `
+                    <p>The glowing violet key vibrated between my fingertips like a trapped pulse. The moment my fingers closed around it, the silence in the gallery shattered into a chorus of whispers.</p>
+                    <p>They weren't foreign voices. They were mine. Hundreds of iterations of my own voice, overlapping in a chaotic wave of memory and regret. Fragments of conversations I had forgotten, choices I hadn't made yet, and names of places that didn't exist on any modern map.</p>
+                    <p>"You're late," a quiet voice spoke from behind me.</p>
+                    <p>I spun around. Standing near the gallery entrance was a silhouette dressed in a dark hooded coat, face obscured by a glowing slit visor. The figure held a leather-bound journal bearing the emblem of an 'S' inside a violet circle.</p>
+                    <p>"Who are you?" I demanded, backing against the display case.</p>
+                    <p>The figure smiled—or at least, I felt the phantom impression of a smile beneath the mask. "I am the architect of this dream. And you are finally beginning to remember why you built it."</p>
+                    <p>The ground beneath us dissolved into a sea of midnight violet light. As I fell into the void, one final thought lingered before everything went white: <em>If this was a dream... who was holding the pen?</em></p>
+                `
+            }
+        ];
+
+        // STATE VARIABLES
+        let currentChapterIndex = 0;
+        let fontSize = 18;
+        let autoScrollInterval = null;
+        let isAutoScrolling = false;
+        let isLiked = false;
+
+        // INITIALIZATION
+        window.onload = function() {
+            lucide.createIcons();
+            loadSettingsFromStorage();
+            renderChapterList();
+            loadChapter(0);
+            
+            // Progress Bar Scroll Listener
+            window.addEventListener('scroll', updateProgressBar);
+        };
+
+        // RENDER CHAPTER LIST & DROPDOWNS
+        function renderChapterList() {
+            const container = document.getElementById('chapterListContainer');
+            const select = document.getElementById('quickJumpSelect');
+            
+            container.innerHTML = '';
+            select.innerHTML = '';
+
+            CHAPTERS.forEach((ch, idx) => {
+                // Sidebar List Item
+                const item = document.createElement('div');
+                item.className = `p-3.5 rounded-xl border text-xs cursor-pointer transition-all flex justify-between items-center ${idx === currentChapterIndex ? 'bg-brand-purple/20 border-brand-purple text-white font-semibold' : 'bg-surface-light border-white/5 text-gray-400 hover:border-white/20 hover:text-white'}`;
+                item.onclick = () => { loadChapter(idx); toggleTocSidebar(); };
+                item.innerHTML = `
+                    <div>
+                        <div class="font-medium">${ch.title}</div>
+                        <div class="text-[10px] text-gray-500 mt-0.5">${ch.date}</div>
+                    </div>
+                    ${idx === currentChapterIndex ? '<i data-lucide="book-open" class="w-4 h-4 text-brand-glow"></i>' : ''}
+                `;
+                container.appendChild(item);
+
+                // Quick Jump Dropdown Option
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.innerText = ch.title;
+                if(idx === currentChapterIndex) opt.selected = true;
+                select.appendChild(opt);
+            });
+
+            lucide.createIcons();
+        }
+
+        // LOAD CHAPTER CONTENT
+        function loadChapter(index) {
+            if (index < 0 || index >= CHAPTERS.length) return;
+            
+            currentChapterIndex = index;
+            const ch = CHAPTERS[index];
+
+            document.getElementById('headerChapterLabel').innerText = ch.title;
+            document.getElementById('chapterNumberSubLabel').innerText = `Chapter ${ch.id}`;
+            document.getElementById('activeChapterTitle').innerText = ch.title.split(': ')[1] || ch.title;
+            document.getElementById('activeChapterDate').innerText = `Published by Swypyy • ${ch.date}`;
+            document.getElementById('chapterBody').innerHTML = ch.content;
+
+            // Update Nav Buttons
+            document.getElementById('prevChapterBtn').disabled = (index === 0);
+            document.getElementById('nextChapterBtn').disabled = (index === CHAPTERS.length - 1);
+            document.getElementById('quickJumpSelect').value = index;
+
+            renderChapterList();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function navigateChapter(direction) {
+            loadChapter(currentChapterIndex + direction);
+        }
+
+        function jumpToChapter(index) {
+            loadChapter(parseInt(index));
+        }
+
+        // READING DISPLAY CONTROLS
+        function setFontSize(size) {
+            fontSize = parseInt(size);
+            document.getElementById('fontSizeDisplay').innerText = `${fontSize}px`;
+            document.getElementById('fontSizeSlider').value = fontSize;
+            document.getElementById('chapterBody').style.fontSize = `${fontSize}px`;
+            localStorage.setItem('swypyy_reader_fontsize', fontSize);
+        }
+
+        function adjustFontSize(delta) {
+            const newSize = Math.min(Math.max(fontSize + delta, 14), 28);
+            setFontSize(newSize);
+        }
+
+        function setFontFamily(family) {
+            const body = document.getElementById('chapterBody');
+            body.className = body.className.replace(/font-\w+-mode/g, '');
+            body.classList.add(`font-${family}-mode`);
+
+            // Active button UI
+            ['sans', 'serif', 'mono', 'dyslexic'].forEach(f => {
+                const btn = document.getElementById(`fontBtn-${f}`);
+                if (f === family) {
+                    btn.className = "px-2 py-2 text-xs rounded-xl border border-brand-purple/50 bg-brand-purple/20 text-white font-medium";
+                } else {
+                    btn.className = "px-2 py-2 text-xs rounded-xl border border-white/10 bg-surface-light text-gray-300 hover:border-white/30";
+                }
+            });
+
+            localStorage.setItem('swypyy_reader_fontfamily', family);
+        }
+
+        function setTheme(theme) {
+            document.body.className = document.body.className.replace(/theme-\w+/g, '');
+            document.body.classList.add(`theme-${theme}`);
+
+            ['void', 'sepia', 'oled', 'light'].forEach(t => {
+                const btn = document.getElementById(`themeBtn-${t}`);
+                if (t === theme) {
+                    btn.classList.add('border-brand-purple');
+                } else {
+                    btn.classList.remove('border-brand-purple');
+                }
+            });
+
+            localStorage.setItem('swypyy_reader_theme', theme);
+        }
+
+        function setContentWidth(widthClass) {
+            const container = document.getElementById('contentContainer');
+            container.className = container.className.replace(/max-w-\w+/g, '');
+            container.classList.add(widthClass);
+            localStorage.setItem('swypyy_reader_width', widthClass);
+        }
+
+        function setLineHeight(leadingClass) {
+            const body = document.getElementById('chapterBody');
+            body.className = body.className.replace(/leading-\w+/g, '');
+            body.classList.add(leadingClass);
+            localStorage.setItem('swypyy_reader_leading', leadingClass);
+        }
+
+        // AUTO SCROLL FEATURE
+        function toggleAutoScroll() {
+            const btn = document.getElementById('autoScrollBtn');
+            if (isAutoScrolling) {
+                clearInterval(autoScrollInterval);
+                isAutoScrolling = false;
+                btn.classList.remove('autoscroll-active', 'border-brand-purple', 'bg-brand-purple/20');
+                showToast("Auto-scroll paused");
+            } else {
+                isAutoScrolling = true;
+                btn.classList.add('autoscroll-active', 'border-brand-purple', 'bg-brand-purple/20');
+                showToast("Auto-scroll activated");
+                autoScrollInterval = setInterval(() => {
+                    window.scrollBy({ top: 1, behavior: 'smooth' });
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        toggleAutoScroll();
+                    }
+                }, 40);
+            }
+        }
+
+        // PROGRESS BAR & BOOKMARK
+        function updateProgressBar() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        }
+
+        function saveBookmark() {
+            const bookmark = {
+                chapterIndex: currentChapterIndex,
+                title: CHAPTERS[currentChapterIndex].title,
+                scrollPos: window.scrollY
+            };
+            localStorage.setItem('swypyy_reader_bookmark', JSON.stringify(bookmark));
+            showToast(`Bookmarked ${CHAPTERS[currentChapterIndex].title}`);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // INTERACTIVE PANELS TOGGLE
+        function toggleSettingsPanel() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('hidden');
+        }
+
+        function toggleTocSidebar() {
+            const sidebar = document.getElementById('tocSidebar');
+            sidebar.classList.toggle('translate-x-full');
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                document.getElementById('fullscreenIcon').setAttribute('data-lucide', 'minimize');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    document.getElementById('fullscreenIcon').setAttribute('data-lucide', 'maximize');
+                }
+            }
+            lucide.createIcons();
+        }
+
+        function filterChapters() {
+            const query = document.getElementById('chapterSearch').value.toLowerCase();
+            const container = document.getElementById('chapterListContainer');
+            const items = container.children;
+
+            Array.from(items).forEach((item, idx) => {
+                const title = CHAPTERS[idx].title.toLowerCase();
+                if (title.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleReaction(type) {
+            if (type === 'like') {
+                const countSpan = document.getElementById('likeCount');
+                let count = parseInt(countSpan.innerText);
+                if (!isLiked) {
+                    countSpan.innerText = count + 1;
+                    isLiked = true;
+                    showToast("Thanks for liking this chapter!");
+                } else {
+                    countSpan.innerText = count - 1;
+                    isLiked = false;
+                }
+            } else if (type === 'bookmark') {
+                saveBookmark();
+            }
+        }
+
+        function postComment() {
+            const input = document.getElementById('commentInput');
+            const val = input.value.trim();
+            if (!val) return;
+
+            const list = document.getElementById('commentsList');
+            const commentDiv = document.createElement('div');
+            commentDiv.className = "bg-surface-light/50 rounded-2xl p-4 border border-brand-purple/30 space-y-1.5 animate-pulse";
+            commentDiv.innerHTML = `
+                <div class="flex justify-between items-center text-xs">
+                    <span class="font-bold text-brand-glow">You (Anonymous)</span>
+                    <span class="text-gray-500">Just now</span>
+                </div>
+                <p class="text-xs sm:text-sm text-gray-200">${val}</p>
+            `;
+            list.prepend(commentDiv);
+            input.value = '';
+            showToast("Reaction posted successfully!");
+            setTimeout(() => commentDiv.classList.remove('animate-pulse'), 1000);
+        }
+
+        // LOAD PREFERENCES
+        function loadSettingsFromStorage() {
+            const savedSize = localStorage.getItem('swypyy_reader_fontsize');
+            if (savedSize) setFontSize(savedSize);
+
+            const savedFont = localStorage.getItem('swypyy_reader_fontfamily');
+            if (savedFont) setFontFamily(savedFont);
+
+            const savedTheme = localStorage.getItem('swypyy_reader_theme');
+            if (savedTheme) setTheme(savedTheme);
+
+            const savedWidth = localStorage.getItem('swypyy_reader_width');
+            if (savedWidth) {
+                setContentWidth(savedWidth);
+                document.getElementById('widthSelect').value = savedWidth;
+            }
+
+            const savedLeading = localStorage.getItem('swypyy_reader_leading');
+            if (savedLeading) {
+                setLineHeight(savedLeading);
+                document.getElementById('lineHeightSelect').value = savedLeading;
+            }
+        }
+    </script>
+</body>
+</html>
