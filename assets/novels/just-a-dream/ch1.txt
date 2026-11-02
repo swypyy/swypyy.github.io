@@ -1,6 +1,4 @@
-
-
-
+CHAPTER 1 - THE START
 
 I'm completely with you. Let's lock in and build out reader.html right now, keeping everything matched to your exact ecosystem style (void background, sleek top-left logo, clean borderless back arrow button tucked right underneath with zero gap).
 Here is the exact plan for what reader.html will do:
