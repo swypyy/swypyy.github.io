@@ -79,15 +79,13 @@ line-height: 1;
 </button>
 </div>
 </header>
-<!-- FULLSCREEN MOBILE MENU OVERLAY -->
+<!-- FULLSCREEN MOBILE MENU OVERLAY (STREAMLINED: HOME, CREATIONS, ABOUT, CONTACT) -->
 <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden transition-all duration-300">
 <button id="closeMenuBtn" class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow">
 <i data-lucide="x" class="w-8 h-8"></i>
 </button>
 <a href="index.html#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
 <a href="index.html#creations-showcase" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Creations</a>
-<a href="novels.html" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Webnovels</a>
-<a href="art.html" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Arts</a>
 <a href="index.html#about" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">About Me</a>
 <a href="index.html#contact" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Contact</a>
 </div>
@@ -133,7 +131,7 @@ About Me
 <p class="text-gray-400">Categories of projects I am building as I learn.</p>
 </div>
 <div class="space-y-6">
-<!-- 1. WEB NOVELS CARD WITH LOGO -->
+<!-- 1. WEB NOVELS CARD -->
 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
 <div class="flex items-center gap-5 text-left">
 <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
@@ -148,7 +146,7 @@ About Me
 Read
 </a>
 </div>
-<!-- 2. MY ARTS CARD WITH LOGO -->
+<!-- 2. MY ARTS CARD -->
 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
 <div class="flex items-center gap-5 text-left">
 <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
@@ -163,51 +161,21 @@ Read
 View
 </a>
 </div>
-<!-- 3. SWYPYY MESSENGER CARD WITH LOGO -->
+<!-- 3. MY GITHUB PROJECTS CARD -->
 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
 <div class="flex items-center gap-5 text-left">
 <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
-<i data-lucide="message-square" class="w-7 h-7"></i>
+<i data-lucide="git-branch" class="w-7 h-7"></i>
 </div>
 <div class="space-y-1">
-<span class="text-xs font-bold uppercase tracking-wider text-brand-light">Web App / Real-Time Tool</span>
-<h3 class="text-xl sm:text-2xl font-bold text-white">Swypyy Messenger</h3>
-<p class="text-xs sm:text-sm text-gray-400">Anonymous, ephemeral real-time chat with self-destructing rooms.</p>
+<span class="text-xs font-bold uppercase tracking-wider text-brand-light">Developer Portfolio</span>
+<h3 class="text-xl sm:text-2xl font-bold text-white">My GitHub Projects</h3>
+<p class="text-xs sm:text-sm text-gray-400">Web apps, custom tools, and experimental repositories.</p>
 </div>
 </div>
-<div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
-<a href="https://github.com/swypyy/ephemeral-chat" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2">
-<i data-lucide="code" class="w-4 h-4 text-brand-glow"></i>
-<span>GitHub Repo</span>
+<a href="projects.html" class="w-full sm:w-auto px-7 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center shrink-0">
+View Projects
 </a>
-<a href="https://swypyy-messenger.onrender.com" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2">
-<span>Open App</span>
-<i data-lucide="external-link" class="w-4 h-4"></i>
-</a>
-</div>
-</div>
-<!-- 4. ANONYMOUS DROP CARD WITH LOGO -->
-<div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
-<div class="flex items-center gap-5 text-left">
-<div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
-<i data-lucide="globe" class="w-7 h-7"></i>
-</div>
-<div class="space-y-1">
-<span class="text-xs font-bold uppercase tracking-wider text-brand-light">Web App / Community Tool</span>
-<h3 class="text-xl sm:text-2xl font-bold text-white">Anonymous Drop</h3>
-<p class="text-xs sm:text-sm text-gray-400">Zero-friction anonymous blogging and commenting wall for everyone.</p>
-</div>
-</div>
-<div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
-<a href="https://github.com/swypyy/Anonymous-Blogger-repo" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2">
-<i data-lucide="code" class="w-4 h-4 text-brand-glow"></i>
-<span>GitHub Repo</span>
-</a>
-<a href="blog.html" class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2">
-<span>Open App</span>
-<i data-lucide="external-link" class="w-4 h-4"></i>
-</a>
-</div>
 </div>
 </div>
 </div>
@@ -215,22 +183,17 @@ View
 <!-- ABOUT ME SECTION -->
 <section id="about" class="py-20 px-6">
 <div class="max-w-5xl mx-auto">
-<!-- CARD CONTAINER -->
 <div class="relative bg-surface rounded-3xl border border-white/10 p-8 md:p-12 overflow-hidden">
-<!-- MOBILE ONLY BACKGROUND WATERMARK -->
 <div class="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
 <img src="Assets/s-logo.png" alt="S Logo Watermark" class="w-64 h-64 object-contain select-none" onerror="this.onerror=null; this.src='assets/s-logo.png';">
 </div>
 <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-<!-- DESKTOP LEFT SIDE: LARGE S LOGO -->
 <div class="hidden md:flex md:col-span-4 items-center justify-center">
 <div class="relative group">
 <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl group-hover:bg-brand-purple/50 transition-all"></div>
-<img src="Assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/s-logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='block';};">
-<span id="fallbackSLogo" class="hidden s-logo-handwritten text-[160px] text-brand-purple leading-none select-none relative z-10">S</span>
+<img src="Assets/s-logo.png" alt="Swypyy S Logo" class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='assets/s-logo.png';">
 </div>
 </div>
-<!-- RIGHT SIDE CONTENT -->
 <div class="md:col-span-8 space-y-4 text-left">
 <h2 class="text-3xl font-extrabold text-white">About Me</h2>
 <p class="text-gray-300 leading-relaxed">
@@ -263,14 +226,12 @@ swypyy@gmail.com
 </div>
 </section>
 </main>
-<!-- FOOTER WITH HARDCODED JS COPYRIGHT PROTECTION -->
+<!-- FOOTER -->
 <footer id="footer-container" class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
-<!-- Injected via JavaScript below -->
 </footer>
-<!-- JAVASCRIPT FOR MOBILE MENU & HARDCODED COPYRIGHT -->
+<!-- JAVASCRIPT -->
 <script>
 lucide.createIcons();
-// Mobile menu toggle logic
 const menuBtn = document.getElementById('menuBtn');
 const closeMenuBtn = document.getElementById('closeMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
@@ -278,7 +239,6 @@ const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 menuBtn.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
 closeMenuBtn.addEventListener('click', () => mobileMenu.classList.add('hidden'));
 mobileLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-// Hardcoded Copyright Injection
 const currentYear = new Date().getFullYear();
 document.getElementById('footer-container').innerHTML = `
     <div class="max-w-6xl mx-auto px-6">
@@ -287,5 +247,5 @@ document.getElementById('footer-container').innerHTML = `
 `;
 </script>
 </body>
-  </html>
-  
+    </html>
+    
