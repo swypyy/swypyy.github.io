@@ -127,7 +127,7 @@
                     <button onclick="changeChapter(-1)" id="prevBtn" class="px-5 py-2.5 rounded-xl bg-surface border border-white/10 text-gray-300 hover:text-white hover:border-brand-purple/40 font-semibold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed">
                         Previous Chapter
                     </button>
-                    <button onclick="changeChapter(1)" id="nextBtn" class="px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-bold text-sm transition-all">
+                    <button onclick="changeChapter(1)" id="nextBtn" class="px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-bold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed">
                         Next Chapter
                     </button>
                 </div>
@@ -269,7 +269,10 @@
                     document.getElementById('chapterContent').innerHTML = formatText(rawText);
                     document.getElementById('chapterIndicator').innerText = `Ch. ${chapterNum}`;
                     
+                    // Dim/disable previous button if on chapter 1
                     document.getElementById('prevBtn').disabled = (chapterNum <= 1);
+                    
+                    // Dim/disable next button if on the latest available chapter
                     document.getElementById('nextBtn').disabled = (chapterNum >= maxAvailableChapter);
                     
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -314,4 +317,4 @@
     </script>
 </body>
         </html>
-            
+    
