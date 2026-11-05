@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swypyy // Dungeon Crawler</title>
+    <style>
+        :root {
+            --bg-color: #090d16;
+            --card-bg: #111827;
+            --accent: #38bdf8;
+            --e-rank: #94a3b8;
+            --text-main: #f8fafc;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* --- SPLASH SCREEN --- */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.6s ease;
+        }
+
+        .logo-box {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .loader-track {
+            width: 200px;
+            height: 4px;
+            background: #1e293b;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--accent);
+            animation: loadProgress 2s ease forwards;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* --- GAME UI --- */
+        #game-container {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            background: var(--card-bg);
+            border-left: 1px solid #1f2937;
+            border-right: 1px solid #1f2937;
+            position: relative;
+        }
+
+        header {
+            padding: 15px;
+            background: #0f172a;
+            border-bottom: 1px solid #1f2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dungeon-badge {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--e-rank);
+            border: 1px solid var(--e-rank);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* --- PROCEDURAL GRID DUNGEON --- */
+        #viewport {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 8px;
+            padding: 15px;
+            background: #0b0f19;
+        }
+
+        .tile {
+            background: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .tile.explored {
+            background: #1e293b;
+            border-color: #374151;
+        }
+
+        .tile.player {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        /* --- LOG CONSOLE --- */
+        #log-box {
+            height: 100px;
+            background: #090d16;
+            border-top: 1px solid #1f2937;
+            padding: 12px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            overflow-y: auto;
+        }
+
+        /* --- CONTROLS --- */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 15px;
+            background: #0f172a;
+            border-top: 1px solid #1f2937;
+        }
+
+        .ctrl-btn {
+            background: #1e293b;
+            color: var(--text-main);
+            border: 1px solid #334155;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            touch-action: manipulation;
+        }
+
+        .ctrl-btn:active {
+            background: var(--accent);
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <div class="logo-box">Swypyy</div>
+        <div class="loader-track">
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Game View -->
+    <div id="game-container">
+        <header>
+            <div>
+                <span style="font-weight: bold; color: var(--accent);">Dungeon #1049</span>
+            </div>
+            <div class="dungeon-badge">RANK: E</div>
+        </header>
+
+        <!-- 5x5 Procedural Room Grid -->
+        <div id="viewport"></div>
+
+        <div id="log-box">
+            > Entered E-Rank Dungeon...<br>
+            > Procedural floor layout generated successfully. Use D-pad to explore.
+        </div>
+
+        <div class="controls">
+            <div></div>
+            <div class="ctrl-btn" onclick="move('up')">▲</div>
+            <div></div>
+            <div class="ctrl-btn" onclick="move('left')">◀</div>
+            <div class="ctrl-btn" onclick="move('down')">▼</div>
+            <div class="ctrl-btn" onclick="move('right')">▶</div>
+        </div>
+    </div>
+
+    <script>
+        // Hide Splash Screen after 2.2 seconds
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+                document.getElementById('game-container').style.display = 'flex';
+                initDungeon();
+            }, 600);
+        }, 2200);
+
+        // Dungeon State
+        const size = 5;
+        let playerPos = { x: 2, y: 4 };
+        let gridData = [];
+
+        function initDungeon() {
+            // Randomly generate dungeon contents every time
+            gridData = [];
+            for (let y = 0; y < size; y++) {
+                let row = [];
+                for (let x = 0; x < size; x++) {
+                    let type = 'empty';
+                    // Random generation rules
+                    if (!(x === 2 && y === 4)) {
+                        let rand = Math.random();
+                        if (rand < 0.25) type = 'monster';
+                        else if (rand < 0.4) type = 'chest';
+                        else if (rand < 0.5) type = 'trap';
+                    }
+                    row.push({ x, y, type, explored: (x === 2 && y === 4) });
+                }
+                gridData.push(row);
+            }
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const viewport = document.getElementById('viewport');
+            viewport.innerHTML = '';
+
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++) {
+                    let tileDiv = document.createElement('div');
+                    tileDiv.className = 'tile';
+                    
+                    let cell = gridData[y][x];
+
+                    if (cell.x === playerPos.x && cell.y === playerPos.y) {
+                        tileDiv.classList.add('player');
+                        tileDiv.innerHTML = '🥷'; // Hooded hero icon
+                    } else if (cell.explored) {
+                        tileDiv.classList.add('explored');
+                        if (cell.type === 'chest') tileDiv.innerHTML = '📦';
+                        else if (cell.type === 'monster') tileDiv.innerHTML = '👾';
+                        else if (cell.type === 'trap') tileDiv.innerHTML = '⚡';
+                        else tileDiv.innerHTML = '·';
+                    } else {
+                        tileDiv.innerHTML = '⬛'; // Unexplored fog of war
+                    }
+
+                    viewport.appendChild(tileDiv);
+                }
+            }
+        }
+
+        function logMessage(msg) {
+            const box = document.getElementById('log-box');
+            box.innerHTML = `> ${msg}<br>` + box.innerHTML;
+        }
+
+        function move(direction) {
+            let newX = playerPos.x;
+            let newY = playerPos.y;
+
+            if (direction === 'up' && newY > 0) newY--;
+            if (direction === 'down' && newY < size - 1) newY++;
+            if (direction === 'left' && newX > 0) newX--;
+            if (direction === 'right' && newX < size - 1) newX++;
+
+            if (newX !== playerPos.x || newY !== playerPos.y) {
+                playerPos.x = newX;
+                playerPos.y = newY;
+                
+                let currentCell = gridData[playerPos.y][playerPos.x];
+                currentCell.explored = true;
+
+                if (currentCell.type === 'monster') {
+                    logMessage("Encountered a low-rank goblin! Defeated it easily.");
+                } else if (currentCell.type === 'chest') {
+                    logMessage("Found a small loot chest! +10 Gold.");
+                } else if (currentCell.type === 'trap') {
+                    logMessage("Triggered a hidden dart trap! Ouch (-5 HP).");
+                } else {
+                    logMessage("Moved to coordinates (" + newX + ", " + newY + ")");
+                }
+
+                renderGrid();
+            }
+        }
+    </script>
+</body>
+</html>
