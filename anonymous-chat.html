@@ -37,22 +37,10 @@
             font-family: Inter, system-ui, sans-serif;
         }
 
-        button, input {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        button:disabled {
-            opacity: .5;
-            cursor: not-allowed;
-        }
-
-        .hidden {
-            display: none !important;
-        }
+        button, input { font: inherit; }
+        button { cursor: pointer; }
+        button:disabled { opacity: .5; cursor: not-allowed; }
+        .hidden { display: none !important; }
 
         #setup {
             min-height: 100vh;
@@ -96,9 +84,7 @@
             letter-spacing: -2px;
         }
 
-        .intro h1 span {
-            color: var(--light);
-        }
+        .intro h1 span { color: var(--light); }
 
         .intro p {
             max-width: 420px;
@@ -124,9 +110,7 @@
             box-shadow: 0 25px 80px #0006;
         }
 
-        .card h2 {
-            font-size: 22px;
-        }
+        .card h2 { font-size: 22px; }
 
         .card > p {
             margin: 8px 0 23px;
@@ -134,9 +118,7 @@
             font-size: 13px;
         }
 
-        .field {
-            margin-bottom: 15px;
-        }
+        .field { margin-bottom: 15px; }
 
         label {
             display: block;
@@ -159,13 +141,8 @@
             color: white;
         }
 
-        input:focus {
-            border-color: var(--purple);
-        }
-
-        input::placeholder {
-            color: #716a7e;
-        }
+        input:focus { border-color: var(--purple); }
+        input::placeholder { color: #716a7e; }
 
         .room-code {
             text-transform: uppercase;
@@ -183,9 +160,7 @@
             font-weight: 800;
         }
 
-        .btn.secondary {
-            background: #201832;
-        }
+        .btn.secondary { background: #201832; }
 
         .divider {
             margin: 22px 0;
@@ -212,9 +187,7 @@
             font-size: 10px;
         }
 
-        #status {
-            transition: color .2s;
-        }
+        #status { transition: color .2s; }
 
         #chat {
             height: 100vh;
@@ -260,9 +233,7 @@
             font-size: 11px;
         }
 
-        .small-btn.danger {
-            color: var(--red);
-        }
+        .small-btn.danger { color: var(--red); }
 
         .layout {
             flex: 1;
@@ -305,9 +276,7 @@
             align-self: flex-start;
         }
 
-        .message.own {
-            align-self: flex-end;
-        }
+        .message.own { align-self: flex-end; }
 
         .sender {
             margin: 0 0 5px 5px;
@@ -419,9 +388,7 @@
             transition: opacity .2s;
         }
 
-        #toast.show {
-            opacity: 1;
-        }
+        #toast.show { opacity: 1; }
 
         @media(max-width:760px) {
             .setup-layout {
@@ -430,13 +397,8 @@
                 gap: 25px;
             }
 
-            .intro {
-                text-align: center;
-            }
-
-            .intro .brand {
-                justify-content: center;
-            }
+            .intro { text-align: center; }
+            .intro .brand { justify-content: center; }
 
             .intro h1 {
                 margin-top: 20px;
@@ -448,39 +410,19 @@
                 margin-right: auto;
             }
 
-            .features {
-                display: none;
-            }
-
-            .card {
-                padding: 22px;
-            }
-
-            .layout {
-                display: block;
-                padding: 8px;
-            }
-
-            .layout > .panel:last-child {
-                display: none;
-            }
-
-            .chat-header {
-                padding: 10px;
-            }
-
-            .chat-header .brand-icon {
-                display: none;
-            }
+            .features { display: none; }
+            .card { padding: 22px; }
+            .layout { display: block; padding: 8px; }
+            .layout > .panel:last-child { display: none; }
+            .chat-header { padding: 10px; }
+            .chat-header .brand-icon { display: none; }
 
             .small-btn {
                 padding: 8px;
                 font-size: 10px;
             }
 
-            .message {
-                max-width: 90%;
-            }
+            .message { max-width: 90%; }
         }
     </style>
 </head>
@@ -601,9 +543,7 @@
 <script>
 /*
  * Socket.IO CDN loader
- *
- * Tries each CDN in order. The chat application will not start
- * until a working Socket.IO client library has loaded.
+ * Tries each CDN in order and starts the app only after the library loads.
  */
 function loadSocketIOLibrary() {
     if (typeof window.io === 'function') {
@@ -631,16 +571,13 @@ function loadSocketIOLibrary() {
             }
 
             const source = sources[index++];
-
             const script = document.createElement('script');
             script.src = source;
             script.async = true;
 
             let completed = false;
 
-            const timeout = setTimeout(() => {
-                finishAttempt(false);
-            }, 12000);
+            const timeout = setTimeout(() => finishAttempt(false), 12000);
 
             function finishAttempt(success) {
                 if (completed) return;
@@ -661,9 +598,7 @@ function loadSocketIOLibrary() {
                 finishAttempt(typeof window.io === 'function');
             };
 
-            script.onerror = () => {
-                finishAttempt(false);
-            };
+            script.onerror = () => finishAttempt(false);
 
             document.head.appendChild(script);
         }
@@ -672,9 +607,7 @@ function loadSocketIOLibrary() {
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', async () => {
-
     const $ = id => document.getElementById(id);
 
     const setup = $('setup');
@@ -682,10 +615,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const messages = $('messages');
     const messageInput = $('message-input');
 
-    /*
-     * Wait for Socket.IO to load before starting the application.
-     * This avoids the previous CDN loading race.
-     */
     try {
         $('status').textContent = 'Loading chat library...';
         await loadSocketIOLibrary();
@@ -696,14 +625,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         $('status').style.color = '#fb7185';
         $('notice').textContent =
             'Could not load the chat library. Check your connection and refresh the page.';
-
         return;
     }
 
-    /*
-     * Connect manually after the library has loaded.
-     * Automatic reconnection handles temporary network interruptions.
-     */
     const socket = window.io('https://swypyy-messenger.onrender.com', {
         autoConnect: false,
         timeout: 10000,
@@ -753,9 +677,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         $('send-btn').disabled = !connected;
     }
 
-    /*
-     * Connection feedback
-     */
     socket.on('connect', () => {
         clearTimeout(connectionHintTimeout);
         updateStatus(true);
@@ -764,7 +685,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     socket.on('disconnect', () => {
         updateStatus(false);
-
         $('status').textContent = '● Disconnected. Reconnecting...';
 
         if (currentRoom) {
@@ -782,18 +702,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         $('status').textContent = '● Reconnecting to server...';
     });
 
-    socket.io.on('reconnect', () => {
-        updateStatus(true);
-    });
+    socket.io.on('reconnect', () => updateStatus(true));
 
     socket.io.on('reconnect_error', () => {
         $('status').textContent = '● Server unavailable. Retrying...';
     });
 
-    /*
-     * If the connection takes longer than expected, explain that
-     * the server may be waking up instead of leaving a vague message.
-     */
     connectionHintTimeout = setTimeout(() => {
         if (!socket.connected) {
             $('status').textContent = '● Server may be waking up...';
@@ -887,7 +801,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         toast(host ? 'Room created!' : 'Joined room!');
-
         setTimeout(() => messageInput.focus(), 100);
     }
 
@@ -915,9 +828,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (message) notice(message);
     }
 
-    /*
-     * Create room
-     */
     $('create-form').addEventListener('submit', event => {
         event.preventDefault();
 
@@ -940,9 +850,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         socket.emit('create-room', { username });
     });
 
-    /*
-     * Room code formatting
-     */
     $('room-code').addEventListener('input', event => {
         event.target.value = event.target.value
             .toUpperCase()
@@ -950,9 +857,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             .slice(0, 6);
     });
 
-    /*
-     * Join room
-     */
     $('join-form').addEventListener('submit', event => {
         event.preventDefault();
 
@@ -981,9 +885,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         socket.emit('join-room', { username, code });
     });
 
-    /*
-     * Room events
-     */
     socket.on('room-created', data => {
         enterRoom(data.code, data.users, data.messages, true);
     });
@@ -1004,9 +905,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         reset(reason || 'This room has ended.');
     });
 
-    socket.on('room-left', () => {
-        reset('You left the room.');
-    });
+    socket.on('room-left', () => reset('You left the room.'));
 
     socket.on('user-joined', data => {
         if (Array.isArray(data.users)) {
@@ -1028,9 +927,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     socket.on('new-message', showMessage);
 
-    /*
-     * Send messages
-     */
     $('message-form').addEventListener('submit', event => {
         event.preventDefault();
 
@@ -1065,9 +961,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    /*
-     * Typing indicators
-     */
     messageInput.addEventListener('input', () => {
         if (!currentRoom || !socket.connected) return;
 
@@ -1129,9 +1022,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 : names.length + ' people are typing...';
     }
 
-    /*
-     * Copy room code and invitations
-     */
     async function copyText(text) {
         try {
             await navigator.clipboard.writeText(text);
@@ -1179,9 +1069,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    /*
-     * Leave room
-     */
     $('leave-btn').addEventListener('click', () => {
         if (!currentRoom) return;
 
@@ -1199,12 +1086,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         socket.emit('leave-room');
     });
 
-    /*
-     * Start connecting only after the library and page are ready.
-     */
     updateStatus(false);
     socket.connect();
-
 });
 </script>
 
