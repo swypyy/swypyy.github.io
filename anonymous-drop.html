@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -24,32 +23,35 @@
     <link rel="icon" type="image/png" href="assets/s-logo.png">
     <link rel="apple-touch-icon" href="assets/s-logo.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-
+    <!-- Tailwind configuration MUST come before the CDN script -->
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        void: '#07060b',
-                        surface: '#120f1d',
-                        'surface-light': '#1c172e',
-                        brand: {
-                            purple: '#7c3aed',
-                            light: '#a78bfa',
-                            glow: '#c084fc',
-                            accent: '#d8b4fe'
+        tailwind = {
+            config: {
+                theme: {
+                    extend: {
+                        colors: {
+                            void: '#07060b',
+                            surface: '#120f1d',
+                            'surface-light': '#1c172e',
+                            brand: {
+                                purple: '#7c3aed',
+                                light: '#a78bfa',
+                                glow: '#c084fc',
+                                accent: '#d8b4fe'
+                            }
+                        },
+                        fontFamily: {
+                            sans: ['Inter', 'system-ui', 'sans-serif'],
+                            cursive: ['Caveat', 'cursive', 'sans-serif']
                         }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        cursive: ['Caveat', 'cursive', 'sans-serif']
                     }
                 }
             }
         };
     </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -81,12 +83,25 @@
             opacity: 0.6;
             cursor: not-allowed;
         }
+
+        button:focus-visible,
+        a:focus-visible,
+        article:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 2px solid #a78bfa;
+            outline-offset: 3px;
+        }
+
+        .floating-button {
+            bottom: max(1.5rem, env(safe-area-inset-bottom));
+        }
     </style>
 </head>
 
 <body class="min-h-screen flex flex-col selection:bg-brand-purple selection:text-white">
 
-    <!-- HEADER: LOGO ONLY -->
+    <!-- HEADER -->
     <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
         <div class="w-full px-6 md:px-10 xl:px-16 h-20 flex items-center">
             <a href="index.html" class="flex items-center group" aria-label="Swypyy Home">
@@ -107,7 +122,7 @@
 
     <main class="flex-grow">
 
-        <!-- COMPACT HERO -->
+        <!-- HERO -->
         <section class="relative px-6 pt-10 pb-9 sm:pt-14 sm:pb-12 purple-glow-bg">
             <div class="max-w-3xl mx-auto text-center space-y-4">
 
@@ -121,6 +136,7 @@
 
                 <div class="pt-1">
                     <button
+                        type="button"
                         onclick="showCreateView()"
                         class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white text-sm font-semibold transition-all shadow-lg shadow-brand-purple/20"
                     >
@@ -138,13 +154,17 @@
 
                 <!-- FEED VIEW -->
                 <div id="feed-view" class="space-y-5">
+
                     <div class="flex items-center justify-between gap-3">
                         <div>
                             <h2 class="text-xl font-bold text-white">Latest Drops</h2>
-                            <p class="text-xs text-gray-500 mt-1">Thoughts shared by the community</p>
+                            <p class="text-xs text-gray-500 mt-1">
+                                Thoughts shared by the community
+                            </p>
                         </div>
 
                         <button
+                            type="button"
                             onclick="fetchPosts()"
                             class="inline-flex items-center gap-2 text-xs text-gray-400 hover:text-brand-light bg-white/5 hover:bg-white/10 border border-white/5 px-3 py-2 rounded-lg transition"
                             aria-label="Refresh drops"
@@ -154,20 +174,24 @@
                         </button>
                     </div>
 
-                    <div id="posts-container" class="space-y-4">
+                    <div id="posts-container" class="space-y-4" aria-live="polite">
                         <p class="text-gray-400 text-center py-10">Loading drops...</p>
                     </div>
                 </div>
 
-                <!-- CREATE POST VIEW -->
+                <!-- CREATE VIEW -->
                 <div id="create-view" class="hidden space-y-5">
+
                     <div class="flex justify-between items-center gap-3">
                         <div>
                             <h2 class="text-xl font-bold text-white">Create a Drop</h2>
-                            <p class="text-xs text-gray-500 mt-1">Share what's on your mind.</p>
+                            <p class="text-xs text-gray-500 mt-1">
+                                Share what's on your mind.
+                            </p>
                         </div>
 
                         <button
+                            type="button"
                             onclick="showFeedView()"
                             class="text-sm text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl transition"
                         >
@@ -177,17 +201,19 @@
 
                     <form
                         id="create-form"
-                        onsubmit="event.preventDefault(); createPost();"
                         class="bg-surface border border-white/10 p-5 sm:p-7 rounded-2xl space-y-4 shadow-xl purple-glow-card"
                     >
+
                         <div>
                             <label for="author" class="block text-xs font-medium text-gray-400 mb-2">
                                 Name <span class="text-gray-600">(Optional)</span>
                             </label>
+
                             <input
                                 type="text"
                                 id="author"
                                 maxlength="60"
+                                autocomplete="off"
                                 placeholder="Your name or nickname"
                                 class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white text-sm outline-none focus:border-brand-purple transition"
                             >
@@ -197,6 +223,7 @@
                             <label for="title" class="block text-xs font-medium text-gray-400 mb-2">
                                 Title
                             </label>
+
                             <input
                                 type="text"
                                 id="title"
@@ -211,6 +238,7 @@
                             <label for="content" class="block text-xs font-medium text-gray-400 mb-2">
                                 Your thoughts
                             </label>
+
                             <textarea
                                 id="content"
                                 placeholder="Write anything you want to share..."
@@ -223,6 +251,7 @@
 
                         <!-- PERMANENT POST WARNING -->
                         <div class="bg-amber-500/10 border border-amber-500/25 rounded-xl p-4 flex gap-3">
+
                             <div class="shrink-0 mt-0.5">
                                 <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400"></i>
                             </div>
@@ -246,12 +275,15 @@
                         >
                             Publish Drop
                         </button>
+
                     </form>
                 </div>
 
-                <!-- SINGLE POST DETAIL VIEW -->
+                <!-- DETAIL VIEW -->
                 <div id="detail-view" class="hidden space-y-5">
+
                     <button
+                        type="button"
                         onclick="showFeedView()"
                         class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
                     >
@@ -268,6 +300,18 @@
         </section>
 
     </main>
+
+    <!-- FLOATING CREATE BUTTON -->
+    <button
+        id="floating-create-button"
+        type="button"
+        onclick="showCreateView()"
+        aria-label="Create a Drop"
+        title="Create a Drop"
+        class="floating-button fixed right-6 z-40 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-brand-purple hover:bg-brand-glow text-white flex items-center justify-center shadow-2xl shadow-brand-purple/40 hover:scale-110 active:scale-95 transition-all duration-200 border border-white/20"
+    >
+        <i data-lucide="plus" class="w-7 h-7 sm:w-8 sm:h-8"></i>
+    </button>
 
     <!-- FOOTER -->
     <footer class="py-7 border-t border-white/5 bg-void text-center text-gray-600 text-xs">
@@ -301,7 +345,9 @@
             </p>
 
             <div class="grid grid-cols-3 gap-2 pt-1">
+
                 <button
+                    type="button"
                     onclick="goBack()"
                     class="bg-white/5 hover:bg-white/10 text-gray-300 py-2.5 rounded-xl text-sm font-medium transition"
                 >
@@ -309,6 +355,7 @@
                 </button>
 
                 <button
+                    type="button"
                     onclick="declineTerms()"
                     class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 py-2.5 rounded-xl text-sm font-medium transition"
                 >
@@ -316,34 +363,55 @@
                 </button>
 
                 <button
+                    type="button"
                     onclick="acceptTerms()"
                     class="bg-brand-purple hover:bg-brand-glow text-white py-2.5 rounded-xl text-sm font-semibold transition"
                 >
                     Accept
                 </button>
+
             </div>
         </div>
     </div>
 
     <script>
-        // Existing live Render backend.
+        // ==========================================
+        // CONFIGURATION
+        // ==========================================
+
         const API_URL = 'https://anonymous-blogger-djqp.onrender.com';
 
         let allPostsData = [];
         let currentPostId = null;
 
-        // Initialize icons and footer.
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
+        // Request counters prevent outdated responses from replacing newer content.
+        let postsRequestId = 0;
+        let commentsRequestId = 0;
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
 
         document.getElementById('footer-year').textContent =
             new Date().getFullYear();
 
-        // Warning modal.
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // ==========================================
+        // WARNING MODAL
+        // ==========================================
+
         function acceptTerms() {
             document.getElementById('warning-modal').style.display = 'none';
-            localStorage.setItem('warningAccepted', 'true');
+
+            try {
+                localStorage.setItem('warningAccepted', 'true');
+            } catch (error) {
+                // The warning is still accepted for this session.
+                console.warn('Browser storage is unavailable.');
+            }
         }
 
         function declineTerms() {
@@ -359,18 +427,29 @@
                 document.getElementById('warning-modal').style.display = 'none';
             }
         } catch (error) {
-            // The warning remains visible if browser storage is unavailable.
+            // Keep the warning visible when storage is unavailable.
         }
 
-        // View switchers.
+        // ==========================================
+        // VIEW MANAGEMENT
+        // ==========================================
+
         function showFeedView() {
             document.getElementById('feed-view').classList.remove('hidden');
             document.getElementById('create-view').classList.add('hidden');
             document.getElementById('detail-view').classList.add('hidden');
 
+            document.getElementById('floating-create-button').classList.remove('hidden');
+
             currentPostId = null;
+            commentsRequestId++;
+
             fetchPosts();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
         function showCreateView() {
@@ -378,23 +457,42 @@
             document.getElementById('create-view').classList.remove('hidden');
             document.getElementById('detail-view').classList.add('hidden');
 
-            if (typeof lucide !== 'undefined') lucide.createIcons();
+            document.getElementById('floating-create-button').classList.add('hidden');
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            document.getElementById('title').focus();
         }
 
         function showDetailView(postId) {
-            currentPostId = postId;
+            currentPostId = String(postId);
+            commentsRequestId++;
 
             document.getElementById('feed-view').classList.add('hidden');
             document.getElementById('create-view').classList.add('hidden');
             document.getElementById('detail-view').classList.remove('hidden');
 
+            document.getElementById('floating-create-button').classList.remove('hidden');
+
             renderSinglePost(postId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
-        // Safely escape content before inserting it into HTML.
+        // ==========================================
+        // SECURITY HELPERS
+        // ==========================================
+
         function escapeHtml(value) {
             return String(value ?? '').replace(/[&<>'"]/g, character => ({
                 '&': '&amp;',
@@ -403,6 +501,24 @@
                 "'": '&#39;',
                 '"': '&quot;'
             })[character]);
+        }
+
+        // Client-side convenience check.
+        // The backend MUST enforce this restriction too.
+        function isReservedAuthorName(value) {
+            const normalized = String(value ?? '')
+                .normalize('NFKC')
+                .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                .trim()
+                .toLowerCase();
+
+            return normalized === 'swypyy';
+        }
+
+        function isValidPostId(value) {
+            const id = Number(value);
+
+            return Number.isSafeInteger(id) && id > 0;
         }
 
         function formatDate(value) {
@@ -417,9 +533,19 @@
             return escapeHtml(date.toLocaleString());
         }
 
-        // Fetch and render posts.
+        function refreshIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // ==========================================
+        // FETCH POSTS
+        // ==========================================
+
         async function fetchPosts() {
             const container = document.getElementById('posts-container');
+            const requestId = ++postsRequestId;
 
             container.innerHTML =
                 '<p class="text-gray-400 text-center py-10">Loading drops...</p>';
@@ -428,7 +554,7 @@
                 const response = await fetch(`${API_URL}/api/posts`);
 
                 if (!response.ok) {
-                    throw new Error('Unable to load posts.');
+                    throw new Error(`Server returned ${response.status}`);
                 }
 
                 const data = await response.json();
@@ -437,32 +563,42 @@
                     throw new Error('Unexpected response from server.');
                 }
 
+                // Ignore older requests.
+                if (requestId !== postsRequestId) return;
+
                 allPostsData = data;
 
-                if (allPostsData.length === 0) {
+                const validPosts = allPostsData.filter(post =>
+                    isValidPostId(post.id)
+                );
+
+                if (validPosts.length === 0) {
                     container.innerHTML = `
                         <div class="bg-surface border border-white/10 rounded-2xl p-8 text-center">
                             <div class="w-12 h-12 mx-auto rounded-2xl bg-brand-purple/10 flex items-center justify-center mb-4">
                                 <i data-lucide="message-circle" class="w-6 h-6 text-brand-light"></i>
                             </div>
+
                             <h3 class="text-white font-semibold mb-2">No drops yet</h3>
-                            <p class="text-gray-500 text-sm">Be the first to share something!</p>
+
+                            <p class="text-gray-500 text-sm">
+                                Be the first to share something!
+                            </p>
                         </div>
                     `;
 
-                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                    refreshIcons();
                     return;
                 }
 
-                container.innerHTML = allPostsData.map(post => {
+                container.innerHTML = validPosts.map(post => {
                     const content = String(post.content ?? '');
+
                     const preview = content.length > 180
                         ? content.substring(0, 180) + '...'
                         : content;
 
                     const postId = Number(post.id);
-
-                    if (!Number.isSafeInteger(postId)) return '';
 
                     return `
                         <article
@@ -474,11 +610,16 @@
                             onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); showDetailView(${postId}); }"
                         >
                             <div class="flex justify-between items-center gap-3 text-xs text-gray-500">
-                                <span class="truncate">By: ${escapeHtml(post.author || 'Anonymous')}</span>
-                                <span class="shrink-0">${formatDate(post.date)}</span>
+                                <span class="truncate">
+                                    By: ${escapeHtml(post.author || 'Anonymous')}
+                                </span>
+
+                                <span class="shrink-0">
+                                    ${formatDate(post.date)}
+                                </span>
                             </div>
 
-                            <h3 class="text-lg sm:text-xl font-bold text-brand-light">
+                            <h3 class="text-lg sm:text-xl font-bold text-brand-light break-words">
                                 ${escapeHtml(post.title)}
                             </h3>
 
@@ -492,39 +633,61 @@
                     `;
                 }).join('');
 
-                if (typeof lucide !== 'undefined') lucide.createIcons();
+                refreshIcons();
 
             } catch (error) {
+                if (requestId !== postsRequestId) return;
+
                 container.innerHTML = `
                     <div class="bg-surface border border-red-500/20 rounded-2xl p-6 text-center">
                         <i data-lucide="cloud-off" class="w-7 h-7 text-red-400 mx-auto mb-3"></i>
-                        <p class="text-red-400 text-sm">Failed to load drops.</p>
-                        <p class="text-gray-500 text-xs mt-2">The server might be waking up. Please try again.</p>
-                        <button onclick="fetchPosts()" class="mt-4 text-xs text-brand-light hover:text-white">
+
+                        <p class="text-red-400 text-sm">
+                            Failed to load drops.
+                        </p>
+
+                        <p class="text-gray-500 text-xs mt-2">
+                            The server might be waking up. Please try again.
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="fetchPosts()"
+                            class="mt-4 text-xs text-brand-light hover:text-white"
+                        >
                             Try again
                         </button>
                     </div>
                 `;
 
-                if (typeof lucide !== 'undefined') lucide.createIcons();
-                console.error(error);
+                refreshIcons();
+                console.error('Fetch posts error:', error);
             }
         }
 
-        // Render one post and its comments.
+        // ==========================================
+        // SINGLE POST
+        // ==========================================
+
         async function renderSinglePost(postId) {
-            const post = allPostsData.find(item => String(item.id) === String(postId));
+            const post = allPostsData.find(item =>
+                String(item.id) === String(postId)
+            );
+
             const container = document.getElementById('single-post-container');
 
             if (!post) {
                 container.innerHTML = `
-                    <p class="text-red-400 text-sm">Post not found. It may have been removed.</p>
+                    <p class="text-red-400 text-sm">
+                        Post not found. It may have been removed.
+                    </p>
                 `;
                 return;
             }
 
             container.innerHTML = `
                 <article class="bg-surface border border-white/10 p-5 sm:p-7 rounded-2xl space-y-4 shadow-xl">
+
                     <div class="flex justify-between items-center gap-3 text-xs text-gray-500">
                         <span>By: ${escapeHtml(post.author || 'Anonymous')}</span>
                         <span>${formatDate(post.date)}</span>
@@ -537,9 +700,16 @@
                     <p class="text-gray-300 whitespace-pre-wrap break-words leading-relaxed text-sm sm:text-base">${escapeHtml(post.content)}</p>
 
                     <div class="border-t border-white/10 pt-6 mt-6 space-y-4">
-                        <h4 class="font-semibold text-gray-200">Comments</h4>
 
-                        <div id="single-comments-container" class="space-y-3 text-sm">
+                        <h4 class="font-semibold text-gray-200">
+                            Comments
+                        </h4>
+
+                        <div
+                            id="single-comments-container"
+                            class="space-y-3 text-sm"
+                            aria-live="polite"
+                        >
                             <p class="text-gray-500">Loading comments...</p>
                         </div>
 
@@ -564,26 +734,35 @@
                                 Reply
                             </button>
                         </form>
+
                     </div>
                 </article>
             `;
 
-            if (typeof lucide !== 'undefined') lucide.createIcons();
+            refreshIcons();
 
             fetchComments(post.id);
         }
 
-        // Fetch comments.
+        // ==========================================
+        // FETCH COMMENTS
+        // ==========================================
+
         async function fetchComments(postId) {
             const container = document.getElementById('single-comments-container');
 
             if (!container) return;
 
+            const requestId = ++commentsRequestId;
+            const requestedPostId = String(postId);
+
             try {
-                const response = await fetch(`${API_URL}/api/comments/${encodeURIComponent(postId)}`);
+                const response = await fetch(
+                    `${API_URL}/api/comments/${encodeURIComponent(postId)}`
+                );
 
                 if (!response.ok) {
-                    throw new Error('Unable to load comments.');
+                    throw new Error(`Server returned ${response.status}`);
                 }
 
                 const comments = await response.json();
@@ -592,34 +771,57 @@
                     throw new Error('Unexpected comments response.');
                 }
 
-                if (currentPostId !== postId) return;
+                // Prevent comments from appearing on the wrong post.
+                if (
+                    requestId !== commentsRequestId ||
+                    String(currentPostId) !== requestedPostId
+                ) {
+                    return;
+                }
 
                 if (comments.length === 0) {
                     container.innerHTML = `
-                        <p class="text-gray-500 text-xs">No comments yet. Be the first to reply!</p>
+                        <p class="text-gray-500 text-xs">
+                            No comments yet. Be the first to reply!
+                        </p>
                     `;
                     return;
                 }
 
                 container.innerHTML = comments.map(comment => `
                     <div class="bg-black/30 p-3.5 rounded-xl border border-white/5 space-y-2">
+
                         <p class="text-gray-200 break-words whitespace-pre-wrap">${escapeHtml(comment.text)}</p>
-                        <p class="text-[10px] text-gray-500">${formatDate(comment.time)}</p>
+
+                        <p class="text-[10px] text-gray-500">
+                            ${formatDate(comment.time)}
+                        </p>
+
                     </div>
                 `).join('');
 
             } catch (error) {
-                if (currentPostId !== postId) return;
+                if (
+                    requestId !== commentsRequestId ||
+                    String(currentPostId) !== requestedPostId
+                ) {
+                    return;
+                }
 
                 container.innerHTML = `
-                    <p class="text-red-400 text-xs">Failed to load comments. Please refresh and try again.</p>
+                    <p class="text-red-400 text-xs">
+                        Failed to load comments. Please refresh and try again.
+                    </p>
                 `;
 
-                console.error(error);
+                console.error('Fetch comments error:', error);
             }
         }
 
-        // Submit a comment.
+        // ==========================================
+        // ADD COMMENT
+        // ==========================================
+
         async function addComment(postId) {
             const input = document.getElementById('single-comment-input');
             const button = document.getElementById('reply-button');
@@ -628,30 +830,47 @@
 
             const text = input.value.trim();
 
-            if (!text) return;
+            if (!text) {
+                input.focus();
+                return;
+            }
+
+            if (text.length > 1000) {
+                alert('Your comment is too long.');
+                return;
+            }
+
+            if (!isValidPostId(postId)) {
+                alert('Invalid post.');
+                return;
+            }
 
             button.disabled = true;
             button.textContent = 'Sending...';
 
             try {
-                const response = await fetch(`${API_URL}/api/comments/${encodeURIComponent(postId)}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ text })
-                });
+                const response = await fetch(
+                    `${API_URL}/api/comments/${encodeURIComponent(postId)}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text })
+                    }
+                );
 
                 if (!response.ok) {
-                    throw new Error('Error adding comment.');
+                    throw new Error(`Server returned ${response.status}`);
                 }
 
                 input.value = '';
+
                 await fetchComments(postId);
 
             } catch (error) {
                 alert('Unable to add your comment. Please try again.');
-                console.error(error);
+                console.error('Add comment error:', error);
 
             } finally {
                 button.disabled = false;
@@ -659,7 +878,10 @@
             }
         }
 
-        // Publish a post.
+        // ==========================================
+        // CREATE POST
+        // ==========================================
+
         async function createPost() {
             const authorInput = document.getElementById('author');
             const titleInput = document.getElementById('title');
@@ -675,6 +897,17 @@
                 return;
             }
 
+            if (title.length > 120 || content.length > 10000 || author.length > 60) {
+                alert('One or more fields exceed the allowed length.');
+                return;
+            }
+
+            if (isReservedAuthorName(author)) {
+                alert('The author name "Swypyy" is reserved and cannot be used.');
+                authorInput.focus();
+                return;
+            }
+
             button.disabled = true;
             button.textContent = 'Publishing...';
 
@@ -684,11 +917,27 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ author, title, content })
+                    body: JSON.stringify({
+                        author,
+                        title,
+                        content
+                    })
                 });
 
                 if (!response.ok) {
-                    throw new Error('Error publishing post.');
+                    let message = 'Unable to publish your drop.';
+
+                    try {
+                        const errorData = await response.json();
+
+                        if (errorData.error || errorData.message) {
+                            message = errorData.error || errorData.message;
+                        }
+                    } catch (error) {
+                        // Keep the default message.
+                    }
+
+                    throw new Error(message);
                 }
 
                 authorInput.value = '';
@@ -698,8 +947,8 @@
                 showFeedView();
 
             } catch (error) {
-                alert('Unable to publish your drop. The server might be waking up. Please try again.');
-                console.error(error);
+                alert(error.message || 'Unable to publish your drop. The server might be waking up. Please try again.');
+                console.error('Create post error:', error);
 
             } finally {
                 button.disabled = false;
@@ -707,8 +956,21 @@
             }
         }
 
-        // Initial feed load.
+        // ==========================================
+        // FORM SUBMISSION
+        // ==========================================
+
+        document.getElementById('create-form').addEventListener('submit', event => {
+            event.preventDefault();
+            createPost();
+        });
+
+        // ==========================================
+        // INITIAL FEED LOAD
+        // ==========================================
+
         fetchPosts();
+
     </script>
 
 </body>
