@@ -1,38 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO Primary Tags -->
-    <title>Swypyy | Creative Hub - Web Novels, Apps, Art & Projects</title>
-    <meta name="description" content="Welcome to Swypyy's digital lab. Explore original web novels, web apps, tools, digital art, and open-source GitHub projects built with creativity and AI.">
-    <meta name="keywords" content="Swypyy, web novels, indie developer, AI creations, digital art gallery, open source projects, web apps">
+    <meta name="theme-color" content="#07060b">
+
+    <title>Anonymous Drop | Swypyy</title>
+    <meta name="description" content="Share your thoughts anonymously and discover different perspectives on Swypyy's Anonymous Drop.">
     <meta name="author" content="Swypyy">
-    
-    <!-- Open Graph / Social Media (Discord, Twitter, Telegram previews) -->
+    <meta name="robots" content="noindex, follow">
+
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://swypyy.github.io/">
-    <meta property="og:title" content="Swypyy | Creative Hub - Web Novels, Apps, Art & Projects">
-    <meta property="og:description" content="Explore original web novels, web apps, digital art, and open-source projects by Swypyy.">
-    <meta property="og:image" content="https://swypyy.github.io/Assets/logo.png">
+    <meta property="og:title" content="Anonymous Drop | Swypyy">
+    <meta property="og:description" content="A place to share your thoughts anonymously.">
+    <meta property="og:image" content="https://swypyy.github.io/assets/logo.png">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Swypyy | Creative Hub">
-    <meta name="twitter:description" content="Explore original web novels, web apps, digital art, and open-source projects by Swypyy.">
-    <meta name="twitter:image" content="https://swypyy.github.io/Assets/logo.png">
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swypyy Anonymous Blog</title>
+    <meta name="twitter:title" content="Anonymous Drop | Swypyy">
+    <meta name="twitter:description" content="Share your thoughts anonymously on Swypyy.">
+    <meta name="twitter:image" content="https://swypyy.github.io/assets/logo.png">
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="assets/s-logo.png">
-<link rel="apple-touch-icon" href="assets/s-logo.png">
-    
-    <!-- Tailwind CSS -->
+    <link rel="icon" type="image/png" href="assets/s-logo.png">
+    <link rel="apple-touch-icon" href="assets/s-logo.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -44,289 +37,669 @@
                         brand: {
                             purple: '#7c3aed',
                             light: '#a78bfa',
-                            glow: '#c084fc'
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
                     }
                 }
             }
-        }
+        };
     </script>
-</head>
-<body class="bg-[#07060b] text-white min-h-screen p-6 selection:bg-brand-purple selection:text-white">
 
-    <!-- Warning Modal -->
-    <div id="warning-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
-        <div class="bg-gray-900 border border-gray-700 rounded-2xl p-6 max-w-md w-full text-white shadow-2xl space-y-4">
-            <h3 class="text-xl font-bold text-red-400">⚠️ Anonymous Drop Warning</h3>
-            <p class="text-gray-300 text-sm leading-relaxed">
-                You are entering an open, unmoderated anonymous drop zone. Content posted here is public, permanent, and unfiltered. Do you wish to proceed?
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            background-color: #07060b;
+            color: #f3f4f6;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .purple-glow-bg {
+            background: radial-gradient(
+                circle at 50% 20%,
+                rgba(124, 58, 237, 0.19) 0%,
+                rgba(7, 6, 11, 0) 72%
+            );
+        }
+
+        .purple-glow-card {
+            box-shadow: 0 0 30px -8px rgba(124, 58, 237, 0.2);
+        }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col selection:bg-brand-purple selection:text-white">
+
+    <!-- HEADER: LOGO ONLY -->
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="w-full px-6 md:px-10 xl:px-16 h-20 flex items-center">
+            <a href="index.html" class="flex items-center group" aria-label="Swypyy Home">
+                <img
+                    src="assets/logo.png"
+                    alt="Swypyy Logo"
+                    class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                    onerror="this.onerror=null; this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';"
+                >
+
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- BACK BUTTON -->
+        <div class="px-6 md:px-10 xl:px-16 pt-5">
+            <a
+                href="index.html"
+                class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+            >
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Back to Home
+            </a>
+        </div>
+
+        <!-- COMPACT HERO -->
+        <section class="relative px-6 pt-10 pb-9 sm:pt-14 sm:pb-12 purple-glow-bg">
+            <div class="max-w-3xl mx-auto text-center space-y-4">
+
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+                    Anonymous <span class="text-brand-light">Drop</span>
+                </h1>
+
+                <p class="text-sm sm:text-base text-gray-400 max-w-lg mx-auto leading-relaxed">
+                    Share your thoughts, discover different perspectives, and join conversations.
+                </p>
+
+                <div class="pt-1">
+                    <button
+                        onclick="showCreateView()"
+                        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-brand-purple hover:bg-brand-glow text-white text-sm font-semibold transition-all shadow-lg shadow-brand-purple/20"
+                    >
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        Create a Drop
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PAGE CONTENT -->
+        <section class="px-6 pb-20">
+            <div class="max-w-3xl mx-auto">
+
+                <!-- FEED VIEW -->
+                <div id="feed-view" class="space-y-5">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Latest Drops</h2>
+                            <p class="text-xs text-gray-500 mt-1">Thoughts shared by the community</p>
+                        </div>
+
+                        <button
+                            onclick="fetchPosts()"
+                            class="inline-flex items-center gap-2 text-xs text-gray-400 hover:text-brand-light bg-white/5 hover:bg-white/10 border border-white/5 px-3 py-2 rounded-lg transition"
+                            aria-label="Refresh drops"
+                        >
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            Refresh
+                        </button>
+                    </div>
+
+                    <div id="posts-container" class="space-y-4">
+                        <p class="text-gray-400 text-center py-10">Loading drops...</p>
+                    </div>
+                </div>
+
+                <!-- CREATE POST VIEW -->
+                <div id="create-view" class="hidden space-y-5">
+                    <div class="flex justify-between items-center gap-3">
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Create a Drop</h2>
+                            <p class="text-xs text-gray-500 mt-1">Share what's on your mind.</p>
+                        </div>
+
+                        <button
+                            onclick="showFeedView()"
+                            class="text-sm text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl transition"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+
+                    <form
+                        id="create-form"
+                        onsubmit="event.preventDefault(); createPost();"
+                        class="bg-surface border border-white/10 p-5 sm:p-7 rounded-2xl space-y-4 shadow-xl purple-glow-card"
+                    >
+                        <div>
+                            <label for="author" class="block text-xs font-medium text-gray-400 mb-2">
+                                Name <span class="text-gray-600">(Optional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="author"
+                                maxlength="60"
+                                placeholder="Your name or nickname"
+                                class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white text-sm outline-none focus:border-brand-purple transition"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="title" class="block text-xs font-medium text-gray-400 mb-2">
+                                Title
+                            </label>
+                            <input
+                                type="text"
+                                id="title"
+                                maxlength="120"
+                                placeholder="Give your drop a title"
+                                required
+                                class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white text-sm outline-none focus:border-brand-purple transition"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="content" class="block text-xs font-medium text-gray-400 mb-2">
+                                Your thoughts
+                            </label>
+                            <textarea
+                                id="content"
+                                placeholder="Write anything you want to share..."
+                                rows="6"
+                                maxlength="10000"
+                                required
+                                class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white text-sm outline-none focus:border-brand-purple transition resize-y"
+                            ></textarea>
+                        </div>
+
+                        <button
+                            id="publish-button"
+                            type="submit"
+                            class="w-full bg-brand-purple hover:bg-brand-glow text-white font-semibold py-3 rounded-xl transition-all shadow-lg shadow-brand-purple/20 text-sm"
+                        >
+                            Publish Drop
+                        </button>
+                    </form>
+                </div>
+
+                <!-- SINGLE POST DETAIL VIEW -->
+                <div id="detail-view" class="hidden space-y-5">
+                    <button
+                        onclick="showFeedView()"
+                        class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                    >
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        Back to Drops
+                    </button>
+
+                    <div id="single-post-container" class="space-y-5">
+                        <!-- Post and comments are inserted here -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-7 border-t border-white/5 bg-void text-center text-gray-600 text-xs">
+        <p>
+            &copy; <span id="footer-year"></span> SWYPYY. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- WARNING MODAL -->
+    <div
+        id="warning-modal"
+        class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="warning-title"
+    >
+        <div class="bg-surface border border-white/10 rounded-2xl p-6 max-w-md w-full text-white shadow-2xl space-y-5">
+
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                    <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i>
+                </div>
+
+                <h3 id="warning-title" class="text-lg font-bold text-white">
+                    Anonymous Drop Notice
+                </h3>
+            </div>
+
+            <p class="text-gray-400 text-sm leading-relaxed">
+                You are entering an open anonymous drop zone. Posts and comments are public and may be visible to anyone. Content may not be moderated. Do not share passwords, personal contact details, or other private information.
             </p>
-            <div class="flex space-x-3 pt-2">
-                <button onclick="goBack()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-gray-200 py-2.5 rounded-xl font-medium transition">
+
+            <div class="grid grid-cols-3 gap-2 pt-1">
+                <button
+                    onclick="goBack()"
+                    class="bg-white/5 hover:bg-white/10 text-gray-300 py-2.5 rounded-xl text-sm font-medium transition"
+                >
                     Back
                 </button>
-                <button onclick="declineTerms()" class="flex-1 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-600/50 py-2.5 rounded-xl font-medium transition">
+
+                <button
+                    onclick="declineTerms()"
+                    class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 py-2.5 rounded-xl text-sm font-medium transition"
+                >
                     Decline
                 </button>
-                <button onclick="acceptTerms()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-xl font-medium transition shadow-lg shadow-indigo-600/30">
+
+                <button
+                    onclick="acceptTerms()"
+                    class="bg-brand-purple hover:bg-brand-glow text-white py-2.5 rounded-xl text-sm font-semibold transition"
+                >
                     Accept
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="max-w-2xl mx-auto space-y-6 pb-20">
-        
-        <!-- Header Section -->
-        <div class="flex flex-col space-y-3">
-            <a href="index.html" class="inline-flex items-center text-sm text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl transition-all w-fit">
-                ← Back to Home
-            </a>
-            <h1 class="text-3xl font-extrabold text-brand-light tracking-tight">Anonymous Drop</h1>
-        </div>
-
-        <!-- MAIN FEED VIEW -->
-        <div id="feed-view" class="space-y-4">
-            <div id="posts-container" class="space-y-4">
-                <p class="text-gray-400 text-center py-10">Loading drops...</p>
-            </div>
-        </div>
-
-        <!-- CREATE POST VIEW (Hidden by default) -->
-        <div id="create-view" class="hidden space-y-6">
-            <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold text-brand-light">Create New Drop</h2>
-                <button onclick="showFeedView()" class="text-sm bg-white/10 px-4 py-2 rounded-xl hover:bg-white/20 transition">Cancel</button>
-            </div>
-            <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-4 shadow-xl">
-                <input type="text" id="author" placeholder="Your Name (Optional)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple">
-                <input type="text" id="title" placeholder="Post Title" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple">
-                <textarea id="content" placeholder="Write anything you want into the void..." rows="6" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-purple"></textarea>
-                <button onclick="createPost()" class="w-full bg-brand-purple hover:bg-brand-glow text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-brand-purple/20">Publish Drop</button>
-            </div>
-        </div>
-
-        <!-- SINGLE POST DETAIL VIEW (Hidden by default) -->
-        <div id="detail-view" class="hidden space-y-6">
-            <button onclick="showFeedView()" class="inline-flex items-center text-sm text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl transition-all">
-                ← Back to Feed
-            </button>
-            <div id="single-post-container" class="space-y-6">
-                <!-- Injected via JS -->
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Floating "+" Action Button (Bottom Right) -->
-    <button onclick="showCreateView()" class="fixed bottom-6 right-6 bg-brand-purple hover:bg-brand-glow text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl shadow-brand-purple/50 text-3xl font-light transition-all transform hover:scale-105 z-40">
-        +
-    </button>
-
     <script>
-        // Your live Render backend URL
+        // Existing live Render backend.
         const API_URL = 'https://anonymous-blogger-djqp.onrender.com';
-        let allPostsData = [];
 
-        // Warning Modal Logic
+        let allPostsData = [];
+        let currentPostId = null;
+
+        // Initialize icons and footer.
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        document.getElementById('footer-year').textContent =
+            new Date().getFullYear();
+
+        // Warning modal.
         function acceptTerms() {
             document.getElementById('warning-modal').style.display = 'none';
             localStorage.setItem('warningAccepted', 'true');
         }
 
         function declineTerms() {
-            alert('You must accept the terms to view anonymous drops.');
-            window.location.reload();
+            window.location.href = 'index.html';
         }
 
         function goBack() {
-            window.history.back();
+            window.location.href = 'index.html';
         }
 
-        if (localStorage.getItem('warningAccepted') === 'true') {
-            document.getElementById('warning-modal').style.display = 'none';
+        try {
+            if (localStorage.getItem('warningAccepted') === 'true') {
+                document.getElementById('warning-modal').style.display = 'none';
+            }
+        } catch (error) {
+            // The warning remains visible if browser storage is unavailable.
         }
 
-        // View Switchers
+        // View switchers.
         function showFeedView() {
             document.getElementById('feed-view').classList.remove('hidden');
             document.getElementById('create-view').classList.add('hidden');
             document.getElementById('detail-view').classList.add('hidden');
+
+            currentPostId = null;
             fetchPosts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showCreateView() {
             document.getElementById('feed-view').classList.add('hidden');
             document.getElementById('create-view').classList.remove('hidden');
             document.getElementById('detail-view').classList.add('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showDetailView(postId) {
+            currentPostId = postId;
+
             document.getElementById('feed-view').classList.add('hidden');
             document.getElementById('create-view').classList.add('hidden');
             document.getElementById('detail-view').classList.remove('hidden');
+
             renderSinglePost(postId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Fetch and Render Feed
+        // Safely escape content before inserting it into HTML.
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>'"]/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            })[character]);
+        }
+
+        function formatDate(value) {
+            if (!value) return '';
+
+            const date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+                return escapeHtml(value);
+            }
+
+            return escapeHtml(date.toLocaleString());
+        }
+
+        // Fetch and render posts.
         async function fetchPosts() {
+            const container = document.getElementById('posts-container');
+
+            container.innerHTML =
+                '<p class="text-gray-400 text-center py-10">Loading drops...</p>';
+
             try {
-                const res = await fetch(`${API_URL}/api/posts`);
-                allPostsData = await res.json();
-                const container = document.getElementById('posts-container');
-                
+                const response = await fetch(`${API_URL}/api/posts`);
+
+                if (!response.ok) {
+                    throw new Error('Unable to load posts.');
+                }
+
+                const data = await response.json();
+
+                if (!Array.isArray(data)) {
+                    throw new Error('Unexpected response from server.');
+                }
+
+                allPostsData = data;
+
                 if (allPostsData.length === 0) {
-                    container.innerHTML = '<p class="text-gray-400 text-center py-10">No drops yet. Be the first to share something!</p>';
+                    container.innerHTML = `
+                        <div class="bg-surface border border-white/10 rounded-2xl p-8 text-center">
+                            <div class="w-12 h-12 mx-auto rounded-2xl bg-brand-purple/10 flex items-center justify-center mb-4">
+                                <i data-lucide="message-circle" class="w-6 h-6 text-brand-light"></i>
+                            </div>
+                            <h3 class="text-white font-semibold mb-2">No drops yet</h3>
+                            <p class="text-gray-500 text-sm">Be the first to share something!</p>
+                        </div>
+                    `;
+
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
                     return;
                 }
 
-                container.innerHTML = allPostsData.map(p => {
-                    const cleanContent = escapeHtml(p.content);
-                    const isLong = cleanContent.length > 100;
-                    const previewText = isLong ? cleanContent.substring(0, 100) + '...' : cleanContent;
+                container.innerHTML = allPostsData.map(post => {
+                    const content = String(post.content ?? '');
+                    const preview = content.length > 180
+                        ? content.substring(0, 180) + '...'
+                        : content;
+
+                    const postId = Number(post.id);
+
+                    if (!Number.isSafeInteger(postId)) return '';
 
                     return `
-                        <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-3 shadow-lg hover:border-white/20 transition cursor-pointer" onclick="if(event.target.tagName !== 'BUTTON') showDetailView(${p.id})">
-                            <div class="flex justify-between text-xs text-gray-400 font-mono">
-                                <span>By: ${escapeHtml(p.author)}</span>
-                                <span>${p.date}</span>
+                        <article
+                            class="bg-surface border border-white/10 p-5 sm:p-6 rounded-2xl space-y-3 shadow-lg hover:border-brand-purple/40 transition-all cursor-pointer"
+                            onclick="showDetailView(${postId})"
+                            tabindex="0"
+                            role="button"
+                            aria-label="Read post: ${escapeHtml(post.title)}"
+                            onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); showDetailView(${postId}); }"
+                        >
+                            <div class="flex justify-between items-center gap-3 text-xs text-gray-500">
+                                <span class="truncate">By: ${escapeHtml(post.author || 'Anonymous')}</span>
+                                <span class="shrink-0">${formatDate(post.date)}</span>
                             </div>
-                            <h3 class="text-xl font-bold text-brand-light">${escapeHtml(p.title)}</h3>
-                            <p class="text-gray-300 leading-relaxed">${previewText}</p>
-                            ${isLong ? `<div class="pt-2"><button onclick="showDetailView(${p.id})" class="text-xs bg-brand-purple/20 hover:bg-brand-purple/30 text-brand-light border border-brand-purple/40 px-3 py-1.5 rounded-lg transition font-medium">Read More</button></div>` : ''}
-                        </div>
+
+                            <h3 class="text-lg sm:text-xl font-bold text-brand-light">
+                                ${escapeHtml(post.title)}
+                            </h3>
+
+                            <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap break-words">${escapeHtml(preview)}</p>
+
+                            <div class="pt-1 flex items-center gap-1 text-xs font-semibold text-brand-light">
+                                Read post
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </div>
+                        </article>
                     `;
                 }).join('');
-            } catch (e) {
-                document.getElementById('posts-container').innerHTML = '<p class="text-red-400 text-center py-10">Failed to load posts. Render server might be waking up.</p>';
+
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="bg-surface border border-red-500/20 rounded-2xl p-6 text-center">
+                        <i data-lucide="cloud-off" class="w-7 h-7 text-red-400 mx-auto mb-3"></i>
+                        <p class="text-red-400 text-sm">Failed to load drops.</p>
+                        <p class="text-gray-500 text-xs mt-2">The server might be waking up. Please try again.</p>
+                        <button onclick="fetchPosts()" class="mt-4 text-xs text-brand-light hover:text-white">
+                            Try again
+                        </button>
+                    </div>
+                `;
+
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+                console.error(error);
             }
         }
 
-        // Render Single Post & Comments View
+        // Render one post and its comments.
         async function renderSinglePost(postId) {
-            const p = allPostsData.find(item => item.id == postId);
+            const post = allPostsData.find(item => String(item.id) === String(postId));
             const container = document.getElementById('single-post-container');
 
-            if (!p) {
-                container.innerHTML = '<p class="text-red-400">Post not found.</p>';
+            if (!post) {
+                container.innerHTML = `
+                    <p class="text-red-400 text-sm">Post not found. It may have been removed.</p>
+                `;
                 return;
             }
 
             container.innerHTML = `
-                <div class="bg-surface border border-white/10 p-6 rounded-2xl space-y-4 shadow-xl">
-                    <div class="flex justify-between text-xs text-gray-400 font-mono">
-                        <span>By: ${escapeHtml(p.author)}</span>
-                        <span>${p.date}</span>
+                <article class="bg-surface border border-white/10 p-5 sm:p-7 rounded-2xl space-y-4 shadow-xl">
+                    <div class="flex justify-between items-center gap-3 text-xs text-gray-500">
+                        <span>By: ${escapeHtml(post.author || 'Anonymous')}</span>
+                        <span>${formatDate(post.date)}</span>
                     </div>
-                    <h2 class="text-2xl font-bold text-brand-light">${escapeHtml(p.title)}</h2>
-                    <p class="text-gray-300 whitespace-pre-wrap leading-relaxed text-base">${escapeHtml(p.content)}</p>
-                    
-                    <!-- Comments Section -->
+
+                    <h2 class="text-2xl font-bold text-brand-light break-words">
+                        ${escapeHtml(post.title)}
+                    </h2>
+
+                    <p class="text-gray-300 whitespace-pre-wrap break-words leading-relaxed text-sm sm:text-base">${escapeHtml(post.content)}</p>
+
                     <div class="border-t border-white/10 pt-6 mt-6 space-y-4">
-                        <h4 class="text-md font-semibold text-gray-300">Comments</h4>
+                        <h4 class="font-semibold text-gray-200">Comments</h4>
+
                         <div id="single-comments-container" class="space-y-3 text-sm">
-                            <p class="text-gray-500 italic">Loading comments...</p>
+                            <p class="text-gray-500">Loading comments...</p>
                         </div>
-                        <div class="flex gap-2 pt-2">
-                            <input type="text" id="single-comment-input" placeholder="Write an anonymous comment..." class="flex-1 bg-black/40 border border-white/10 px-4 py-3 rounded-xl text-sm text-white outline-none focus:border-brand-purple">
-                            <button onclick="addComment(${p.id})" class="bg-brand-purple hover:bg-brand-glow px-6 py-3 rounded-xl text-sm font-medium transition shadow-lg shadow-brand-purple/20">Reply</button>
-                        </div>
+
+                        <form
+                            onsubmit="event.preventDefault(); addComment(${Number(post.id)});"
+                            class="flex flex-col sm:flex-row gap-2 pt-2"
+                        >
+                            <input
+                                type="text"
+                                id="single-comment-input"
+                                maxlength="1000"
+                                placeholder="Write an anonymous comment..."
+                                required
+                                class="flex-1 min-w-0 bg-black/40 border border-white/10 px-4 py-3 rounded-xl text-sm text-white outline-none focus:border-brand-purple"
+                            >
+
+                            <button
+                                type="submit"
+                                id="reply-button"
+                                class="bg-brand-purple hover:bg-brand-glow px-5 py-3 rounded-xl text-sm font-semibold transition"
+                            >
+                                Reply
+                            </button>
+                        </form>
                     </div>
-                </div>
+                </article>
             `;
 
-            fetchComments(p.id);
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+
+            fetchComments(post.id);
         }
 
+        // Fetch comments.
         async function fetchComments(postId) {
+            const container = document.getElementById('single-comments-container');
+
+            if (!container) return;
+
             try {
-                const res = await fetch(`${API_URL}/api/comments/${postId}`);
-                const comments = await res.json();
-                const container = document.getElementById(`single-comments-container`);
-                
-                if (!container) return;
+                const response = await fetch(`${API_URL}/api/comments/${encodeURIComponent(postId)}`);
+
+                if (!response.ok) {
+                    throw new Error('Unable to load comments.');
+                }
+
+                const comments = await response.json();
+
+                if (!Array.isArray(comments)) {
+                    throw new Error('Unexpected comments response.');
+                }
+
+                if (currentPostId !== postId) return;
 
                 if (comments.length === 0) {
-                    container.innerHTML = '<p class="text-gray-500 text-xs italic">No comments yet. Be the first to reply!</p>';
+                    container.innerHTML = `
+                        <p class="text-gray-500 text-xs">No comments yet. Be the first to reply!</p>
+                    `;
                     return;
                 }
 
-                container.innerHTML = comments.map(c => `
-                    <div class="bg-black/30 p-3.5 rounded-xl border border-white/5 flex justify-between items-center">
-                        <span class="text-gray-200">${escapeHtml(c.text)}</span>
-                        <span class="text-[10px] text-gray-500 font-mono">${c.time}</span>
+                container.innerHTML = comments.map(comment => `
+                    <div class="bg-black/30 p-3.5 rounded-xl border border-white/5 space-y-2">
+                        <p class="text-gray-200 break-words whitespace-pre-wrap">${escapeHtml(comment.text)}</p>
+                        <p class="text-[10px] text-gray-500">${formatDate(comment.time)}</p>
                     </div>
                 `).join('');
-            } catch (e) {
-                const container = document.getElementById(`single-comments-container`);
-                if (container) container.innerHTML = '<p class="text-red-400 text-xs">Failed to load comments.</p>';
+
+            } catch (error) {
+                if (currentPostId !== postId) return;
+
+                container.innerHTML = `
+                    <p class="text-red-400 text-xs">Failed to load comments. Please refresh and try again.</p>
+                `;
+
+                console.error(error);
             }
         }
 
+        // Submit a comment.
         async function addComment(postId) {
-            const input = document.getElementById(`single-comment-input`);
+            const input = document.getElementById('single-comment-input');
+            const button = document.getElementById('reply-button');
+
+            if (!input || !button) return;
+
             const text = input.value.trim();
 
             if (!text) return;
 
+            button.disabled = true;
+            button.textContent = 'Sending...';
+
             try {
-                const res = await fetch(`${API_URL}/api/comments/${postId}`, {
+                const response = await fetch(`${API_URL}/api/comments/${encodeURIComponent(postId)}`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({ text })
                 });
 
-                if (res.ok) {
-                    input.value = '';
-                    fetchComments(postId);
-                } else {
-                    alert('Error adding comment.');
+                if (!response.ok) {
+                    throw new Error('Error adding comment.');
                 }
-            } catch (err) {
-                alert('Network error adding comment.');
+
+                input.value = '';
+                await fetchComments(postId);
+
+            } catch (error) {
+                alert('Unable to add your comment. Please try again.');
+                console.error(error);
+
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Reply';
             }
         }
 
+        // Publish a post.
         async function createPost() {
-            const author = document.getElementById('author').value;
-            const title = document.getElementById('title').value;
-            const content = document.getElementById('content').value;
+            const authorInput = document.getElementById('author');
+            const titleInput = document.getElementById('title');
+            const contentInput = document.getElementById('content');
+            const button = document.getElementById('publish-button');
+
+            const author = authorInput.value.trim();
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
 
             if (!title || !content) {
-                alert('Please fill out the title and content!');
+                alert('Please fill out the title and content.');
                 return;
             }
 
+            button.disabled = true;
+            button.textContent = 'Publishing...';
+
             try {
-                const res = await fetch(`${API_URL}/api/posts`, {
+                const response = await fetch(`${API_URL}/api/posts`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({ author, title, content })
                 });
 
-                if (res.ok) {
-                    document.getElementById('author').value = '';
-                    document.getElementById('title').value = '';
-                    document.getElementById('content').value = '';
-                    showFeedView();
-                } else {
-                    alert('Error publishing post.');
+                if (!response.ok) {
+                    throw new Error('Error publishing post.');
                 }
-            } catch (err) {
-                alert('Network error. Render server might be waking up from sleep mode, please try again in a few seconds.');
+
+                authorInput.value = '';
+                titleInput.value = '';
+                contentInput.value = '';
+
+                showFeedView();
+
+            } catch (error) {
+                alert('Unable to publish your drop. The server might be waking up. Please try again.');
+                console.error(error);
+
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Publish Drop';
             }
         }
 
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>'"]/g, 
-                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-            );
-        }
-
-        // Initialize feed on load
+        // Initial feed load.
         fetchPosts();
     </script>
+
 </body>
-                    </html>
-    
+</html>
