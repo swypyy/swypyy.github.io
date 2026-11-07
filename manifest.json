@@ -1,43 +1,28 @@
 {
-  "background_color": "#ffffff",
-  "description": "Welcome to Swypyy's digital lab. Explore original web novels, web apps, tools, digital art, and open-source GitHub projects built with creativity and AI.",
-  "dir": "ltr",
-  "display": "minimal-ui",
+  "id": "/",
   "name": "Swypyy",
-  "orientation": "any",
-  "scope": "/",
   "short_name": "Swypyy",
-  "start_url": "https://swypyy.github.io/index.html/",
-  "theme_color": "#ffffff",
-  "icons": [
-    {
-      "src": "https://swypyy.github.io/assets/s-logo.png",
-      "type": "image/png",
-      "sizes": "1024x1024",
-      "isSquare": true,
-      "isPng": true,
-      "isWebp": false,
-      "isJpg": false,
-      "width": 1024,
-      "is512x512": false,
-      "is256x256": false,
-      "is192x192": false
-    },
-    {
-      "src": "https://swypyy.github.io/assets/logo.png",
-      "isSquare": false,
-      "isPng": true,
-      "isWebp": false,
-      "isJpg": false,
-      "width": 0,
-      "is512x512": false,
-      "is256x256": false,
-      "is192x192": false
-    }
-  ],
-  "id": "swypyy",
+  "description": "Welcome to Swypyy's digital lab. Explore original web novels, web apps, tools, digital art, and open-source GitHub projects built with creativity and AI.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "orientation": "any",
+  "background_color": "#07060b",
+  "theme_color": "#07060b",
   "lang": "en",
+  "dir": "ltr",
   "categories": [
     "developer"
+  ],
+  "icons": [
+    {
+      "src": "/assets/s-logo.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    },
+    {
+      "src": "/assets/logo.png",
+      "type": "image/png"
+    }
   ]
 }
