@@ -52,13 +52,28 @@ permalink: /blog/
     </div>
 
     <div class="post-grid" id="postGrid">
-      {% for post in site.posts offset:3 %}
+      {% if site.posts.size > 3 %}
+        {% assign latest_posts = site.posts | slice: 3, site.posts.size %}
+      {% else %}
+        {% assign latest_posts = site.posts %}
+      {% endif %}
+      {% for post in latest_posts %}
         <article class="post-card" data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}" data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}">
           <a class="post-card-link" href="{{ post.url | relative_url }}">
-            <div class="post-card-top"><span class="card-category">{% if post.categories.size > 0 %}{{ post.categories.first }}{% elsif post.tags.size > 0 %}{{ post.tags.first }}{% else %}JOURNAL{% endif %}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time></div>
-            <h3>{{ post.title | escape }}</h3>
+            {% assign card_image = post.cover | default: post.image %}
+            <div class="post-card-visual">
+              {% if card_image %}
+                <img src="{{ card_image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
+              {% else %}
+                <div class="post-card-art" aria-hidden="true"><span>SWYPYY</span><i>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</i></div>
+              {% endif %}
+            </div>
+            <div class="post-card-content">
+              <div class="post-card-top"><span class="card-category">{% if post.categories.size > 0 %}{{ post.categories.first }}{% elsif post.tags.size > 0 %}{{ post.tags.first }}{% else %}JOURNAL{% endif %}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time></div>
+              <h3>{{ post.title | escape }}</h3>
             <p>{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 145 }}</p>
-            <div class="post-card-bottom"><span class="read-link">READ STORY <b>↗</b></span><span class="card-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span></div>
+              <div class="post-card-bottom"><span class="read-link">READ STORY <b>↗</b></span><span class="card-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span></div>
+            </div>
           </a>
         </article>
       {% endfor %}
