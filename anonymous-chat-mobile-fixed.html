@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090711">
+    <meta name="description" content="Anonymous Chat - Temporary chat rooms.">
+    <title>Anonymous Chat | Swypyy</title>
+
+    <style>
+        :root {
+            --bg: #090711;
+            --panel: #151020;
+            --panel2: #201832;
+            --purple: #8b5cf6;
+            --light: #c4b5fd;
+            --text: #f5f3ff;
+            --muted: #9690a8;
+            --border: rgba(167,139,250,.18);
+            --green: #4ade80;
+            --red: #fb7185;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 15% 10%, #7c3aed22, transparent 40%),
+                radial-gradient(ellipse at 85% 90%, #5b21b622, transparent 40%),
+                var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, sans-serif;
+        }
+
+        button, input { font: inherit; }
+        button { cursor: pointer; }
+        button:disabled { opacity: .5; cursor: not-allowed; }
+        .hidden { display: none !important; }
+
+        #setup {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 25px;
+        }
+
+        .setup-layout {
+            width: 100%;
+            max-width: 950px;
+            display: grid;
+            grid-template-columns: 1fr 390px;
+            align-items: center;
+            gap: 55px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 21px;
+            font-weight: 850;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg,#a78bfa,#6d28d9);
+            box-shadow: 0 8px 30px #8b5cf633;
+            font-size: 22px;
+        }
+
+        .intro h1 {
+            margin-top: 0;
+            font-size: clamp(48px, 6vw, 76px);
+            line-height: 1.02;
+            letter-spacing: -3px;
+            font-weight: 900;
+        }
+
+        .intro h1 span { color: var(--light); }
+
+        .intro p {
+            max-width: 420px;
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .features {
+            display: grid;
+            gap: 14px;
+            margin-top: 30px;
+            color: #d8d2e8;
+            font-size: 13px;
+        }
+
+        .card {
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 23px;
+            background: #120e1de8;
+            box-shadow: 0 25px 80px #0006;
+        }
+
+        .card h2 { font-size: 22px; }
+
+        .card > p {
+            margin: 8px 0 23px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .field { margin-bottom: 15px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c4bdd3;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            height: 47px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            outline: none;
+            background: #0d0a17;
+            color: white;
+        }
+
+        input:focus { border-color: var(--purple); }
+        input::placeholder { color: #716a7e; }
+
+        .room-code {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 800;
+        }
+
+        .btn {
+            width: 100%;
+            min-height: 47px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: linear-gradient(120deg,#8b5cf6,#6d28d9);
+            color: white;
+            font-weight: 800;
+        }
+
+        .btn.secondary { background: #201832; }
+
+        .divider {
+            margin: 22px 0;
+            color: var(--muted);
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        #notice {
+            min-height: 20px;
+            margin-top: 13px;
+            color: #fbbf24;
+            font-size: 12px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        #status { transition: color .2s; }
+
+        #chat {
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            flex-shrink: 0;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 22px;
+            border-bottom: 1px solid var(--border);
+            background: #110d1bf2;
+        }
+
+        .room-info {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .room-info strong {
+            display: block;
+            margin-top: 5px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .small-btn {
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--panel2);
+            color: white;
+            font-size: 11px;
+        }
+
+        .small-btn.danger { color: var(--red); }
+
+        .layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 1fr 245px;
+            gap: 14px;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .panel {
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: #110d1bd9;
+        }
+
+        .panel-title {
+            flex-shrink: 0;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        #messages {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 18px;
+        }
+
+        .message {
+            max-width: 78%;
+            align-self: flex-start;
+        }
+
+        .message.own { align-self: flex-end; }
+
+        .sender {
+            margin: 0 0 5px 5px;
+            color: var(--light);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .bubble {
+            padding: 11px 14px;
+            border: 1px solid var(--border);
+            border-radius: 14px 14px 14px 4px;
+            background: var(--panel2);
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .own .bubble {
+            border-radius: 14px 14px 4px 14px;
+            background: linear-gradient(135deg,#7040c9,#5b2da9);
+        }
+
+        .time {
+            margin: 4px 5px;
+            color: #777087;
+            font-size: 9px;
+        }
+
+        .system {
+            align-self: center;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        #typing {
+            flex-shrink: 0;
+            min-height: 22px;
+            padding: 0 18px;
+            color: var(--light);
+            font-size: 11px;
+        }
+
+        .message-form {
+            flex-shrink: 0;
+            display: flex;
+            gap: 9px;
+            padding: 12px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
+            border-top: 1px solid var(--border);
+            background: #110d1b;
+        }
+
+        .message-form input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .send {
+            flex-shrink: 0;
+            width: 48px;
+            border: 0;
+            border-radius: 11px;
+            background: var(--purple);
+            color: white;
+            font-size: 20px;
+        }
+
+        #members {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 14px;
+            overflow-y: auto;
+        }
+
+        .member {
+            padding: 10px;
+            border-radius: 9px;
+            background: #ffffff08;
+            font-size: 12px;
+        }
+
+        .member small {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+        }
+
+        .room-note {
+            margin: auto 12px 12px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 22px;
+            transform: translateX(-50%);
+            padding: 12px 17px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--panel2);
+            color: white;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s;
+        }
+
+        #toast.show { opacity: 1; }
+
+        @media(max-width:760px) {
+            .setup-layout {
+                max-width: 430px;
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .intro { text-align: center; }
+
+            .intro h1 {
+                margin-top: 0;
+                font-size: 48px;
+                letter-spacing: -2px;
+            }
+
+            .intro p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .features { display: none; }
+            .card { padding: 22px; }
+
+            .chat-header {
+                min-height: 62px;
+                padding: 10px;
+            }
+
+            .layout {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                min-height: 0;
+                padding: 8px;
+                overflow: hidden;
+            }
+
+            .layout > .panel:first-child {
+                flex: 1;
+                min-height: 0;
+                width: 100%;
+            }
+
+            .layout > .panel:last-child { display: none; }
+
+            .small-btn {
+                padding: 8px;
+                font-size: 10px;
+            }
+
+            .message { max-width: 90%; }
+
+            .message-form {
+                position: relative;
+                flex-shrink: 0;
+                width: 100%;
+                padding: 10px;
+                padding-bottom: max(10px, env(safe-area-inset-bottom));
+                background: #110d1b;
+            }
+
+            .message-form input { height: 46px; }
+            .send { height: 46px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<main id="setup">
+    <div class="setup-layout">
+
+        <section class="intro">
+            <h1>Anonymous<br><span>Chat.</span></h1>
+
+            <p>
+                Create a temporary room, invite people using a room code,
+                and start chatting. No account required.
+            </p>
+
+            <div class="features">
+                <div>✦ Temporary rooms with unique codes</div>
+                <div>◉ Live messages and online members</div>
+                <div>⌁ No permanent message storage</div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Start chatting</h2>
+            <p>Create a room or join an existing conversation.</p>
+
+            <form id="create-form">
+                <div class="field">
+                    <label for="host-name">Your display name</label>
+                    <input id="host-name" maxlength="24"
+                           placeholder="Enter your name" required>
+                </div>
+
+                <button class="btn" id="create-btn" disabled>Create a room</button>
+            </form>
+
+            <div class="divider">OR JOIN A ROOM</div>
+
+            <form id="join-form">
+                <div class="field">
+                    <label for="guest-name">Your display name</label>
+                    <input id="guest-name" maxlength="24"
+                           placeholder="Enter your name" required>
+                </div>
+
+                <div class="field">
+                    <label for="room-code">Room code</label>
+                    <input id="room-code" class="room-code"
+                           maxlength="6" placeholder="ABC123" required>
+                </div>
+
+                <button class="btn secondary" id="join-btn" disabled>Join room →</button>
+            </form>
+
+            <div id="notice"></div>
+
+            <div class="footer">
+                <span id="status">Loading chat connection...</span>
+                <span>Swypyy</span>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<section id="chat" class="hidden">
+
+    <header class="chat-header">
+        <div class="room-info">
+            Anonymous Chat
+            <strong id="room-title">ROOM</strong>
+        </div>
+
+        <div class="header-actions">
+            <button class="small-btn" id="copy-btn">Copy code</button>
+            <button class="small-btn" id="share-btn">Share</button>
+            <button class="small-btn danger" id="leave-btn">Leave</button>
+        </div>
+    </header>
+
+    <main class="layout">
+        <section class="panel">
+            <div class="panel-title">Messages · Temporary session</div>
+
+            <div id="messages" role="log" aria-live="polite"></div>
+
+            <div id="typing"></div>
+
+            <form id="message-form" class="message-form">
+                <input id="message-input" maxlength="1000"
+                       placeholder="Write a message..." autocomplete="off">
+                <button class="send" id="send-btn" aria-label="Send" disabled>↑</button>
+            </form>
+        </section>
+
+        <aside class="panel">
+            <div class="panel-title">
+                Members · <span id="member-count">0</span>
+            </div>
+            <div id="members"></div>
+            <div class="room-note">
+                Messages are kept in server memory while this room is active.
+                They are not permanently stored or end-to-end encrypted.
+            </div>
+        </aside>
+    </main>
+</section>
+
+<div id="toast" role="status"></div>
+
+<script>
+/*
+ * Socket.IO CDN loader
+ * Tries each CDN in order and starts the app only after the library loads.
+ */
+function loadSocketIOLibrary() {
+    if (typeof window.io === 'function') {
+        return Promise.resolve();
+    }
+
+    const sources = [
+        'https://cdn.socket.io/4.7.2/socket.io.min.js',
+        'https://cdn.jsdelivr.net/npm/socket.io-client@4.7.2/dist/socket.io.min.js',
+        'https://unpkg.com/socket.io-client@4.7.2/dist/socket.io.min.js'
+    ];
+
+    return new Promise((resolve, reject) => {
+        let index = 0;
+
+        function tryNextSource() {
+            if (typeof window.io === 'function') {
+                resolve();
+                return;
+            }
+
+            if (index >= sources.length) {
+                reject(new Error('All Socket.IO CDN sources failed.'));
+                return;
+            }
+
+            const source = sources[index++];
+            const script = document.createElement('script');
+            script.src = source;
+            script.async = true;
+
+            let completed = false;
+
+            const timeout = setTimeout(() => finishAttempt(false), 12000);
+
+            function finishAttempt(success) {
+                if (completed) return;
+
+                completed = true;
+                clearTimeout(timeout);
+
+                if (success && typeof window.io === 'function') {
+                    resolve();
+                    return;
+                }
+
+                script.remove();
+                tryNextSource();
+            }
+
+            script.onload = () => {
+                finishAttempt(typeof window.io === 'function');
+            };
+
+            script.onerror = () => finishAttempt(false);
+
+            document.head.appendChild(script);
+        }
+
+        tryNextSource();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const $ = id => document.getElementById(id);
+
+    const setup = $('setup');
+    const chat = $('chat');
+    const messages = $('messages');
+    const messageInput = $('message-input');
+
+    try {
+        $('status').textContent = 'Loading chat library...';
+        await loadSocketIOLibrary();
+    } catch (error) {
+        console.error('Socket.IO loading failed:', error);
+
+        $('status').textContent = 'Chat library unavailable.';
+        $('status').style.color = '#fb7185';
+        $('notice').textContent =
+            'Could not load the chat library. Check your connection and refresh the page.';
+        return;
+    }
+
+    const socket = window.io('https://swypyy-messenger.onrender.com', {
+        autoConnect: false,
+        timeout: 10000,
+        reconnection: true,
+        reconnectionAttempts: Infinity,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        randomizationFactor: 0.5
+    });
+
+    let currentRoom = '';
+    let currentUser = '';
+    let isHost = false;
+    let members = [];
+    let typingUsers = new Map();
+    let typingTimeout;
+    let toastTimeout;
+    let connectionHintTimeout;
+    let isTyping = false;
+
+    function notice(text) {
+        $('notice').textContent = text || '';
+    }
+
+    function toast(text) {
+        $('toast').textContent = text;
+        $('toast').classList.add('show');
+
+        clearTimeout(toastTimeout);
+
+        toastTimeout = setTimeout(() => {
+            $('toast').classList.remove('show');
+        }, 2500);
+    }
+
+    function updateStatus(connected) {
+        $('status').textContent = connected
+            ? '● Connected'
+            : '● Connecting...';
+
+        $('status').style.color = connected
+            ? '#4ade80'
+            : '#9690a8';
+
+        $('create-btn').disabled = !connected;
+        $('join-btn').disabled = !connected;
+        $('send-btn').disabled = !connected;
+    }
+
+    socket.on('connect', () => {
+        clearTimeout(connectionHintTimeout);
+        updateStatus(true);
+        notice('');
+    });
+
+    socket.on('disconnect', () => {
+        updateStatus(false);
+        $('status').textContent = '● Disconnected. Reconnecting...';
+
+        if (currentRoom) {
+            reset('Connection lost. Join the room again.');
+        }
+    });
+
+    socket.on('connect_error', () => {
+        updateStatus(false);
+        $('status').textContent = '● Connection issue. Retrying...';
+    });
+
+    socket.io.on('reconnect_attempt', () => {
+        updateStatus(false);
+        $('status').textContent = '● Reconnecting to server...';
+    });
+
+    socket.io.on('reconnect', () => updateStatus(true));
+
+    socket.io.on('reconnect_error', () => {
+        $('status').textContent = '● Server unavailable. Retrying...';
+    });
+
+    connectionHintTimeout = setTimeout(() => {
+        if (!socket.connected) {
+            $('status').textContent = '● Server may be waking up...';
+        }
+    }, 6000);
+
+    function showMessage(message) {
+        if (!message || typeof message.text !== 'string') return;
+
+        const row = document.createElement('div');
+        const own = message.senderId === socket.id;
+
+        row.className = 'message' + (own ? ' own' : '');
+
+        if (!own) {
+            const sender = document.createElement('div');
+            sender.className = 'sender';
+            sender.textContent = message.sender || 'Guest';
+            row.appendChild(sender);
+        }
+
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.textContent = message.text;
+
+        const time = document.createElement('div');
+        time.className = 'time';
+
+        const date = new Date(message.createdAt);
+        time.textContent = Number.isNaN(date.getTime())
+            ? ''
+            : date.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+        row.append(bubble, time);
+        messages.appendChild(row);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function systemMessage(text) {
+        const item = document.createElement('div');
+        item.className = 'system';
+        item.textContent = text;
+        messages.appendChild(item);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function renderMembers() {
+        $('members').replaceChildren();
+        $('member-count').textContent = members.length;
+
+        members.forEach(member => {
+            const item = document.createElement('div');
+            item.className = 'member';
+
+            const name = document.createElement('strong');
+            name.textContent = member.name || 'Guest';
+
+            if (member.id === socket.id) {
+                name.textContent += ' (You)';
+            }
+
+            const role = document.createElement('small');
+            role.textContent = member.isHost ? 'Room host' : 'Member';
+
+            item.append(name, role);
+            $('members').appendChild(item);
+        });
+    }
+
+    function enterRoom(code, users, history, host) {
+        currentRoom = code;
+        isHost = host;
+        members = Array.isArray(users) ? users : [];
+
+        typingUsers.clear();
+        $('typing').textContent = '';
+
+        setup.classList.add('hidden');
+        chat.classList.remove('hidden');
+
+        $('room-title').textContent = '#' + code;
+
+        messages.replaceChildren();
+        renderMembers();
+
+        if (Array.isArray(history)) {
+            history.forEach(showMessage);
+        }
+
+        toast(host ? 'Room created!' : 'Joined room!');
+        setTimeout(() => messageInput.focus(), 100);
+    }
+
+    function reset(message) {
+        currentRoom = '';
+        currentUser = '';
+        isHost = false;
+        members = [];
+        typingUsers.clear();
+        isTyping = false;
+
+        clearTimeout(typingTimeout);
+
+        chat.classList.add('hidden');
+        setup.classList.remove('hidden');
+
+        messages.replaceChildren();
+        $('members').replaceChildren();
+        $('typing').textContent = '';
+        messageInput.value = '';
+
+        $('create-btn').disabled = !socket.connected;
+        $('join-btn').disabled = !socket.connected;
+
+        if (message) notice(message);
+    }
+
+    $('create-form').addEventListener('submit', event => {
+        event.preventDefault();
+
+        if (!socket.connected) {
+            notice('Waiting for server connection...');
+            return;
+        }
+
+        const username = $('host-name').value.trim();
+
+        if (!username || username.length > 24) {
+            notice('Enter a name between 1 and 24 characters.');
+            return;
+        }
+
+        currentUser = username;
+        $('create-btn').disabled = true;
+        notice('');
+
+        socket.emit('create-room', { username });
+    });
+
+    $('room-code').addEventListener('input', event => {
+        event.target.value = event.target.value
+            .toUpperCase()
+            .replace(/[^A-F0-9]/g, '')
+            .slice(0, 6);
+    });
+
+    $('join-form').addEventListener('submit', event => {
+        event.preventDefault();
+
+        if (!socket.connected) {
+            notice('Waiting for server connection...');
+            return;
+        }
+
+        const username = $('guest-name').value.trim();
+        const code = $('room-code').value.trim().toUpperCase();
+
+        if (!username || username.length > 24) {
+            notice('Enter a name between 1 and 24 characters.');
+            return;
+        }
+
+        if (!/^[A-F0-9]{6}$/.test(code)) {
+            notice('Enter a valid six-character room code.');
+            return;
+        }
+
+        currentUser = username;
+        $('join-btn').disabled = true;
+        notice('');
+
+        socket.emit('join-room', { username, code });
+    });
+
+    socket.on('room-created', data => {
+        enterRoom(data.code, data.users, data.messages, true);
+    });
+
+    socket.on('room-joined', data => {
+        enterRoom(data.code, data.users, data.messages, false);
+    });
+
+    socket.on('error-msg', message => {
+        notice(message);
+        toast(message);
+
+        $('create-btn').disabled = !socket.connected;
+        $('join-btn').disabled = !socket.connected;
+    });
+
+    socket.on('room-destroyed', reason => {
+        reset(reason || 'This room has ended.');
+    });
+
+    socket.on('room-left', () => reset('You left the room.'));
+
+    socket.on('user-joined', data => {
+        if (Array.isArray(data.users)) {
+            members = data.users;
+            renderMembers();
+        }
+
+        systemMessage(data.username + ' joined the room.');
+    });
+
+    socket.on('user-left', data => {
+        if (Array.isArray(data.users)) {
+            members = data.users;
+            renderMembers();
+        }
+
+        systemMessage(data.username + ' left the room.');
+    });
+
+    socket.on('new-message', showMessage);
+
+    $('message-form').addEventListener('submit', event => {
+        event.preventDefault();
+
+        const text = messageInput.value.trim();
+
+        if (!text) return;
+
+        if (!currentRoom || !socket.connected) {
+            toast('You are not connected to a room.');
+            return;
+        }
+
+        if (text.length > 1000) {
+            toast('Messages cannot exceed 1000 characters.');
+            return;
+        }
+
+        $('send-btn').disabled = true;
+        stopTyping();
+
+        socket.emit('send-message', { text }, response => {
+            $('send-btn').disabled = !socket.connected;
+
+            if (!response || !response.ok) {
+                toast(response?.error || 'Message could not be sent.');
+                return;
+            }
+
+            showMessage(response.message);
+            messageInput.value = '';
+            messageInput.focus();
+        });
+    });
+
+    messageInput.addEventListener('input', () => {
+        if (!currentRoom || !socket.connected) return;
+
+        if (!isTyping) {
+            isTyping = true;
+            socket.emit('typing', { isTyping: true });
+        }
+
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(stopTyping, 1000);
+    });
+
+    function stopTyping() {
+        clearTimeout(typingTimeout);
+
+        if (!isTyping) return;
+
+        isTyping = false;
+
+        if (socket.connected && currentRoom) {
+            socket.emit('typing', { isTyping: false });
+        }
+    }
+
+    socket.on('typing-update', data => {
+        if (!data.userId) return;
+
+        clearTimeout(typingUsers.get(data.userId + '_timer'));
+
+        if (data.isTyping) {
+            typingUsers.set(data.userId, data.username || 'Someone');
+
+            const timer = setTimeout(() => {
+                typingUsers.delete(data.userId);
+                typingUsers.delete(data.userId + '_timer');
+                updateTyping();
+            }, 2500);
+
+            typingUsers.set(data.userId + '_timer', timer);
+        } else {
+            typingUsers.delete(data.userId);
+            typingUsers.delete(data.userId + '_timer');
+        }
+
+        updateTyping();
+    });
+
+    function updateTyping() {
+        const names = [];
+
+        for (const [key, value] of typingUsers.entries()) {
+            if (!key.endsWith('_timer')) names.push(value);
+        }
+
+        $('typing').textContent = names.length === 0
+            ? ''
+            : names.length === 1
+                ? names[0] + ' is typing...'
+                : names.length + ' people are typing...';
+    }
+
+    async function copyText(text) {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch {
+            const field = document.createElement('textarea');
+            field.value = text;
+            document.body.appendChild(field);
+            field.select();
+            const success = document.execCommand('copy');
+            field.remove();
+            return success;
+        }
+    }
+
+    $('copy-btn').addEventListener('click', async () => {
+        if (!currentRoom) return;
+
+        toast(await copyText(currentRoom)
+            ? 'Room code copied!'
+            : 'Could not copy room code.');
+    });
+
+    $('share-btn').addEventListener('click', async () => {
+        if (!currentRoom) return;
+
+        const text =
+            'Join my Anonymous Chat room!\n' +
+            'Room code: ' + currentRoom + '\n' +
+            'Website: https://swypyy.github.io/anonymous-chat.html';
+
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'Anonymous Chat invitation',
+                    text
+                });
+            } catch {
+                // Sharing may be cancelled by the user.
+            }
+        } else {
+            toast(await copyText(text)
+                ? 'Invitation copied!'
+                : 'Could not copy invitation.');
+        }
+    });
+
+    $('leave-btn').addEventListener('click', () => {
+        if (!currentRoom) return;
+
+        const warning = isHost
+            ? 'Leaving will close this room for everyone. Continue?'
+            : 'Are you sure you want to leave this room?';
+
+        if (!confirm(warning)) return;
+
+        if (!socket.connected) {
+            reset('Connection lost. You have left this session.');
+            return;
+        }
+
+        socket.emit('leave-room');
+    });
+
+    updateStatus(false);
+    socket.connect();
+});
+</script>
+
+</body>
+</html>
