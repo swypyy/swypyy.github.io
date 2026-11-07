@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Primary Tags -->
+    <title>My Art Gallery | SWYPYY</title>
+    <meta name="description" content="Explore Swypyy's art gallery featuring visual art experiments and drawings.">
+    <meta name="keywords" content="Swypyy, digital art gallery, visual art, drawings, art experiments">
+    <meta name="author" content="Swypyy">
+    <meta name="copyright" content="SWYPYY. All rights reserved.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://swypyy.github.io/art.html">
+    <meta property="og:title" content="My Art Gallery | SWYPYY">
+    <meta property="og:description" content="Explore visual art experiments and drawings by Swypyy.">
+    <meta property="og:image" content="https://swypyy.github.io/assets/logo.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="My Art Gallery | SWYPYY">
+    <meta name="twitter:description" content="Explore visual art experiments and drawings by Swypyy.">
+    <meta name="twitter:image" content="https://swypyy.github.io/assets/logo.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#07060b',
+                        surface: '#120f1d',
+                        'surface-light': '#1c172e',
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #07060b;
+            color: #f3f4f6;
+        }
+
+        .purple-glow-card {
+            box-shadow: 0 0 30px -5px rgba(124, 58, 237, 0.25);
+        }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
+
+    <!-- HEADER LOGO ONLY -->
+    <header class="w-full bg-void/90 backdrop-blur-md border-b border-white/5 py-4">
+        <div class="w-full px-6 flex items-center justify-between">
+            <a href="index.html" class="flex items-center group">
+                <img
+                    src="assets/logo.png"
+                    alt="Swypyy Logo"
+                    class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                    onerror="this.onerror=null; this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';"
+                >
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow py-8 px-6">
+        <div class="max-w-4xl mx-auto space-y-6">
+
+            <!-- BACK BUTTON -->
+            <div>
+                <a href="index.html" class="inline-flex items-center text-white hover:text-brand-glow transition-colors" aria-label="Back to Home">
+                    <i data-lucide="arrow-left" class="w-7 h-7"></i>
+                </a>
+            </div>
+
+            <!-- HEADING & DESCRIPTION -->
+            <div class="space-y-2 text-left">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    My Art Gallery
+                </h1>
+                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+                    Visual art experiments and drawings created as I learn.
+                </p>
+            </div>
+
+            <!-- EMPTY STATE CARD -->
+            <div class="space-y-6 pt-2">
+                <div class="bg-surface rounded-3xl border border-white/10 p-8 sm:p-12 text-center purple-glow-card space-y-4">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center text-brand-glow">
+                        <i data-lucide="image-off" class="w-8 h-8"></i>
+                    </div>
+                    <div class="space-y-2 max-w-md mx-auto">
+                        <h2 class="text-2xl font-bold text-white">There is nothing here</h2>
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Check back later once I upload my latest art pieces to the gallery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer-container" class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
+        <!-- Injected via JavaScript below -->
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // Copyright
+        const currentYear = new Date().getFullYear();
+
+        document.getElementById('footer-container').innerHTML = `
+            <div class="max-w-6xl mx-auto px-6">
+                <p>&copy; ${currentYear} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
+            </div>
+        `;
+    </script>
+
+</body>
+</html>
