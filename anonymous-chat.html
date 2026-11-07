@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,8 @@
     <meta name="description" content="Anonymous Chat - Temporary chat rooms.">
     <title>Anonymous Chat | Swypyy</title>
 
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- Deferred: lets the page render without waiting for Socket.IO. -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js" defer></script>
 
     <style>
         :root {
@@ -212,6 +214,10 @@
             border-top: 1px solid var(--border);
             color: var(--muted);
             font-size: 10px;
+        }
+
+        #status {
+            transition: color .2s;
         }
 
         #chat {
@@ -519,7 +525,7 @@
                            placeholder="Enter your name" required>
                 </div>
 
-                <button class="btn" id="create-btn">Create a room</button>
+                <button class="btn" id="create-btn" disabled>Create a room</button>
             </form>
 
             <div class="divider">OR JOIN A ROOM</div>
@@ -537,13 +543,13 @@
                            maxlength="6" placeholder="ABC123" required>
                 </div>
 
-                <button class="btn secondary" id="join-btn">Join room →</button>
+                <button class="btn secondary" id="join-btn" disabled>Join room →</button>
             </form>
 
             <div id="notice"></div>
 
             <div class="footer">
-                <span id="status">Connecting...</span>
+                <span id="status">Loading chat connection...</span>
                 <span>Swypyy</span>
             </div>
         </section>
@@ -577,7 +583,7 @@
             <form id="message-form" class="message-form">
                 <input id="message-input" maxlength="1000"
                        placeholder="Write a message..." autocomplete="off">
-                <button class="send" id="send-btn" aria-label="Send">↑</button>
+                <button class="send" id="send-btn" aria-label="Send" disabled>↑</button>
             </form>
         </section>
 
@@ -597,10 +603,40 @@
 <div id="toast" role="status"></div>
 
 <script>
-    // Connect to the existing Render backend.
-    const socket = io('https://swypyy-messenger.onrender.com');
+document.addEventListener('DOMContentLoaded', () => {
 
     const $ = id => document.getElementById(id);
+
+    const setup = $('setup');
+    const chat = $('chat');
+    const messages = $('messages');
+    const messageInput = $('message-input');
+
+    /*
+     * Check whether the Socket.IO CDN loaded successfully.
+     * The page remains visible even if the CDN is unavailable.
+     */
+    if (typeof window.io !== 'function') {
+        $('status').textContent = 'Chat library failed to load. Refresh the page.';
+        $('status').style.color = '#fb7185';
+        $('notice').textContent = 'Could not load the chat connection library.';
+        return;
+    }
+
+    /*
+     * Connect manually after the page has loaded.
+     * Automatic reconnection handles Render cold starts and temporary
+     * network interruptions.
+     */
+    const socket = window.io('https://swypyy-messenger.onrender.com', {
+        autoConnect: false,
+        timeout: 10000,
+        reconnection: true,
+        reconnectionAttempts: Infinity,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        randomizationFactor: 0.5
+    });
 
     let currentRoom = '';
     let currentUser = '';
@@ -609,12 +645,8 @@
     let typingUsers = new Map();
     let typingTimeout;
     let toastTimeout;
+    let connectionHintTimeout;
     let isTyping = false;
-
-    const setup = $('setup');
-    const chat = $('chat');
-    const messages = $('messages');
-    const messageInput = $('message-input');
 
     function notice(text) {
         $('notice').textContent = text || '';
@@ -634,23 +666,63 @@
     function updateStatus(connected) {
         $('status').textContent = connected
             ? '● Connected'
-            : '● Reconnecting...';
+            : '● Connecting...';
+
+        $('status').style.color = connected
+            ? '#4ade80'
+            : '#9690a8';
 
         $('create-btn').disabled = !connected;
         $('join-btn').disabled = !connected;
         $('send-btn').disabled = !connected;
     }
 
-    socket.on('connect', () => updateStatus(true));
+    /*
+     * Connection feedback
+     */
+    socket.on('connect', () => {
+        clearTimeout(connectionHintTimeout);
+        updateStatus(true);
+        notice('');
+    });
+
     socket.on('disconnect', () => {
         updateStatus(false);
+
+        $('status').textContent = '● Disconnected. Reconnecting...';
 
         if (currentRoom) {
             reset('Connection lost. Join the room again.');
         }
     });
 
-    socket.on('connect_error', () => updateStatus(false));
+    socket.on('connect_error', () => {
+        updateStatus(false);
+        $('status').textContent = '● Connection issue. Retrying...';
+    });
+
+    socket.io.on('reconnect_attempt', () => {
+        updateStatus(false);
+        $('status').textContent = '● Reconnecting to server...';
+    });
+
+    socket.io.on('reconnect', () => {
+        updateStatus(true);
+    });
+
+    socket.io.on('reconnect_error', () => {
+        $('status').textContent = '● Server unavailable. Retrying...';
+    });
+
+    /*
+     * If the connection takes longer than expected, explain that
+     * the server may be waking up instead of leaving a vague message.
+     */
+    connectionHintTimeout = setTimeout(() => {
+        if (!socket.connected) {
+            $('status').textContent = '● Server may be waking up...';
+        }
+    }, 6000);
 
     function showMessage(message) {
         if (!message || typeof message.text !== 'string') return;
@@ -767,6 +839,9 @@
         if (message) notice(message);
     }
 
+    /*
+     * Create room
+     */
     $('create-form').addEventListener('submit', event => {
         event.preventDefault();
 
@@ -789,6 +864,9 @@
         socket.emit('create-room', { username });
     });
 
+    /*
+     * Room code formatting
+     */
     $('room-code').addEventListener('input', event => {
         event.target.value = event.target.value
             .toUpperCase()
@@ -796,6 +874,9 @@
             .slice(0, 6);
     });
 
+    /*
+     * Join room
+     */
     $('join-form').addEventListener('submit', event => {
         event.preventDefault();
 
@@ -824,6 +905,9 @@
         socket.emit('join-room', { username, code });
     });
 
+    /*
+     * Room events
+     */
     socket.on('room-created', data => {
         enterRoom(data.code, data.users, data.messages, true);
     });
@@ -835,6 +919,7 @@
     socket.on('error-msg', message => {
         notice(message);
         toast(message);
+
         $('create-btn').disabled = !socket.connected;
         $('join-btn').disabled = !socket.connected;
     });
@@ -867,6 +952,9 @@
 
     socket.on('new-message', showMessage);
 
+    /*
+     * Send messages
+     */
     $('message-form').addEventListener('submit', event => {
         event.preventDefault();
 
@@ -901,6 +989,9 @@
         });
     });
 
+    /*
+     * Typing indicators
+     */
     messageInput.addEventListener('input', () => {
         if (!currentRoom || !socket.connected) return;
 
@@ -962,6 +1053,9 @@
                 : names.length + ' people are typing...';
     }
 
+    /*
+     * Copy room code and invitations
+     */
     async function copyText(text) {
         try {
             await navigator.clipboard.writeText(text);
@@ -1009,6 +1103,9 @@
         }
     });
 
+    /*
+     * Leave room
+     */
     $('leave-btn').addEventListener('click', () => {
         if (!currentRoom) return;
 
@@ -1026,7 +1123,13 @@
         socket.emit('leave-room');
     });
 
-    updateStatus(socket.connected);
+    /*
+     * Start connecting only after all page elements and scripts are ready.
+     */
+    updateStatus(false);
+    socket.connect();
+
+});
 </script>
 
 </body>
