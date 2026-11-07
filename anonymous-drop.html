@@ -112,15 +112,13 @@
             background-color: #a78bfa !important;
         }
 
-        /* FLOATING BUTTON */
+        /* FLOATING CREATE BUTTON */
 
         #floating-create-button {
-            position: fixed !important;
-            top: auto !important;
-            left: auto !important;
-            right: 24px !important;
-            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px) !important;
-            z-index: 60 !important;
+            position: fixed;
+            right: 24px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+            z-index: 60;
 
             width: 60px;
             height: 60px;
@@ -129,20 +127,22 @@
             align-items: center;
             justify-content: center;
 
-            background-color: #7c3aed !important;
-            color: #ffffff !important;
-            opacity: 1 !important;
+            background-color: #7c3aed;
+            color: #ffffff;
 
             border: 1px solid rgba(255,255,255,0.25);
             border-radius: 50%;
 
             box-shadow: 0 8px 30px rgba(124,58,237,0.5);
 
-            transition: background-color 0.2s ease, transform 0.2s ease;
+            transition:
+                background-color 0.2s ease,
+                transform 0.2s ease,
+                bottom 0.12s ease-out;
         }
 
         #floating-create-button:hover {
-            background-color: #a78bfa !important;
+            background-color: #a78bfa;
             transform: scale(1.1);
         }
 
@@ -189,8 +189,7 @@
 
         @media (max-width: 640px) {
             #floating-create-button {
-                right: 18px !important;
-                bottom: calc(env(safe-area-inset-bottom, 0px) + 18px) !important;
+                right: 18px;
                 width: 56px;
                 height: 56px;
             }
@@ -518,6 +517,64 @@
         refreshIcons();
 
         // ==========================================
+        // FLOATING BUTTON FOOTER POSITIONING
+        // ==========================================
+
+        const floatingButton = document.getElementById('floating-create-button');
+        const footer = document.querySelector('footer');
+
+        function updateFloatingButtonPosition() {
+            if (
+                !floatingButton ||
+                !footer ||
+                floatingButton.classList.contains('hidden')
+            ) {
+                return;
+            }
+
+            const footerRect = footer.getBoundingClientRect();
+
+            const defaultBottom =
+                window.innerWidth <= 640 ? 18 : 24;
+
+            // Distance between the footer and the bottom of the screen.
+            const footerOverlap =
+                window.innerHeight - footerRect.top;
+
+            if (footerOverlap > 0) {
+                // Move the button above the footer.
+                floatingButton.style.bottom =
+                    `${footerOverlap + defaultBottom}px`;
+            } else {
+                // Normal floating position.
+                floatingButton.style.bottom =
+                    `calc(env(safe-area-inset-bottom, 0px) + ${defaultBottom}px)`;
+            }
+        }
+
+        // Recalculate while scrolling.
+        window.addEventListener(
+            'scroll',
+            updateFloatingButtonPosition,
+            { passive: true }
+        );
+
+        // Recalculate when the screen size changes.
+        window.addEventListener(
+            'resize',
+            updateFloatingButtonPosition
+        );
+
+        // Recalculate if footer dimensions change.
+        if ('ResizeObserver' in window) {
+            const footerObserver = new ResizeObserver(() => {
+                updateFloatingButtonPosition();
+            });
+
+            footerObserver.observe(footer);
+        }
+
+        // ==========================================
         // WARNING MODAL
         // ==========================================
 
@@ -556,7 +613,7 @@
             document.getElementById('create-view').classList.add('hidden');
             document.getElementById('detail-view').classList.add('hidden');
 
-            document.getElementById('floating-create-button').classList.remove('hidden');
+            floatingButton.classList.remove('hidden');
 
             currentPostId = null;
             commentsRequestId++;
@@ -567,6 +624,8 @@
                 top: 0,
                 behavior: 'smooth'
             });
+
+            requestAnimationFrame(updateFloatingButtonPosition);
         }
 
         function showCreateView() {
@@ -574,7 +633,7 @@
             document.getElementById('create-view').classList.remove('hidden');
             document.getElementById('detail-view').classList.add('hidden');
 
-            document.getElementById('floating-create-button').classList.add('hidden');
+            floatingButton.classList.add('hidden');
 
             refreshIcons();
 
@@ -596,7 +655,7 @@
             document.getElementById('create-view').classList.add('hidden');
             document.getElementById('detail-view').classList.remove('hidden');
 
-            document.getElementById('floating-create-button').classList.remove('hidden');
+            floatingButton.classList.remove('hidden');
 
             renderSinglePost(postId);
 
@@ -604,6 +663,8 @@
                 top: 0,
                 behavior: 'smooth'
             });
+
+            requestAnimationFrame(updateFloatingButtonPosition);
         }
 
         // ==========================================
@@ -1089,6 +1150,9 @@
         // ==========================================
 
         fetchPosts();
+
+        // Set the correct initial button position.
+        requestAnimationFrame(updateFloatingButtonPosition);
 
     </script>
 
