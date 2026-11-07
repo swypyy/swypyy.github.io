@@ -95,3 +95,7 @@ Do not replace the entire homepage just to add these links.
 - There is no admin dashboard or visitor comment system. Posts are published
   by adding Markdown files to the GitHub repository.
 - The package intentionally does not modify the existing homepage or chat pages.
+
+
+## Design update
+The blog layout now reuses the Swypyy homepage header, mobile navigation, logo fallback, font setup, and footer wording/year behavior. Blog content uses the homepage palette: #07060b, #120f1d, #1c172e, #7c3aed, #a78bfa, and #c084fc. The existing homepage and app HTML files are not replaced.
