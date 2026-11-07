@@ -1,0 +1,13 @@
+title: Swypyy Blog
+description: Stories, updates, ideas and announcements from Swypyy.
+url: "https://swypyy.github.io"
+baseurl: ""
+permalink: /blog/:year/:month/:day/:title/
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+# GitHub Pages builds this site with Jekyll. Keep the existing root HTML pages
+# in place; this configuration adds the blog without replacing them.
