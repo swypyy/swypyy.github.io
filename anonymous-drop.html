@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -105,7 +106,6 @@
     </header>
 
     <main class="flex-grow">
-
 
         <!-- COMPACT HERO -->
         <section class="relative px-6 pt-10 pb-9 sm:pt-14 sm:pb-12 purple-glow-bg">
@@ -221,6 +221,24 @@
                             ></textarea>
                         </div>
 
+                        <!-- PERMANENT POST WARNING -->
+                        <div class="bg-amber-500/10 border border-amber-500/25 rounded-xl p-4 flex gap-3">
+                            <div class="shrink-0 mt-0.5">
+                                <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400"></i>
+                            </div>
+
+                            <div>
+                                <h3 class="text-sm font-semibold text-amber-300 mb-1">
+                                    Important: Posts are permanent
+                                </h3>
+
+                                <p class="text-xs sm:text-sm text-amber-100/70 leading-relaxed">
+                                    Once published, your drop cannot be edited or deleted by you.
+                                    Please review your title and content carefully before publishing.
+                                </p>
+                            </div>
+                        </div>
+
                         <button
                             id="publish-button"
                             type="submit"
@@ -274,12 +292,12 @@
                 </div>
 
                 <h3 id="warning-title" class="text-lg font-bold text-white">
-                    Anonymous Drop Notice
+                    Before You Enter
                 </h3>
             </div>
 
             <p class="text-gray-400 text-sm leading-relaxed">
-                You are entering an open anonymous drop zone. Posts and comments are public and may be visible to anyone. Content may not be moderated. Do not share passwords, personal contact details, or other private information.
+                You are entering an open anonymous drop zone. Posts and comments are public and may be visible to anyone. Once published, posts and comments cannot be edited or deleted by users. Content may not be moderated. Do not share passwords, personal contact details, or other private information.
             </p>
 
             <div class="grid grid-cols-3 gap-2 pt-1">
@@ -359,6 +377,8 @@
             document.getElementById('feed-view').classList.add('hidden');
             document.getElementById('create-view').classList.remove('hidden');
             document.getElementById('detail-view').classList.add('hidden');
+
+            if (typeof lucide !== 'undefined') lucide.createIcons();
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
