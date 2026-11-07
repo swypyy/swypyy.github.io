@@ -4,46 +4,74 @@ title: Blog
 description: Stories, updates, ideas and announcements from Swypyy.
 permalink: /blog/
 ---
-<section class="blog-hero">
-  <div class="eyebrow"><span class="eyebrow-dot"></span> THE SWYPYY JOURNAL</div>
-  <h1>Ideas worth<br><span>putting into words.</span></h1>
-  <p>Updates, experiments, behind-the-scenes notes and whatever else is worth sharing.</p>
-  <div class="hero-bottom"><span>INDEPENDENTLY MADE</span><span>EST. 2026</span></div>
+<section class="newsroom-hero">
+  <div class="newsroom-kicker"><span class="eyebrow-dot"></span> THE SWYPYY JOURNAL <span class="kicker-rule"></span> INDEPENDENTLY MADE</div>
+  <h1>Ideas, updates<br>and things <span>worth sharing.</span></h1>
+  <div class="newsroom-intro">
+    <p>Stories from the desk at Swypyy. New projects, experiments, announcements and notes from behind the scenes.</p>
+    <span class="issue-mark">JOURNAL / EST. 2026</span>
+  </div>
 </section>
 
-<section class="posts-section" aria-labelledby="latest-heading">
-  <div class="section-heading">
-    <div>
-      <div class="eyebrow">FRESH FROM THE DESK</div>
-      <h2 id="latest-heading">Latest posts<span class="heading-dot">.</span></h2>
+{% if site.posts.size > 0 %}
+  {% assign featured_posts = site.posts | slice: 0, 3 %}
+  <section class="featured-section" aria-labelledby="featured-heading">
+    <div class="editorial-section-head">
+      <div><span class="section-kicker">THE EDITOR'S PICKS</span><h2 id="featured-heading">Featured stories<span>.</span></h2></div>
+      <span class="section-side-note">01 — 03 / SELECTED STORIES</span>
     </div>
-    <label class="search-box">
-      <span class="sr-only">Search articles</span>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 4 4"></path></svg>
-      <input id="postSearch" type="search" placeholder="Search articles..." autocomplete="off">
-    </label>
-  </div>
-
-  {% if site.posts.size > 0 %}
-    <div class="post-grid" id="postGrid">
-      {% for post in site.posts %}
-        <article class="post-card" data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}">
-          <a class="post-card-link" href="{{ post.url | relative_url }}">
-            <div class="post-card-top"><span class="card-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time></div>
-            <h3>{{ post.title | escape }}</h3>
-            <p>{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 150 }}</p>
-            <div class="post-card-bottom"><span>{% if post.tags.size > 0 %}{{ post.tags.first }}{% elsif post.categories.size > 0 %}{{ post.categories.first }}{% else %}ARTICLE{% endif %}</span><span class="read-link">READ ARTICLE ↗</span></div>
+    <div class="featured-grid" id="featuredGrid">
+      {% for post in featured_posts %}
+        <article class="featured-card" data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}" data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}">
+          <a href="{{ post.url | relative_url }}" class="featured-link">
+            <div class="featured-visual">
+              {% assign cover_image = post.cover | default: post.image %}
+              {% if cover_image %}<img src="{{ cover_image | relative_url }}" alt="" loading="lazy">{% else %}<div class="featured-art"><span>SWYPYY</span><i>{{ forloop.index | prepend: '0' }}</i></div>{% endif %}
+              <span class="featured-label">FEATURED STORY</span>
+            </div>
+            <div class="featured-copy">
+              <div class="card-meta"><span>{% if post.categories.size > 0 %}{{ post.categories.first }}{% elsif post.tags.size > 0 %}{{ post.tags.first }}{% else %}JOURNAL{% endif %}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time></div>
+              <h3>{{ post.title | escape }}</h3>
+              <p>{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 155 }}</p>
+              <span class="story-link">READ STORY <b>↗</b></span>
+            </div>
           </a>
         </article>
       {% endfor %}
     </div>
-    <p class="empty-state" id="emptyState" hidden>No posts match that search. Try another phrase.</p>
-  {% else %}
-    <div class="empty-state">No articles yet. The first post is waiting to happen.</div>
-  {% endif %}
-</section>
+  </section>
+
+  <section class="latest-section" aria-labelledby="latest-heading" id="latest">
+    <div class="editorial-section-head latest-head">
+      <div><span class="section-kicker">FRESH FROM THE DESK</span><h2 id="latest-heading">Latest stories<span>.</span></h2></div>
+      <span class="section-side-note" id="resultCount" aria-live="polite"></span>
+    </div>
+
+    <div class="category-bar" id="categoryBar" aria-label="Filter stories by category">
+      <button class="category-chip is-active" type="button" data-category="all" aria-pressed="true">All stories</button>
+    </div>
+
+    <div class="post-grid" id="postGrid">
+      {% for post in site.posts offset:3 %}
+        <article class="post-card" data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}" data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}">
+          <a class="post-card-link" href="{{ post.url | relative_url }}">
+            <div class="post-card-top"><span class="card-category">{% if post.categories.size > 0 %}{{ post.categories.first }}{% elsif post.tags.size > 0 %}{{ post.tags.first }}{% else %}JOURNAL{% endif %}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time></div>
+            <h3>{{ post.title | escape }}</h3>
+            <p>{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 145 }}</p>
+            <div class="post-card-bottom"><span class="read-link">READ STORY <b>↗</b></span><span class="card-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span></div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+
+    <p class="empty-state" id="emptyState" hidden>No stories match those filters. Try another search or category.</p>
+    <nav class="pagination" id="postPagination" aria-label="Stories pagination"></nav>
+  </section>
+{% else %}
+  <section class="latest-section"><div class="empty-state">No articles yet. The first story is waiting to happen.</div></section>
+{% endif %}
 
 <section class="write-note">
-  <div><div class="eyebrow">HAVE SOMETHING TO SHARE?</div><h2>Every project has a story.</h2><p>New experiments, product updates and ideas belong here.</p></div>
+  <div><div class="section-kicker">HAVE SOMETHING TO SHARE?</div><h2>Every project has a story.</h2><p>New experiments, product updates and ideas belong here.</p></div>
   <a href="{{ '/' | relative_url }}">Explore Swypyy <span>↗</span></a>
 </section>
