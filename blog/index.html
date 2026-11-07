@@ -1,0 +1,49 @@
+---
+layout: default
+title: Blog
+description: Stories, updates, ideas and announcements from Swypyy.
+permalink: /blog/
+---
+<section class="blog-hero">
+  <div class="eyebrow"><span class="eyebrow-dot"></span> THE SWYPYY JOURNAL</div>
+  <h1>Ideas worth<br><span>putting into words.</span></h1>
+  <p>Updates, experiments, behind-the-scenes notes and whatever else is worth sharing.</p>
+  <div class="hero-bottom"><span>INDEPENDENTLY MADE</span><span>EST. 2026</span></div>
+</section>
+
+<section class="posts-section" aria-labelledby="latest-heading">
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">FRESH FROM THE DESK</div>
+      <h2 id="latest-heading">Latest posts<span class="heading-dot">.</span></h2>
+    </div>
+    <label class="search-box">
+      <span class="sr-only">Search articles</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 4 4"></path></svg>
+      <input id="postSearch" type="search" placeholder="Search articles..." autocomplete="off">
+    </label>
+  </div>
+
+  {% if site.posts.size > 0 %}
+    <div class="post-grid" id="postGrid">
+      {% for post in site.posts %}
+        <article class="post-card" data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}">
+          <a class="post-card-link" href="{{ post.url | relative_url }}">
+            <div class="post-card-top"><span class="card-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time></div>
+            <h3>{{ post.title | escape }}</h3>
+            <p>{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 150 }}</p>
+            <div class="post-card-bottom"><span>{% if post.tags.size > 0 %}{{ post.tags.first }}{% elsif post.categories.size > 0 %}{{ post.categories.first }}{% else %}ARTICLE{% endif %}</span><span class="read-link">READ ARTICLE ↗</span></div>
+          </a>
+        </article>
+      {% endfor %}
+    </div>
+    <p class="empty-state" id="emptyState" hidden>No posts match that search. Try another phrase.</p>
+  {% else %}
+    <div class="empty-state">No articles yet. The first post is waiting to happen.</div>
+  {% endif %}
+</section>
+
+<section class="write-note">
+  <div><div class="eyebrow">HAVE SOMETHING TO SHARE?</div><h2>Every project has a story.</h2><p>New experiments, product updates and ideas belong here.</p></div>
+  <a href="{{ '/' | relative_url }}">Explore Swypyy <span>↗</span></a>
+</section>

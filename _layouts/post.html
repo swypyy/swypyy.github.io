@@ -1,0 +1,34 @@
+---
+layout: default
+---
+<article class="article-page">
+  <a class="back-link" href="{{ '/blog/' | relative_url }}">← Back to all posts</a>
+  <header class="article-header">
+    <div class="eyebrow">SWYPYY JOURNAL</div>
+    <h1>{{ page.title | escape }}</h1>
+    {% if page.description %}<p class="article-description">{{ page.description | escape }}</p>{% endif %}
+    <div class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+      <span aria-hidden="true">·</span>
+      <span>{% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200.0 | ceil %}{% if minutes < 1 %}1{% else %}{{ minutes }}{% endif %} min read</span>
+    </div>
+    {% if page.tags.size > 0 %}
+      <div class="tag-row">{% for tag in page.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+    {% endif %}
+  </header>
+
+  {% if page.cover %}<img class="article-cover" src="{{ page.cover | relative_url }}" alt="{{ page.cover_alt | default: page.title | escape }}">{% endif %}
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  <div class="article-end">
+    <span>End of article</span>
+    <a href="{{ '/blog/' | relative_url }}">Explore more posts →</a>
+  </div>
+  <nav class="post-pagination" aria-label="More articles">
+    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><small>OLDER</small><strong>← {{ page.previous.title | escape }}</strong></a>{% else %}<span></span>{% endif %}
+    {% if page.next %}<a class="next-post" href="{{ page.next.url | relative_url }}"><small>NEWER</small><strong>{{ page.next.title | escape }} →</strong></a>{% endif %}
+  </nav>
+</article>
