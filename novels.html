@@ -1,37 +1,40 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- SEO Primary Tags -->
-    <title>Swypyy | Creative Hub - Web Novels, Apps, Art & Projects</title>
-    <meta name="description" content="Welcome to Swypyy's digital lab. Explore original web novels, web apps, tools, digital art, and open-source GitHub projects built with creativity and AI.">
-    <meta name="keywords" content="Swypyy, web novels, indie developer, AI creations, digital art gallery, open source projects, web apps">
+    <title>My Webnovels | SWYPYY</title>
+    <meta name="description" content="Read original webnovels and stories written by Swypyy. Explore the stories in the SWYPYY library.">
+    <meta name="keywords" content="Swypyy, webnovels, web novels, original stories, online stories, Just A Dream">
     <meta name="author" content="Swypyy">
-    
-    <!-- Open Graph / Social Media (Discord, Twitter, Telegram previews) -->
+    <meta name="copyright" content="SWYPYY. All rights reserved.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://swypyy.github.io/">
-    <meta property="og:title" content="Swypyy | Creative Hub - Web Novels, Apps, Art & Projects">
-    <meta property="og:description" content="Explore original web novels, web apps, digital art, and open-source projects by Swypyy.">
-    <meta property="og:image" content="https://swypyy.github.io/Assets/logo.png">
+    <meta property="og:url" content="https://swypyy.github.io/novels.html">
+    <meta property="og:title" content="My Webnovels | SWYPYY">
+    <meta property="og:description" content="Read original webnovels and stories written by Swypyy.">
+    <meta property="og:image" content="https://swypyy.github.io/assets/logo.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Swypyy | Creative Hub">
-    <meta name="twitter:description" content="Explore original web novels, web apps, digital art, and open-source projects by Swypyy.">
-    <meta name="twitter:image" content="https://swypyy.github.io/Assets/logo.png">
-        
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Webnovels | SWYPYY</title>
-    
+    <meta name="twitter:title" content="My Webnovels | SWYPYY">
+    <meta name="twitter:description" content="Read original webnovels and stories written by Swypyy.">
+    <meta name="twitter:image" content="https://swypyy.github.io/assets/logo.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/s-logo.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -55,7 +58,7 @@
             }
         }
     </script>
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
 
@@ -70,18 +73,31 @@
         }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
 
     <!-- TOP HEADER -->
     <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="w-full px-6 md:px-10 xl:px-16 h-20 flex items-center justify-between">
+
             <a href="index.html" class="flex items-center group">
-                <img src="assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='Assets/logo.png';">
+                <img
+                    src="Assets/logo.png"
+                    alt="Swypyy Logo"
+                    class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                    onerror="this.onerror=null; this.src='assets/logo.png'; this.onerror=function(){this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';};"
+                >
+
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
             </a>
+
         </div>
     </header>
 
-    <!-- BACK BUTTON DIRECTLY UNDER HEADER WITH NO GAP -->
+    <!-- BACK BUTTON -->
     <div class="max-w-6xl mx-auto w-full px-6 pt-4">
         <a href="index.html" class="text-gray-400 hover:text-brand-glow transition-colors inline-flex items-center" aria-label="Back to Home">
             <i data-lucide="arrow-left" class="w-7 h-7"></i>
@@ -91,27 +107,40 @@
     <!-- MAIN CONTENT -->
     <main class="flex-grow py-8 px-6">
         <div class="max-w-6xl mx-auto space-y-8">
-            
-            <!-- Heading & Balanced Subtitle Hierarchy -->
+
+            <!-- HEADING -->
             <div class="text-center space-y-2 max-w-xl mx-auto">
                 <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">My Webnovels</h1>
-                <p class="text-gray-300 font-normal text-sm sm:text-base leading-relaxed">Original serials & stories written by Swypyy</p>
+                <p class="text-gray-300 font-normal text-sm sm:text-base leading-relaxed">
+                    Original serials & stories written by Swypyy
+                </p>
             </div>
 
-            <!-- NOVELS GRID: Balanced alignment container (2 on mobile, up to 4 on PC) -->
+            <!-- NOVELS GRID -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto pt-2">
-                
+
                 <!-- NOVEL CARD: JUST A DREAM -->
                 <a href="reader.html?novel=just-a-dream" class="group cursor-pointer flex flex-col gap-3">
-                    <!-- Cover Image -->
+
+                    <!-- COVER IMAGE -->
                     <div class="w-full aspect-[3/4] bg-surface-light rounded-2xl border border-white/10 overflow-hidden relative shadow-xl group-hover:border-brand-purple/60 group-hover:shadow-brand-purple/20 transition-all duration-300">
-                        <img src="assets/Novel-cover/Just-A-Dream.png" alt="Just A Dream Cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.src='Assets/Novel-cover/Just-A-Dream.png';">
+
+                        <img
+                            src="assets/Novel-cover/Just-A-Dream.png"
+                            alt="Just A Dream Cover"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        >
+
                         <div class="absolute inset-0 bg-brand-purple/0 group-hover:bg-brand-purple/10 transition-colors duration-300"></div>
                     </div>
-                    <!-- Title (Centered under the cover image) -->
+
+                    <!-- NOVEL TITLE -->
                     <div class="text-center px-1">
-                        <h2 class="text-base sm:text-lg font-bold text-gray-200 group-hover:text-brand-glow transition-colors">Just A Dream</h2>
+                        <h2 class="text-base sm:text-lg font-bold text-gray-200 group-hover:text-brand-glow transition-colors">
+                            Just A Dream
+                        </h2>
                     </div>
+
                 </a>
 
             </div>
@@ -122,14 +151,19 @@
     <!-- FOOTER -->
     <footer class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
         <div class="max-w-6xl mx-auto px-6">
-            <p>&copy; 2026 SWYPYY. All rights reserved.</p>
+            <p>&copy; <span id="currentYear">2026</span> SWYPYY. All rights reserved.</p>
         </div>
     </footer>
 
     <!-- JAVASCRIPT -->
     <script>
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        document.getElementById('currentYear').textContent =
+            new Date().getFullYear();
     </script>
+
 </body>
-                </html>
-    
+</html>
