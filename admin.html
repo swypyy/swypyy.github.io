@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07060b">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Demo | Swypyy</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #07060b;
+            color: #f3f4f6;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background: radial-gradient(ellipse at top, rgba(124, 58, 237, .22), transparent 55%), #07060b;
+        }
+
+        main {
+            width: min(100%, 440px);
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 24px;
+            background: #120f1d;
+            box-shadow: 0 0 40px rgba(124, 58, 237, .18);
+        }
+
+        h1 { margin: 0 0 8px; font-size: 1.8rem; }
+        .intro, .notice { color: #aaa5b7; line-height: 1.5; }
+        .notice {
+            margin: 20px 0;
+            padding: 12px 14px;
+            border: 1px solid rgba(167,139,250,.25);
+            border-radius: 12px;
+            background: rgba(124,58,237,.1);
+            font-size: .9rem;
+        }
+
+        label { display: block; margin: 16px 0 7px; color: #ddd8e7; font-size: .92rem; font-weight: 600; }
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 10px;
+            background: #07060b;
+            color: #f3f4f6;
+            font: inherit;
+        }
+        input:focus { outline: 2px solid #a78bfa; outline-offset: 2px; }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 13px;
+            border: 0;
+            border-radius: 10px;
+            background: #7c3aed;
+            color: white;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        button:hover { background: #8b5cf6; }
+
+        #result { margin-top: 22px; text-align: center; }
+        #result[hidden] { display: none; }
+        .gesture { margin: 8px 0; font-size: clamp(5rem, 24vw, 8rem); line-height: 1.1; }
+        .result-text { margin: 0; font-size: 1.2rem; font-weight: 700; }
+        .small-print { margin: 20px 0 0; color: #777184; font-size: .8rem; text-align: center; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Admin Login</h1>
+        <p class="intro">A harmless demo page. There is no real admin account here.</p>
+        <p class="notice"><strong>Demo only:</strong> Don’t enter a real password. This page does not send or save the username or password.</p>
+
+        <form id="demoLogin">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" autocomplete="off" maxlength="40" placeholder="Enter any name" required>
+
+            <label for="password">Demo password</label>
+            <input id="password" name="password" type="password" autocomplete="off" maxlength="100" placeholder="Anything works" required>
+
+            <button type="submit">Log in</button>
+        </form>
+
+        <section id="result" role="status" aria-live="polite" hidden>
+            <div class="gesture" aria-label="Middle finger">🖕</div>
+            <p class="result-text" id="resultText">Access denied. This was a prank!</p>
+        </section>
+
+        <p class="small-print">Just a prank — no login, account, or authentication is performed.</p>
+    </main>
+
+    <script>
+        const form = document.getElementById('demoLogin');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const result = document.getElementById('result');
+        const resultText = document.getElementById('resultText');
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const username = usernameInput.value.trim();
+
+            // This is only a local visual demo: credentials are never transmitted or stored.
+            resultText.textContent = username
+                ? `Nice try, ${username} — access denied. This was a prank!`
+                : 'Access denied. This was a prank!';
+            passwordInput.value = '';
+            result.hidden = false;
+            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    </script>
+</body>
+</html>
