@@ -3,123 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#07060b">
+    <meta name="theme-color" content="#09090f">
     <meta name="robots" content="noindex, nofollow">
-    <title>Admin Demo | Swypyy</title>
+    <title>Admin Control Center</title>
     <style>
         :root {
             color-scheme: dark;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #07060b;
-            color: #f3f4f6;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #09090f;
+            color: #f4f4f7;
         }
 
         * { box-sizing: border-box; }
+        body { min-height: 100vh; margin: 0; background: #09090f; }
+        button, input { font: inherit; }
 
-        body {
+        .login-screen {
             min-height: 100vh;
-            margin: 0;
             display: grid;
             place-items: center;
             padding: 24px;
-            background: radial-gradient(ellipse at top, rgba(124, 58, 237, .22), transparent 55%), #07060b;
+            background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,.2), transparent 50%);
         }
 
-        main {
-            width: min(100%, 440px);
-            padding: 32px;
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 24px;
-            background: #120f1d;
-            box-shadow: 0 0 40px rgba(124, 58, 237, .18);
+        .login-card {
+            width: min(100%, 430px);
+            padding: 38px;
+            border: 1px solid #252431;
+            border-radius: 18px;
+            background: #111119;
+            box-shadow: 0 24px 80px rgba(0,0,0,.4);
         }
 
-        h1 { margin: 0 0 8px; font-size: 1.8rem; }
-        .intro, .notice { color: #aaa5b7; line-height: 1.5; }
-        .notice {
-            margin: 20px 0;
-            padding: 12px 14px;
-            border: 1px solid rgba(167,139,250,.25);
-            border-radius: 12px;
-            background: rgba(124,58,237,.1);
-            font-size: .9rem;
+        .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+        .brand-icon {
+            width: 42px; height: 42px; display: grid; place-items: center;
+            border: 1px solid rgba(167,139,250,.3); border-radius: 12px;
+            background: rgba(124,58,237,.16); color: #c4b5fd;
         }
-
-        label { display: block; margin: 16px 0 7px; color: #ddd8e7; font-size: .92rem; font-weight: 600; }
+        .brand-title { font-size: 14px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+        .brand-subtitle { margin-top: 3px; color: #777684; font-size: 12px; }
+        h1 { margin: 0; font-size: 25px; letter-spacing: -.03em; }
+        .lead { margin: 9px 0 27px; color: #92919e; font-size: 14px; line-height: 1.6; }
+        label { display: block; margin: 18px 0 8px; color: #c9c8d2; font-size: 13px; font-weight: 600; }
         input {
-            width: 100%;
-            padding: 13px 14px;
-            border: 1px solid rgba(255,255,255,.14);
-            border-radius: 10px;
-            background: #07060b;
-            color: #f3f4f6;
-            font: inherit;
+            width: 100%; padding: 13px 14px; border: 1px solid #302e3a; border-radius: 9px;
+            outline: none; background: #0b0b11; color: #f4f4f7; transition: border-color .2s, box-shadow .2s;
         }
-        input:focus { outline: 2px solid #a78bfa; outline-offset: 2px; }
-
-        button {
-            width: 100%;
-            margin-top: 22px;
-            padding: 13px;
-            border: 0;
-            border-radius: 10px;
-            background: #7c3aed;
-            color: white;
-            font: inherit;
-            font-weight: 700;
-            cursor: pointer;
+        input:focus { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139,92,246,.16); }
+        .login-button {
+            width: 100%; margin-top: 25px; padding: 13px; border: 0; border-radius: 9px;
+            background: #7c3aed; color: white; font-weight: 700; cursor: pointer; transition: background .2s;
         }
-        button:hover { background: #8b5cf6; }
+        .login-button:hover { background: #8b5cf6; }
+        .error { min-height: 20px; margin: 13px 0 0; color: #fca5a5; font-size: 13px; }
+        .login-footer { margin-top: 25px; padding-top: 19px; border-top: 1px solid #252431; color: #686775; font-size: 12px; }
 
-        #result { margin-top: 22px; text-align: center; }
-        #result[hidden] { display: none; }
-        .gesture { margin: 8px 0; font-size: clamp(5rem, 24vw, 8rem); line-height: 1.1; }
-        .result-text { margin: 0; font-size: 1.2rem; font-weight: 700; }
-        .small-print { margin: 20px 0 0; color: #777184; font-size: .8rem; text-align: center; }
+        .dashboard { min-height: 100vh; }
+        .topbar {
+            height: 68px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 28px; border-bottom: 1px solid #24232d; background: #101017;
+        }
+        .topbar-brand { display: flex; align-items: center; gap: 11px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+        .topbar-brand .brand-icon { width: 34px; height: 34px; }
+        .admin-status { display: flex; align-items: center; gap: 8px; color: #aaa9b5; font-size: 13px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 10px rgba(52,211,153,.5); }
+        .dashboard-layout { min-height: calc(100vh - 68px); display: grid; grid-template-columns: 230px 1fr; }
+        aside { padding: 26px 16px; border-right: 1px solid #24232d; background: #101017; }
+        .nav-label { margin: 0 12px 12px; color: #676674; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+        .nav-item { display: flex; align-items: center; gap: 11px; margin: 4px 0; padding: 11px 12px; border-radius: 8px; color: #aaa9b5; font-size: 13px; }
+        .nav-item.active { background: rgba(124,58,237,.16); color: #d3c3ff; }
+        .main-content { width: min(100%, 1000px); margin: 0 auto; padding: clamp(28px, 6vw, 64px); }
+        .eyebrow { color: #a78bfa; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+        .dashboard h1 { margin-top: 10px; font-size: clamp(27px, 4vw, 38px); }
+        .dashboard-intro { margin: 9px 0 30px; color: #92919e; }
+        .panel { padding: clamp(20px, 5vw, 40px); border: 1px solid #292735; border-radius: 16px; background: #111119; text-align: center; }
+        .panel-label { color: #858391; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+        .gesture { margin: 24px 0 13px; font-size: clamp(110px, 23vw, 190px); line-height: 1; }
+        .prank-title { margin: 0; font-size: clamp(23px, 4vw, 34px); }
+        .prank-copy { max-width: 470px; margin: 12px auto 0; color: #9695a2; line-height: 1.65; }
+        .logout-button { margin-top: 24px; padding: 10px 15px; border: 1px solid #383644; border-radius: 8px; background: transparent; color: #c6c5cf; cursor: pointer; }
+        .logout-button:hover { border-color: #8b5cf6; color: white; }
+        [hidden] { display: none !important; }
+
+        @media (max-width: 680px) {
+            .login-card { padding: 28px 23px; }
+            .topbar { padding: 0 17px; }
+            .dashboard-layout { display: block; }
+            aside { display: none; }
+            .main-content { padding: 32px 18px; }
+        }
     </style>
 </head>
 <body>
-    <main>
-        <h1>Admin Login</h1>
-        <p class="intro">A harmless demo page. There is no real admin account here.</p>
-        <p class="notice"><strong>Demo only:</strong> Don’t enter a real password. This page does not send or save the username or password.</p>
+    <main id="loginScreen" class="login-screen">
+        <section class="login-card" aria-labelledby="loginTitle">
+            <div class="brand">
+                <div class="brand-icon" aria-hidden="true">◆</div>
+                <div>
+                    <div class="brand-title">Swypyy</div>
+                    <div class="brand-subtitle">Administration</div>
+                </div>
+            </div>
 
-        <form id="demoLogin">
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" autocomplete="off" maxlength="40" placeholder="Enter any name" required>
+            <h1 id="loginTitle">Welcome back</h1>
+            <p class="lead">Sign in to access the administration control center.</p>
 
-            <label for="password">Demo password</label>
-            <input id="password" name="password" type="password" autocomplete="off" maxlength="100" placeholder="Anything works" required>
+            <form id="loginForm">
+                <label for="username">Admin username</label>
+                <input id="username" name="username" type="text" autocomplete="username" required autofocus>
 
-            <button type="submit">Log in</button>
-        </form>
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" required>
 
-        <section id="result" role="status" aria-live="polite" hidden>
-            <div class="gesture" aria-label="Middle finger">🖕</div>
-            <p class="result-text" id="resultText">Access denied. This was a prank!</p>
+                <button class="login-button" type="submit">Sign in</button>
+                <p id="loginError" class="error" role="alert" aria-live="polite"></p>
+            </form>
+
+            <div class="login-footer">Authorized access only</div>
         </section>
-
-        <p class="small-print">Just a prank — no login, account, or authentication is performed.</p>
     </main>
 
+    <section id="dashboard" class="dashboard" aria-label="Admin control center" hidden>
+        <header class="topbar">
+            <div class="topbar-brand">
+                <div class="brand-icon" aria-hidden="true">◆</div>
+                Admin Control Center
+            </div>
+            <div class="admin-status"><span class="status-dot" aria-hidden="true"></span> Signed in as Admin</div>
+        </header>
+
+        <div class="dashboard-layout">
+            <aside aria-label="Admin navigation">
+                <p class="nav-label">Workspace</p>
+                <div class="nav-item active"><span aria-hidden="true">▦</span> Overview</div>
+                <div class="nav-item"><span aria-hidden="true">◈</span> Site settings</div>
+                <div class="nav-item"><span aria-hidden="true">▤</span> Content</div>
+                <div class="nav-item"><span aria-hidden="true">⚙</span> Preferences</div>
+            </aside>
+
+            <main class="main-content">
+                <div class="eyebrow">Overview</div>
+                <h1>Admin dashboard</h1>
+                <p class="dashboard-intro">Your control center is ready.</p>
+
+                <section class="panel" aria-labelledby="prankTitle">
+                    <div class="panel-label">System notification</div>
+                    <div class="gesture" aria-label="Middle finger">🖕</div>
+                    <h2 id="prankTitle" class="prank-title">You got pranked!</h2>
+                    <p class="prank-copy">You made it into the admin control center… and this is all the control you get. Have a good one!</p>
+                    <button id="logoutButton" class="logout-button" type="button">Log out</button>
+                </section>
+            </main>
+        </div>
+    </section>
+
     <script>
-        const form = document.getElementById('demoLogin');
-        const usernameInput = document.getElementById('username');
+        // Static-page joke gate only. It does not provide real security or transmit/store credentials.
+        const loginForm = document.getElementById('loginForm');
+        const loginScreen = document.getElementById('loginScreen');
+        const dashboard = document.getElementById('dashboard');
+        const loginError = document.getElementById('loginError');
         const passwordInput = document.getElementById('password');
-        const result = document.getElementById('result');
-        const resultText = document.getElementById('resultText');
 
-        form.addEventListener('submit', event => {
+        loginForm.addEventListener('submit', event => {
             event.preventDefault();
-            const username = usernameInput.value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = passwordInput.value;
 
-            // This is only a local visual demo: credentials are never transmitted or stored.
-            resultText.textContent = username
-                ? `Nice try, ${username} — access denied. This was a prank!`
-                : 'Access denied. This was a prank!';
-            passwordInput.value = '';
-            result.hidden = false;
-            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            if (username === 'Admin' && password === '12345') {
+                loginError.textContent = '';
+                passwordInput.value = '';
+                loginScreen.hidden = true;
+                dashboard.hidden = false;
+            } else {
+                loginError.textContent = 'Incorrect username or password.';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            dashboard.hidden = true;
+            loginScreen.hidden = false;
+            loginForm.reset();
+            loginError.textContent = '';
+            document.getElementById('username').focus();
         });
     </script>
 </body>
