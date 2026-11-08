@@ -73,7 +73,8 @@ button, input { font: inherit; }
 .journal-heading > p { max-width: 580px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
 
 .journal-posts { padding-top: 30px; }
-.post-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 26px; align-items: start; }
+/* Four cards per row on desktop; 20 cards gives five rows per page. */
+.post-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 34px 26px; align-items: start; }
 .post-card { min-width: 0; }
 .post-card-link { display: block; height: 100%; }
 .post-card-image { position: relative; width: 100%; aspect-ratio: 1.8 / 1; overflow: hidden; border-radius: 12px; background: var(--surface); }
@@ -105,10 +106,19 @@ button, input { font: inherit; }
     .journal-heading { padding: 36px 0 24px; }
     .journal-heading h1 { font-size: clamp(34px, 9vw, 47px); }
     .journal-heading > p { font-size: 12px; }
-    .post-grid { grid-template-columns: 1fr; gap: 28px; }
-    .post-card-image { aspect-ratio: 1.65 / 1; }
+    .post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; }
+    .post-card-image { aspect-ratio: 1.25 / 1; }
+    .post-card-copy { padding-top: 10px; }
+    .post-card-copy h2 { font-size: 15px; }
+    .post-card-copy time { font-size: 12px; }
+    .post-card-copy p { font-size: 11px; }
+    .post-card-tags { right: 7px; bottom: 7px; left: 7px; gap: 4px; }
+    .post-card-tags span { padding: 5px 8px; font-size: 9px; }
 }
 @media (max-width: 380px) {
     .blog-main { width: calc(100% - 26px); }
     .category-chip { padding: 7px 12px; font-size: 12px; }
+    .post-grid { gap: 20px 10px; }
+    .post-card-copy h2 { font-size: 14px; }
+    .post-card-tags span { padding: 4px 6px; font-size: 8px; }
 }

@@ -7,7 +7,7 @@
     const postGrid = document.getElementById('postGrid');
     const pagination = document.getElementById('postPagination');
     const emptyState = document.getElementById('emptyState');
-    const pageSize = 12;
+    const pageSize = 20;
 
     if (!postGrid) return;
 
