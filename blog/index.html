@@ -1,92 +1,309 @@
+
 ---
 layout: default
 title: Blog
 description: Stories, updates, ideas and announcements from Swypyy.
 permalink: /blog/
 ---
-<section class="newsroom-hero">
-  <div class="newsroom-kicker"><span class="eyebrow-dot"></span> THE SWYPYY JOURNAL <span class="kicker-rule"></span> INDEPENDENTLY MADE</div>
-  <h1>Ideas, updates<br>and things <span>worth sharing.</span></h1>
-  <div class="newsroom-intro">
-    <p>Stories from the desk at Swypyy. New projects, experiments, announcements and notes from behind the scenes.</p>
-    <span class="issue-mark">JOURNAL / EST. 2026</span>
-  </div>
+
+<!-- SEARCH -->
+<section class="journal-tools" aria-label="Search and filter the journal">
+
+    <form class="journal-search" id="journalSearchForm" role="search">
+
+        <label class="sr-only" for="postSearch">
+            Search the Swypyy Journal
+        </label>
+
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m16 16 4 4"></path>
+        </svg>
+
+        <input
+            id="postSearch"
+            name="q"
+            type="search"
+            placeholder="Search the journal..."
+            autocomplete="off"
+        >
+
+        <kbd>/</kbd>
+
+    </form>
+
+    <!-- CATEGORY FILTERS -->
+    <div class="journal-filter-row">
+
+        <span class="filter-label">FILTER</span>
+
+        <div class="category-bar" id="categoryBar" aria-label="Filter stories by category">
+
+            <button class="category-chip is-active" type="button" data-category="all" aria-pressed="true">
+                All
+            </button>
+
+            <button class="category-chip" type="button" data-category="announcements" aria-pressed="false">
+                Announcements
+            </button>
+
+            <button class="category-chip" type="button" data-category="projects" aria-pressed="false">
+                Projects
+            </button>
+
+            <button class="category-chip" type="button" data-category="updates" aria-pressed="false">
+                Updates
+            </button>
+
+            <button class="category-chip" type="button" data-category="ideas" aria-pressed="false">
+                Ideas
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- JOURNAL INTRO -->
+<section class="journal-heading">
+
+    <div class="journal-kicker">
+        <span></span>
+        THE SWYPYY JOURNAL
+    </div>
+
+    <h1>
+        Ideas, updates and<br>
+        <em>things worth sharing.</em>
+    </h1>
+
+    <p>
+        Notes from the desk at Swypyy. Projects, experiments,
+        announcements and thoughts from behind the scenes.
+    </p>
+
 </section>
 
 {% if site.posts.size > 0 %}
-  {% assign featured_posts = site.posts | slice: 0, 3 %}
-  <section class="featured-section" aria-labelledby="featured-heading">
-    <div class="editorial-section-head">
-      <div><span class="section-kicker">THE EDITOR'S PICKS</span><h2 id="featured-heading">Featured stories<span>.</span></h2></div>
-      <span class="section-side-note">01 — 03 / SELECTED STORIES</span>
-    </div>
-    <div class="featured-grid" id="featuredGrid">
-      {% for post in featured_posts %}
-        <article class="featured-card" data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}" data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}">
-          <a href="{{ post.url | relative_url }}" class="featured-link">
-            <div class="featured-visual">
-              {% assign cover_image = post.cover | default: post.image %}
-              {% if cover_image %}<img src="{{ cover_image | relative_url }}" alt="" loading="lazy">{% else %}<div class="featured-art"><span>SWYPYY</span><i>{{ forloop.index | prepend: '0' }}</i></div>{% endif %}
-              <span class="featured-label">FEATURED STORY</span>
-            </div>
-            <div class="featured-copy">
-              <div class="card-meta"><span>{% if post.categories.size > 0 %}{{ post.categories.first }}{% elsif post.tags.size > 0 %}{{ post.tags.first }}{% else %}JOURNAL{% endif %}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time></div>
-              <h3>{{ post.title | escape }}</h3>
-              <p>{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 155 }}</p>
-              <span class="story-link">READ STORY <b>↗</b></span>
-            </div>
-          </a>
-        </article>
-      {% endfor %}
-    </div>
-  </section>
 
-  <section class="latest-section" aria-labelledby="latest-heading" id="latest">
-    <div class="editorial-section-head latest-head">
-      <div><span class="section-kicker">FRESH FROM THE DESK</span><h2 id="latest-heading">Latest stories<span>.</span></h2></div>
-      <span class="section-side-note" id="resultCount" aria-live="polite"></span>
-    </div>
+    {% assign featured_posts = site.posts | slice: 0, 3 %}
 
-    <div class="category-bar" id="categoryBar" aria-label="Filter stories by category">
-      <button class="category-chip is-active" type="button" data-category="all" aria-pressed="true">All stories</button>
-    </div>
+    <!-- FEATURED POSTS -->
+    <section class="featured-section" aria-labelledby="featured-heading">
 
-    <div class="post-grid" id="postGrid">
-      {% if site.posts.size > 3 %}
-        {% assign latest_posts = site.posts | slice: 3, site.posts.size %}
-      {% else %}
-        {% assign latest_posts = site.posts %}
-      {% endif %}
-      {% for post in latest_posts %}
-        <article class="post-card" data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}" data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}">
-          <a class="post-card-link" href="{{ post.url | relative_url }}">
-            {% assign card_image = post.cover | default: post.image %}
-            <div class="post-card-visual">
-              {% if card_image %}
-                <img src="{{ card_image | relative_url }}" alt="{{ post.title | escape }}" loading="lazy">
-              {% else %}
-                <div class="post-card-art" aria-hidden="true"><span>SWYPYY</span><i>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</i></div>
-              {% endif %}
+        <div class="section-heading">
+
+            <div>
+                <span class="section-kicker">SELECTED STORIES</span>
+                <h2 id="featured-heading">Featured posts</h2>
             </div>
-            <div class="post-card-content">
-              <div class="post-card-top"><span class="card-category">{% if post.categories.size > 0 %}{{ post.categories.first }}{% elsif post.tags.size > 0 %}{{ post.tags.first }}{% else %}JOURNAL{% endif %}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d, %Y" }}</time></div>
-              <h3>{{ post.title | escape }}</h3>
-            <p>{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 145 }}</p>
-              <div class="post-card-bottom"><span class="read-link">READ STORY <b>↗</b></span><span class="card-index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span></div>
-            </div>
-          </a>
-        </article>
-      {% endfor %}
-    </div>
 
-    <p class="empty-state" id="emptyState" hidden>No stories match those filters. Try another search or category.</p>
-    <nav class="pagination" id="postPagination" aria-label="Stories pagination"></nav>
-  </section>
+            <span class="section-note">THE LATEST THREE</span>
+
+        </div>
+
+        <div class="featured-grid" id="featuredGrid">
+
+            {% for post in featured_posts %}
+
+                <article
+                    class="featured-card"
+                    data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}"
+                    data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}"
+                >
+
+                    <a href="{{ post.url | relative_url }}" class="featured-link">
+
+                        <div class="featured-image">
+
+                            {% assign cover_image = post.cover | default: post.image %}
+
+                            {% if cover_image %}
+
+                                <img
+                                    src="{{ cover_image | relative_url }}"
+                                    alt=""
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <div class="image-placeholder" aria-hidden="true">
+                                    <span>SWYPYY</span>
+                                    <b>{{ forloop.index | prepend: '0' }}</b>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="featured-copy">
+
+                            <div class="post-meta-line">
+
+                                <span>
+                                    {% if post.categories.size > 0 %}
+                                        {{ post.categories.first }}
+                                    {% elsif post.tags.size > 0 %}
+                                        {{ post.tags.first }}
+                                    {% else %}
+                                        Journal
+                                    {% endif %}
+                                </span>
+
+                                <time datetime="{{ post.date | date_to_xmlschema }}">
+                                    {{ post.date | date: "%b %d, %Y" }}
+                                </time>
+
+                            </div>
+
+                            <h3>{{ post.title | escape }}</h3>
+
+                            <p>
+                                {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 135 }}
+                            </p>
+
+                            <span class="read-more">
+                                Read story <b>↗</b>
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    <!-- LATEST POSTS -->
+    <section class="latest-section" id="latest" aria-labelledby="latest-heading">
+
+        <div class="section-heading latest-heading">
+
+            <div>
+                <span class="section-kicker">MORE FROM SWYPYY</span>
+                <h2 id="latest-heading">Latest posts</h2>
+            </div>
+
+            <span class="section-note" id="resultCount" aria-live="polite"></span>
+
+        </div>
+
+        <div class="post-list" id="postGrid">
+
+            {% if site.posts.size > 3 %}
+
+                {% assign latest_posts = site.posts | slice: 3, site.posts.size %}
+
+            {% else %}
+
+                {% assign latest_posts = site.posts %}
+
+            {% endif %}
+
+            {% for post in latest_posts %}
+
+                <article
+                    class="post-row"
+                    data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}"
+                    data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}"
+                >
+
+                    <a href="{{ post.url | relative_url }}" class="post-row-link">
+
+                        <div class="post-row-image">
+
+                            {% assign card_image = post.cover | default: post.image %}
+
+                            {% if card_image %}
+
+                                <img
+                                    src="{{ card_image | relative_url }}"
+                                    alt=""
+                                    loading="lazy"
+                                >
+
+                            {% else %}
+
+                                <div class="image-placeholder" aria-hidden="true">
+                                    <span>SWYPYY</span>
+                                    <b>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</b>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="post-row-copy">
+
+                            <div class="post-meta-line">
+
+                                <span>
+                                    {% if post.categories.size > 0 %}
+                                        {{ post.categories.first }}
+                                    {% elsif post.tags.size > 0 %}
+                                        {{ post.tags.first }}
+                                    {% else %}
+                                        Journal
+                                    {% endif %}
+                                </span>
+
+                                <time datetime="{{ post.date | date_to_xmlschema }}">
+                                    {{ post.date | date: "%b %d, %Y" }}
+                                </time>
+
+                            </div>
+
+                            <h3>{{ post.title | escape }}</h3>
+
+                            <p>
+                                {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 190 }}
+                            </p>
+
+                            <span class="read-more">
+                                Read story <b>↗</b>
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+        <p class="empty-state" id="emptyState" hidden>
+            No posts match those filters. Try another search or category.
+        </p>
+
+        <nav class="pagination" id="postPagination" aria-label="Posts pagination"></nav>
+
+    </section>
+
 {% else %}
-  <section class="latest-section"><div class="empty-state">No articles yet. The first story is waiting to happen.</div></section>
+
+    <section class="latest-section">
+        <div class="empty-state">
+            No posts yet. The first story is waiting to happen.
+        </div>
+    </section>
+
 {% endif %}
 
-<section class="write-note">
-  <div><div class="section-kicker">HAVE SOMETHING TO SHARE?</div><h2>Every project has a story.</h2><p>New experiments, product updates and ideas belong here.</p></div>
-  <a href="{{ '/' | relative_url }}">Explore Swypyy <span>↗</span></a>
+<!-- BOTTOM NOTE -->
+<section class="journal-bottom-note">
+
+    <p>Made with curiosity, by Swypyy.</p>
+
+    <a href="{{ '/' | relative_url }}">
+        Back to Swypyy <span>↗</span>
+    </a>
+
 </section>
