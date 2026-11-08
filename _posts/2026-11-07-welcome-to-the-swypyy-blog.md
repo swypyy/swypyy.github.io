@@ -4,8 +4,8 @@ title: "Welcome to the Swypyy Journal"
 date: 2026-11-07 16:00:00 +0530
 description: "An introduction to Swypyy: a personal space for projects, experiments, and the lessons learned while building with curiosity."
 featured: true
-tags: [Announcements, Swypyy]
-categories: [Updates]
+tags: [Swypyy]
+categories: [Announcements]
 ---
 
 Welcome to the **Swypyy Journal**—a place to share what I’m building, what I’m learning, and the ideas that inspire me to keep experimenting.
