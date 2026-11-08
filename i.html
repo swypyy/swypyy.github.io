@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07060b">
+
+    <link rel="manifest" href="./manifest.json">
+
+    <title>Swypyy | Creating Everything I Like</title>
+    <meta name="description" content="Welcome to Swypyy. Explore things built with creativity, curiosity, and a passion for trying new ideas.">
+    <meta name="keywords" content="Swypyy, curious mind, indie developer, AI creations, digital art, GitHub projects, creative projects">
+    <meta name="author" content="Swypyy">
+    <meta name="robots" content="index, follow">
+    <meta name="copyright" content="SWYPYY. All rights reserved.">
+    <link rel="canonical" href="https://swypyy.github.io/">
+
+    <meta name="google-site-verification" content="DyCI_IPiGW2Zez0bjyI3kPQc4OpLgpVyTLhsW0etdWc">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Swypyy">
+    <meta property="og:url" content="https://swypyy.github.io/">
+    <meta property="og:title" content="Swypyy | Creating Everything I Like">
+    <meta property="og:description" content="Explore things I create with curiosity, creativity, and a passion for trying new ideas.">
+    <meta property="og:image" content="https://swypyy.github.io/assets/logo.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Swypyy | Creating Everything I Like">
+    <meta name="twitter:description" content="Explore things I create with curiosity, creativity, and a passion for trying new ideas.">
+    <meta name="twitter:image" content="https://swypyy.github.io/assets/logo.png">
+
+    <link rel="icon" type="image/png" href="/assets/s-logo.png">
+    <link rel="apple-touch-icon" href="/assets/s-logo.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@0.468.0"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#07060b',
+                        surface: '#120f1d',
+                        'surface-light': '#1c172e',
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #07060b;
+            color: #f3f4f6;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        .purple-glow-bg {
+            background: radial-gradient(
+                circle at 50% 30%,
+                rgba(124, 58, 237, 0.25) 0%,
+                rgba(7, 6, 11, 0) 70%
+            );
+        }
+
+        .purple-glow-card {
+            box-shadow: 0 0 30px -5px rgba(124, 58, 237, 0.25);
+        }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
+        }
+
+        .contact-input {
+            width: 100%;
+            background: #07060b;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #f3f4f6;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-input::placeholder {
+            color: #777184;
+        }
+
+        .contact-input:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(124,58,237,0.16);
+        }
+
+        .contact-input option {
+            background: #120f1d;
+            color: white;
+        }
+
+        .contact-label {
+            display: block;
+            color: #d1d5db;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .contact-honeypot {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="w-full px-6 md:px-10 xl:px-16 h-20 flex items-center justify-between">
+
+            <a href="/" class="flex items-center group" aria-label="Swypyy home">
+                <img
+                    src="/assets/logo.png"
+                    alt="Swypyy Logo"
+                    class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                    decoding="async"
+                    fetchpriority="high"
+                    onerror="this.onerror=null; this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';"
+                >
+
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8" aria-label="Primary navigation">
+                <a href="/#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
+                <a href="/#creations-showcase" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Creations</a>
+                <a href="/blog/" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Blog</a>
+                <a href="/#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
+                <a href="/#contact" class="text-sm font-semibold text-brand-glow transition-colors">Contact</a>
+            </nav>
+
+            <button
+                id="menuBtn"
+                type="button"
+                class="md:hidden p-2 text-gray-300 hover:text-brand-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-glow rounded-lg"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="mobileMenu"
+            >
+                <i data-lucide="menu" class="w-7 h-7" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div
+        id="mobileMenu"
+        class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden transition-all duration-300"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+        aria-hidden="true"
+    >
+        <button
+            id="closeMenuBtn"
+            type="button"
+            class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow focus-visible:ring-2 focus-visible:ring-brand-glow rounded-lg"
+            aria-label="Close navigation menu"
+        >
+            <i data-lucide="x" class="w-8 h-8" aria-hidden="true"></i>
+        </button>
+
+        <a href="/#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
+        <a href="/#creations-showcase" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Creations</a>
+        <a href="/blog/" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Blog</a>
+        <a href="/#about" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">About Me</a>
+        <a href="/#contact" class="mobile-nav-link text-xl font-bold text-brand-glow">Contact</a>
+    </div>
+
+    <main class="flex-grow">
+
+        <!-- HERO -->
+        <section id="home" class="relative py-24 md:py-36 px-6 purple-glow-bg flex items-center justify-center">
+            <div class="max-w-4xl mx-auto text-center space-y-6">
+
+                <div class="inline-flex items-center px-5 py-2 rounded-full bg-surface-light border border-brand-purple/30 shadow-lg">
+                    <span class="text-brand-light text-xs sm:text-sm font-medium tracking-wide">Welcome</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white">
+                    I'm Swypyy
+                </h1>
+
+                <p class="text-lg sm:text-2xl text-brand-glow font-medium max-w-2xl mx-auto">
+                    I enjoy exploring ideas, trying new things, and turning curiosity into creations.
+                </p>
+
+                <div class="pt-4 flex flex-wrap gap-4 justify-center">
+                    <a href="#creations-showcase" class="px-8 py-3.5 rounded-xl bg-brand-purple text-white font-semibold hover:bg-brand-glow transition-all shadow-lg shadow-brand-purple/25 flex items-center gap-2">
+                        <span>My Creations</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="#about" class="px-8 py-3.5 rounded-xl bg-surface-light text-gray-200 border border-white/10 font-semibold hover:border-brand-purple/50 transition-all">
+                        About Me
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- MY CREATIONS -->
+        <section id="creations-showcase" class="py-20 px-6 bg-surface/30 border-t border-white/5">
+            <div class="max-w-4xl mx-auto space-y-10">
+
+                <div class="text-center space-y-3">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">My Creations</h2>
+                    <p class="text-gray-400">Categories of projects I am building as I learn.</p>
+                </div>
+
+                <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+
+                    <div class="flex items-center gap-5 text-left">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
+                            <i data-lucide="git-branch" class="w-7 h-7" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-light">Developer Portfolio</span>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white">My GitHub Projects</h3>
+                        </div>
+                    </div>
+
+                    <a href="projects.html" class="w-full sm:w-auto px-7 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center shrink-0">
+                        View Projects
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT ME -->
+        <section id="about" class="py-20 px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="relative bg-surface rounded-3xl border border-white/10 p-8 md:p-12 overflow-hidden">
+
+                    <div class="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
+                        <img
+                            src="/assets/s-logo.png"
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                            decoding="async"
+                            class="w-64 h-64 object-contain select-none"
+                            onerror="this.style.display='none';"
+                        >
+                    </div>
+
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+
+                        <div class="hidden md:flex md:col-span-4 items-center justify-center">
+                            <div class="relative group">
+                                <div class="absolute inset-0 bg-brand-purple/30 rounded-full blur-3xl group-hover:bg-brand-purple/50 transition-all"></div>
+
+                                <img
+                                    src="/assets/s-logo.png"
+                                    alt="Swypyy S Logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="w-44 h-44 object-contain relative z-10 transition-transform group-hover:scale-105"
+                                    onerror="this.style.display='none';"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-8 space-y-4 text-left">
+                            <h2 class="text-3xl font-extrabold text-white">About Me</h2>
+
+                            <p class="text-gray-300 leading-relaxed">
+                                Hey! I'm <strong class="text-brand-light">Swypyy</strong>. I'm a curious person who loves exploring new ideas, learning new things, and discovering what I'm capable of creating.
+                            </p>
+
+                            <p class="text-gray-400 leading-relaxed text-sm">
+                                I don't like limiting myself to one interest or following just one path. I'm always curious about how things work, eager to try something different. I believe there's always something new to learn, something interesting to discover, and another possibility worth exploring.
+                            </p>
+
+                            <p class="text-gray-300 text-sm font-medium pt-2">
+                                I'm here to keep learning, experimenting, challenging myself, and growing along the way.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT FORM -->
+        <section id="contact" class="relative py-20 sm:py-24 px-6 bg-surface/30 border-t border-white/5 overflow-hidden">
+
+            <div class="absolute inset-0 purple-glow-bg pointer-events-none"></div>
+
+            <div class="relative max-w-3xl mx-auto space-y-10">
+
+                <div class="text-center space-y-4">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-purple/10 border border-brand-purple/30">
+                        <i data-lucide="message-circle" class="w-4 h-4 text-brand-glow"></i>
+                        <span class="text-xs font-semibold text-brand-light tracking-wide uppercase">Let's Connect</span>
+                    </div>
+
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">
+                        Get In Touch
+                    </h2>
+
+                    <p class="text-gray-400 max-w-lg mx-auto leading-relaxed">
+                        Have feedback, questions, ideas, or just want to connect? I'd love to hear from you.
+                    </p>
+                </div>
+
+                <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 md:p-10 purple-glow-card">
+
+                    <form
+                        id="contactForm"
+                        action="https://formsubmit.co/ajax/swypyy@gmail.com"
+                        method="POST"
+                        class="space-y-6"
+                    >
+
+                        <input type="hidden" name="_subject" value="New message from Swypyy website">
+                        <input type="hidden" name="_template" value="table">
+
+                        <!-- Spam honeypot -->
+                        <div class="contact-honeypot" aria-hidden="true">
+                            <label for="website">Leave this field empty</label>
+                            <input type="text" name="_honey" id="website" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                            <div>
+                                <label for="contactName" class="contact-label">Your Name *</label>
+                                <input
+                                    type="text"
+                                    id="contactName"
+                                    name="name"
+                                    class="contact-input"
+                                    placeholder="Enter your name"
+                                    maxlength="80"
+                                    autocomplete="name"
+                                    required
+                                >
+                            </div>
+
+                            <div>
+                                <label for="contactEmail" class="contact-label">Email Address *</label>
+                                <input
+                                    type="email"
+                                    id="contactEmail"
+                                    name="email"
+                                    class="contact-input"
+                                    placeholder="you@example.com"
+                                    maxlength="254"
+                                    autocomplete="email"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="contactSubject" class="contact-label">What is this about? *</label>
+                            <select
+                                id="contactSubject"
+                                name="topic"
+                                class="contact-input"
+                                required
+                            >
+                                <option value="" disabled selected>Select a subject</option>
+                                <option value="General enquiry">General enquiry</option>
+                                <option value="Feedback">Feedback</option>
+                                <option value="Project collaboration">Project collaboration</option>
+                                <option value="Bug report">Bug report</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="contactMessage" class="contact-label">Your Message *</label>
+                            <textarea
+                                id="contactMessage"
+                                name="message"
+                                rows="6"
+                                maxlength="5000"
+                                class="contact-input resize-y"
+                                placeholder="Write your message here..."
+                                required
+                            ></textarea>
+
+                            <p class="text-xs text-gray-500 mt-2">
+                                Please don't include passwords, private information, or sensitive personal details.
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+
+                            <button
+                                type="submit"
+                                id="contactSubmit"
+                                class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-bold transition-all shadow-lg shadow-brand-purple/20 disabled:opacity-60 disabled:cursor-not-allowed"
+                            >
+                                <span id="submitText">Send Message</span>
+                                <i data-lucide="send" id="submitIcon" class="w-4 h-4"></i>
+                            </button>
+
+                            <p class="text-xs text-gray-500 text-center sm:text-left">
+                                Usually replies by email.
+                            </p>
+                        </div>
+
+                        <div
+                            id="contactStatus"
+                            class="hidden rounded-xl p-4 text-sm leading-relaxed"
+                            role="status"
+                            aria-live="polite"
+                        ></div>
+
+                        <p class="text-xs text-gray-500 text-center leading-relaxed">
+                            By submitting this form, your message and email address will be processed by FormSubmit and sent to Swypyy.
+                        </p>
+
+                    </form>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-sm text-gray-500 mb-3">Prefer email?</p>
+
+                    <a
+                        href="mailto:swypyy@gmail.com"
+                        class="inline-flex items-center gap-2 text-brand-light font-semibold hover:text-brand-glow transition-colors"
+                    >
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        swypyy@gmail.com
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer-container" class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
+        <div class="max-w-6xl mx-auto px-6">
+            <p>&copy; <span id="currentYear"></span> SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Initialize Lucide icons safely.
+        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+            lucide.createIcons();
+        }
+
+        // Mobile menu.
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function openMobileMenu() {
+            if (!mobileMenu || !menuBtn) return;
+
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            menuBtn.setAttribute('aria-expanded', 'true');
+            document.body.classList.add('menu-open');
+
+            if (closeMenuBtn) closeMenuBtn.focus();
+        }
+
+        function closeMobileMenu() {
+            if (!mobileMenu || !menuBtn) return;
+
+            const wasOpen = !mobileMenu.classList.contains('hidden');
+
+            mobileMenu.classList.add('hidden');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            menuBtn.setAttribute('aria-expanded', 'false');
+            document.body.classList.remove('menu-open');
+
+            if (wasOpen) menuBtn.focus();
+        }
+
+        if (menuBtn) {
+            menuBtn.addEventListener('click', openMobileMenu);
+        }
+
+        if (closeMenuBtn) {
+            closeMenuBtn.addEventListener('click', closeMobileMenu);
+        }
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        document.addEventListener('keydown', event => {
+            if (
+                event.key === 'Escape' &&
+                mobileMenu &&
+                !mobileMenu.classList.contains('hidden')
+            ) {
+                closeMobileMenu();
+            }
+        });
+
+        // Dynamic footer year.
+        const yearElement = document.getElementById('currentYear');
+
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
+
+        // Contact form submission.
+        const contactForm = document.getElementById('contactForm');
+        const contactSubmit = document.getElementById('contactSubmit');
+        const submitText = document.getElementById('submitText');
+        const submitIcon = document.getElementById('submitIcon');
+        const contactStatus = document.getElementById('contactStatus');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async event => {
+                event.preventDefault();
+
+                if (!contactForm.reportValidity()) return;
+
+                if (contactForm.querySelector('[name="_honey"]').value) {
+                    return;
+                }
+
+                contactSubmit.disabled = true;
+                submitText.textContent = 'Sending...';
+
+                if (submitIcon) {
+                    submitIcon.setAttribute('data-lucide', 'loader-circle');
+                    submitIcon.classList.add('animate-spin');
+                }
+
+                contactStatus.classList.add('hidden');
+
+                try {
+                    const response = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: new FormData(contactForm),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok || result.success !== 'true') {
+                        throw new Error(result.message || 'Unable to send your message.');
+                    }
+
+                    contactStatus.className =
+                        'rounded-xl p-4 text-sm leading-relaxed bg-green-500/10 border border-green-500/20 text-green-300';
+
+                    contactStatus.textContent =
+                        'Your message has been submitted successfully. Thank you for contacting Swypyy!';
+
+                    contactForm.reset();
+
+                } catch (error) {
+                    contactStatus.className =
+                        'rounded-xl p-4 text-sm leading-relaxed bg-red-500/10 border border-red-500/20 text-red-300';
+
+                    contactStatus.textContent =
+                        'Your message could not be sent. Please try again or email swypyy@gmail.com directly.';
+                } finally {
+                    contactSubmit.disabled = false;
+                    submitText.textContent = 'Send Message';
+
+                    if (submitIcon) {
+                        submitIcon.setAttribute('data-lucide', 'send');
+                        submitIcon.classList.remove('animate-spin');
+                    }
+
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
