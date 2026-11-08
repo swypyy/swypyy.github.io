@@ -1,116 +1,246 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#07060b">
+
     <meta name="description" content="{{ page.description | default: site.description | escape }}">
     <meta name="author" content="Swypyy">
     <meta name="robots" content="index, follow">
+
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
-    <meta property="og:title" content="{% if page.title %}{{ page.title | escape }} | {% endif %}Swypyy Blog">
+    <meta property="og:site_name" content="Swypyy">
+    <meta property="og:title" content="{% if page.title %}{{ page.title | escape }} | {% endif %}Swypyy">
     <meta property="og:description" content="{{ page.description | default: site.description | escape }}">
     <meta property="og:url" content="{{ page.url | absolute_url }}">
-    <title>{% if page.title %}{{ page.title | escape }} | {% endif %}Swypyy Blog</title>
+
+    <title>{% if page.title %}{{ page.title | escape }} | {% endif %}Swypyy</title>
+
     <link rel="icon" type="image/png" href="{{ '/assets/s-logo.png' | relative_url }}">
     <link rel="apple-touch-icon" href="{{ '/assets/s-logo.png' | relative_url }}">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@0.468.0"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        void: '#07060b', surface: '#120f1d', 'surface-light': '#1c172e',
-                        brand: { purple: '#7c3aed', light: '#a78bfa', glow: '#c084fc', accent: '#d8b4fe' }
+                        void: '#07060b',
+                        surface: '#120f1d',
+                        'surface-light': '#1c172e',
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
+                        }
                     },
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], cursive: ['Caveat', 'cursive', 'sans-serif'] }
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
+                    }
                 }
             }
         };
     </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        body { background-color:#07060b; color:#f3f4f6; }
-        .purple-glow-bg { background:radial-gradient(circle at 50% 30%,rgba(124,58,237,.25) 0%,rgba(7,6,11,0) 70%); }
-        .purple-glow-card { box-shadow:0 0 30px -5px rgba(124,58,237,.18); }
-        .s-logo-handwritten { font-family:'Caveat',cursive; line-height:1; }
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            background: #07060b;
+            color: #f3f4f6;
+            font-family: Inter, system-ui, sans-serif;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        .s-logo-handwritten {
+            font-family: Caveat, cursive;
+            line-height: 1;
+        }
     </style>
+
     <link rel="stylesheet" href="{{ '/assets/blog.css' | relative_url }}">
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
-    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
-        <div class="site-header-inner w-full px-6 md:px-10 xl:px-16 h-20 flex items-center justify-between">
-            <div class="header-brand-group">
-                <a href="{{ '/' | relative_url }}" class="brand-link flex items-center group" aria-label="Swypyy home">
-                    <img src="{{ '/assets/logo.png' | relative_url }}" alt="Swypyy Logo"
-                        class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
-                        onerror="this.onerror=null; this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';">
-                    <span id="textBrandLogo" class="hidden items-center gap-1">
-                        <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
-                        <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
-                    </span>
-                </a>
-                <form class="header-search" id="headerSearchForm" action="{{ '/blog/' | relative_url }}" method="get" role="search">
-                    <label class="sr-only" for="postSearch">Search the Swypyy Journal</label>
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 4 4"></path></svg>
-                    <input id="postSearch" name="q" type="search" placeholder="Search the journal..." autocomplete="off">
-                    <kbd>/</kbd>
-                </form>
-            </div>
 
-            <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
-                <a href="{{ '/' | relative_url }}#home" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Home</a>
-                <a href="{{ '/' | relative_url }}#creations-showcase" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">My Creations</a>
-                <a href="/blog/" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Blog</a>
-                <a href="{{ '/' | relative_url }}#about" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">About Me</a>
-                <a href="{{ '/' | relative_url }}#contact" class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">Contact</a>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
+
+    <!-- HOMEPAGE HEADER -->
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="w-full px-6 md:px-10 xl:px-16 h-20 flex items-center justify-between">
+
+            <a href="{{ '/' | relative_url }}" class="flex items-center group" aria-label="Swypyy home">
+
+                <img
+                    src="{{ '/assets/logo.png' | relative_url }}"
+                    alt="Swypyy Logo"
+                    class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                    decoding="async"
+                    fetchpriority="high"
+                    onerror="this.onerror=null; this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';"
+                >
+
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
+
+            </a>
+
+            <!-- DESKTOP NAVIGATION -->
+            <nav class="hidden md:flex items-center gap-8" aria-label="Primary navigation">
+
+                <a href="{{ '/' | relative_url }}#home"
+                   class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">
+                    Home
+                </a>
+
+                <a href="{{ '/' | relative_url }}#creations-showcase"
+                   class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">
+                    My Creations
+                </a>
+
+                <a href="{{ '/blog/' | relative_url }}"
+                   class="text-sm font-semibold text-brand-glow transition-colors"
+                   aria-current="page">
+                    Blog
+                </a>
+
+                <a href="{{ '/' | relative_url }}#about"
+                   class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">
+                    About Me
+                </a>
+
+                <a href="{{ '/' | relative_url }}#contact"
+                   class="text-sm font-semibold text-gray-300 hover:text-brand-glow transition-colors">
+                    Contact
+                </a>
+
             </nav>
 
-            <button id="menuBtn" class="md:hidden p-2 text-gray-300 hover:text-brand-glow focus:outline-none"
-                aria-label="Toggle Menu" aria-expanded="false" aria-controls="mobileMenu">
-                <i data-lucide="menu" class="w-7 h-7"></i>
+            <!-- MOBILE MENU BUTTON -->
+            <button
+                id="menuBtn"
+                type="button"
+                class="md:hidden p-2 text-gray-300 hover:text-brand-glow focus-visible:ring-2 focus-visible:ring-brand-glow rounded-lg"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="mobileMenu"
+            >
+                <i data-lucide="menu" class="w-7 h-7" aria-hidden="true"></i>
             </button>
+
         </div>
     </header>
 
-    <div id="mobileMenu" class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden transition-all duration-300">
-        <button id="closeMenuBtn" class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow" aria-label="Close Menu">
-            <i data-lucide="x" class="w-8 h-8"></i>
+    <!-- MOBILE NAVIGATION -->
+    <div
+        id="mobileMenu"
+        class="fixed inset-0 bg-void/98 backdrop-blur-xl z-50 flex flex-col justify-center items-center gap-6 md:hidden hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+        aria-hidden="true"
+    >
+
+        <button
+            id="closeMenuBtn"
+            type="button"
+            class="absolute top-6 right-6 p-2 text-gray-400 hover:text-brand-glow"
+            aria-label="Close navigation menu"
+        >
+            <i data-lucide="x" class="w-8 h-8" aria-hidden="true"></i>
         </button>
+
         <a href="{{ '/' | relative_url }}#home" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Home</a>
         <a href="{{ '/' | relative_url }}#creations-showcase" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">My Creations</a>
-        <a href="/blog/" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Blog</a>
+        <a href="{{ '/blog/' | relative_url }}" class="mobile-nav-link text-xl font-bold text-brand-glow">Blog</a>
         <a href="{{ '/' | relative_url }}#about" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">About Me</a>
         <a href="{{ '/' | relative_url }}#contact" class="mobile-nav-link text-xl font-bold text-white hover:text-brand-glow">Contact</a>
+
     </div>
 
+    <!-- PAGE CONTENT -->
     <main class="flex-grow blog-main">
         {{ content }}
     </main>
 
-    <footer id="footer-container" class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs"></footer>
+    <!-- HOMEPAGE FOOTER -->
+    <footer id="footer-container" class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs">
+        <div class="max-w-6xl mx-auto px-6">
+            <p>&copy; <span id="currentYear"></span> SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
+        </div>
+    </footer>
 
+    <!-- JAVASCRIPT -->
     <script>
-        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') lucide.createIcons();
+        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+            lucide.createIcons();
+        }
+
         const menuBtn = document.getElementById('menuBtn');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
+
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-        if (menuBtn && mobileMenu) menuBtn.addEventListener('click', () => {
+
+        function openMobileMenu() {
+            if (!mobileMenu || !menuBtn) return;
+
             mobileMenu.classList.remove('hidden');
+            mobileMenu.setAttribute('aria-hidden', 'false');
             menuBtn.setAttribute('aria-expanded', 'true');
-        });
-        function closeMobileMenu() {
-            if (mobileMenu) mobileMenu.classList.add('hidden');
-            if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+
+            document.body.classList.add('menu-open');
+            closeMenuBtn?.focus();
         }
-        if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMobileMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-        document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMobileMenu(); });
-        const footer = document.getElementById('footer-container');
-        if (footer) footer.innerHTML = `<div class="max-w-6xl mx-auto px-6"><p>&copy; ${new Date().getFullYear()} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p></div>`;
+
+        function closeMobileMenu() {
+            if (!mobileMenu || !menuBtn) return;
+
+            const wasOpen = !mobileMenu.classList.contains('hidden');
+
+            mobileMenu.classList.add('hidden');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            menuBtn.setAttribute('aria-expanded', 'false');
+
+            document.body.classList.remove('menu-open');
+
+            if (wasOpen) menuBtn.focus();
+        }
+
+        menuBtn?.addEventListener('click', openMobileMenu);
+        closeMenuBtn?.addEventListener('click', closeMobileMenu);
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        document.addEventListener('keydown', event => {
+            if (
+                event.key === 'Escape' &&
+                mobileMenu &&
+                !mobileMenu.classList.contains('hidden')
+            ) {
+                closeMobileMenu();
+            }
+        });
+
+        const yearElement = document.getElementById('currentYear');
+
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
     </script>
+
     <script src="{{ '/assets/blog.js' | relative_url }}" defer></script>
+
 </body>
 </html>
