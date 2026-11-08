@@ -2,33 +2,41 @@
 layout: default
 ---
 <article class="article-page">
-  <a class="back-link" href="{{ '/blog/' | relative_url }}">← Back to all posts</a>
-  <header class="article-header">
-    <div class="eyebrow">SWYPYY JOURNAL</div>
-    <h1>{{ page.title | escape }}</h1>
-    {% if page.description %}<p class="article-description">{{ page.description | escape }}</p>{% endif %}
-    <div class="post-meta">
-      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
-      <span aria-hidden="true">·</span>
-      <span>{% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200.0 | ceil %}{% if minutes < 1 %}1{% else %}{{ minutes }}{% endif %} min read</span>
+    <nav class="article-back-nav" aria-label="Back to posts">
+        <a class="back-link" href="{{ '/blog/' | relative_url }}">← All posts</a>
+    </nav>
+
+    <header class="article-header">
+        <h1>{{ page.title | escape }}</h1>
+        {% if page.description %}<p class="article-description">{{ page.description | escape }}</p>{% endif %}
+        <div class="post-meta">
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+            <span aria-hidden="true">·</span>
+            <span>{% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200.0 | ceil %}{% if minutes < 1 %}1{% else %}{{ minutes }}{% endif %} min read</span>
+        </div>
+        {% assign post_categories = page.categories | default: empty %}
+        {% assign post_tags = page.tags | default: empty %}
+        {% if post_categories.size > 0 or post_tags.size > 0 %}
+        <div class="tag-row" aria-label="Post categories and tags">
+            {% for category in post_categories %}<span class="tag tag-category">{{ category | escape }}</span>{% endfor %}
+            {% for tag in post_tags %}<span class="tag">{{ tag | escape }}</span>{% endfor %}
+        </div>
+        {% endif %}
+    </header>
+
+    {% if page.cover %}<img class="article-cover" src="{{ page.cover | relative_url }}" alt="{{ page.cover_alt | default: page.title | escape }}" loading="lazy">{% endif %}
+
+    <div class="prose">
+        {{ content }}
     </div>
-    {% if page.tags.size > 0 %}
-      <div class="tag-row">{% for tag in page.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
-    {% endif %}
-  </header>
 
-  {% if page.cover %}<img class="article-cover" src="{{ page.cover | relative_url }}" alt="{{ page.cover_alt | default: page.title | escape }}">{% endif %}
+    <footer class="article-end">
+        <span>Thanks for reading.</span>
+        <a href="{{ '/blog/' | relative_url }}">Explore more posts →</a>
+    </footer>
 
-  <div class="prose">
-    {{ content }}
-  </div>
-
-  <div class="article-end">
-    <span>End of article</span>
-    <a href="{{ '/blog/' | relative_url }}">Explore more posts →</a>
-  </div>
-  <nav class="post-pagination" aria-label="More articles">
-    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><small>OLDER</small><strong>← {{ page.previous.title | escape }}</strong></a>{% else %}<span></span>{% endif %}
-    {% if page.next %}<a class="next-post" href="{{ page.next.url | relative_url }}"><small>NEWER</small><strong>{{ page.next.title | escape }} →</strong></a>{% endif %}
-  </nav>
+    <nav class="post-pagination" aria-label="More articles">
+        {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><small>OLDER POST</small><strong>← {{ page.previous.title | escape }}</strong></a>{% else %}<span></span>{% endif %}
+        {% if page.next %}<a class="next-post" href="{{ page.next.url | relative_url }}"><small>NEWER POST</small><strong>{{ page.next.title | escape }} →</strong></a>{% endif %}
+    </nav>
 </article>

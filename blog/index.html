@@ -6,14 +6,14 @@ permalink: /blog/
 ---
 
 <div class="journal-page">
-    <section class="journal-tools" aria-label="Search and filter the journal">
+    <section class="journal-tools" aria-label="Search and filter the blog">
         <form class="journal-search" id="journalSearchForm" role="search">
-            <label class="sr-only" for="postSearch">Search the Swypyy Journal</label>
+            <label class="sr-only" for="postSearch">Search blog posts</label>
             <svg viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="11" cy="11" r="7"></circle>
                 <path d="m16 16 4 4"></path>
             </svg>
-            <input id="postSearch" name="q" type="search" placeholder="Search the journal..." autocomplete="off">
+            <input id="postSearch" name="q" type="search" placeholder="Search posts..." autocomplete="off">
             <kbd aria-hidden="true">/</kbd>
         </form>
 
@@ -29,14 +29,13 @@ permalink: /blog/
         </div>
     </section>
 
-    <section class="journal-heading">
-        <div class="journal-kicker"><span></span>THE SWYPYY JOURNAL</div>
+    <section class="journal-heading journal-heading-centered">
         <h1>Ideas, updates and<br><em>things worth sharing.</em></h1>
-        <p>Notes from the desk at Swypyy. Projects, experiments, announcements and thoughts from behind the scenes.</p>
+        <p>Notes from Swypyy: projects, experiments, and thoughts from behind the scenes.</p>
     </section>
 
     {% if site.posts.size > 0 %}
-    <section class="journal-posts" aria-label="Journal posts">
+    <section class="journal-posts" aria-label="Blog posts">
         <div class="post-grid" id="postGrid">
             {% for post in site.posts %}
             <article
@@ -62,7 +61,7 @@ permalink: /blog/
                         <h2>{{ post.title | escape }}</h2>
                         <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time>
                         <p>{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 190 }}</p>
-                        <span class="read-more">Read story <b aria-hidden="true">↗</b></span>
+                        <span class="read-more">Read post <b aria-hidden="true">↗</b></span>
                     </div>
                 </a>
             </article>
