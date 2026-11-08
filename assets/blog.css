@@ -42,7 +42,8 @@ input {
 /* MAIN */
 
 .blog-main {
-    width: min(var(--content-width), calc(100% - 64px));
+    width: calc(100% - 40px);
+    max-width: none;
     margin: 0 auto;
     padding-bottom: 56px;
 }
