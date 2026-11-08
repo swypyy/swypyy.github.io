@@ -1,387 +1,373 @@
 
 (() => {
+    'use strict';
+
     const search = document.getElementById('postSearch');
     const searchForm = document.getElementById('journalSearchForm');
 
     const featuredGrid = document.getElementById('featuredGrid');
-    const grid = document.getElementById('postGrid');
+    const latestSection = document.getElementById('latest');
+    const postGrid = document.getElementById('postGrid');
 
-    const empty = document.getElementById('emptyState');
     const categoryBar = document.getElementById('categoryBar');
     const pagination = document.getElementById('postPagination');
+
+    const emptyState = document.getElementById('emptyState');
+    const featuredEmptyState = document.getElementById('featuredEmptyState');
     const resultCount = document.getElementById('resultCount');
 
     const pageSize = 6;
 
-    if (!grid) return;
-
-    const latestCards = Array.from(
-        grid.querySelectorAll('.post-row')
-    );
+    if (!postGrid) return;
 
     const featuredCards = featuredGrid
         ? Array.from(featuredGrid.querySelectorAll('.featured-card'))
         : [];
 
+    const latestCards = Array.from(
+        postGrid.querySelectorAll('.post-row')
+    );
+
     const allCards = [...featuredCards, ...latestCards];
 
-    // Discover categories used in posts.
-    const categories = new Set();
+    let activeCategory = 'all';
+    let currentPage = 1;
 
-    allCards.forEach(card => {
-        (card.dataset.categories || '')
+    // Normalize text consistently.
+    function normalize(value) {
+        return String(value || '')
+            .trim()
+            .toLocaleLowerCase();
+    }
+
+    function getCategories(card) {
+        return (card.dataset.categories || '')
             .split(',')
-            .map(value => value.trim())
-            .filter(Boolean)
-            .forEach(value => categories.add(value));
-    });
+            .map(normalize)
+            .filter(Boolean);
+    }
 
-    const titleCase = value => value
-        .replace(/[-_]+/g, ' ')
-        .replace(/\b\w/g, char => char.toUpperCase());
+    // Add categories found in posts that aren't already listed.
+    function setupCategories() {
+        if (!categoryBar) return;
 
-    // Add custom categories found in posts.
-    if (categoryBar) {
-        [...categories].sort().forEach(category => {
+        const categories = new Set();
 
-            if (
-                categoryBar.querySelector(
-                    `[data-category="${CSS.escape(category)}"]`
-                )
-            ) {
-                return;
-            }
+        allCards.forEach(card => {
+            getCategories(card).forEach(category => {
+                categories.add(category);
+            });
+        });
+
+        const existingCategories = Array.from(
+            categoryBar.querySelectorAll('[data-category]')
+        ).map(button => normalize(button.dataset.category));
+
+        categories.forEach(category => {
+            if (existingCategories.includes(category)) return;
 
             const button = document.createElement('button');
 
             button.type = 'button';
             button.className = 'category-chip';
             button.dataset.category = category;
-            button.textContent = titleCase(category);
+            button.textContent = category
+                .replace(/[-_]+/g, ' ')
+                .replace(/\b\w/g, char => char.toUpperCase());
+
             button.setAttribute('aria-pressed', 'false');
 
             categoryBar.appendChild(button);
         });
     }
 
-    let activeCategory = 'all';
-    let currentPage = 1;
-
-    const params = new URLSearchParams(window.location.search);
-
+    // Restore search from the URL.
     if (search) {
+        const params = new URLSearchParams(window.location.search);
         search.value = params.get('q') || '';
     }
 
-    function matches(card) {
+    function matchesSearch(card) {
+        const query = normalize(search ? search.value : '');
 
-        const query = (
-            search ? search.value : ''
-        ).trim().toLocaleLowerCase();
+        if (!query) return true;
 
-        const textMatch = !query ||
-            (card.dataset.search || '')
-                .toLocaleLowerCase()
-                .includes(query);
+        const searchableText = normalize(card.dataset.search);
 
-        const cardCategories = (
-            card.dataset.categories || ''
-        )
-            .split(',')
-            .map(value => value.trim());
-
-        const categoryMatch =
-            activeCategory === 'all' ||
-            cardCategories.includes(activeCategory);
-
-        return textMatch && categoryMatch;
+        return searchableText.includes(query);
     }
 
-    function addPageButton(
-        label,
-        page,
-        className = '',
-        ariaLabel = label
-    ) {
+    function matchesCategory(card) {
+        if (activeCategory === 'all') return true;
 
+        return getCategories(card).includes(activeCategory);
+    }
+
+    function matches(card) {
+        return matchesSearch(card) && matchesCategory(card);
+    }
+
+    function createPageButton(label, page, className, ariaLabel) {
         const button = document.createElement('button');
 
         button.type = 'button';
-        button.className = `page-control ${className}`.trim();
+        button.className = `page-control ${className || ''}`.trim();
         button.textContent = label;
-        button.setAttribute('aria-label', ariaLabel);
+        button.setAttribute('aria-label', ariaLabel || label);
 
-        if (
-            page === currentPage &&
-            className.includes('page-number')
-        ) {
+        if (className.includes('page-number') && page === currentPage) {
+            button.classList.add('is-current');
             button.setAttribute('aria-current', 'page');
         }
 
         button.addEventListener('click', () => {
+            if (page === currentPage) return;
 
             currentPage = page;
             render();
 
-            document.getElementById('latest')?.scrollIntoView({
+            latestSection?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
-
         });
 
         pagination.appendChild(button);
     }
 
     function renderPagination(totalPages) {
-
         if (!pagination) return;
 
         pagination.replaceChildren();
 
-        if (totalPages <= 1) return;
+        if (totalPages <= 1) {
+            pagination.hidden = true;
+            return;
+        }
 
-        // First and previous only after page one.
+        pagination.hidden = false;
+
+        // First and Previous.
         if (currentPage > 1) {
-
-            addPageButton(
+            createPageButton(
                 'First',
                 1,
                 'page-edge',
-                'First page'
+                'Go to first page'
             );
 
-            addPageButton(
+            createPageButton(
                 'Prev',
                 currentPage - 1,
                 'page-edge',
-                'Previous page'
+                'Go to previous page'
             );
-
         }
 
-        let pages;
+        // Numbered pages.
+        let pages = [];
 
         if (totalPages <= 5) {
-
             pages = Array.from(
                 { length: totalPages },
                 (_, index) => index + 1
             );
-
         } else if (currentPage <= 3) {
-
-            pages = [1, 2, 3, 4, '…', totalPages];
-
+            pages = [1, 2, 3, 4, 'ellipsis', totalPages];
         } else if (currentPage >= totalPages - 2) {
-
             pages = [
                 1,
-                '…',
+                'ellipsis',
                 totalPages - 3,
                 totalPages - 2,
                 totalPages - 1,
                 totalPages
             ];
-
         } else {
-
             pages = [
                 1,
-                '…',
+                'ellipsis',
                 currentPage - 1,
                 currentPage,
                 currentPage + 1,
-                '…',
+                'ellipsis',
                 totalPages
             ];
-
         }
 
         pages.forEach(page => {
-
-            if (page === '…') {
-
+            if (page === 'ellipsis') {
                 const span = document.createElement('span');
 
                 span.className = 'page-ellipsis';
                 span.textContent = '…';
 
                 pagination.appendChild(span);
-
-            } else {
-
-                addPageButton(
-                    String(page),
-                    page,
-                    `page-number${page === currentPage ? ' is-current' : ''}`,
-                    `Page ${page}`
-                );
-
+                return;
             }
 
+            createPageButton(
+                String(page),
+                page,
+                'page-number',
+                `Go to page ${page}`
+            );
         });
 
-        // Next and last only before the final page.
+        // Next and Last.
         if (currentPage < totalPages) {
-
-            addPageButton(
+            createPageButton(
                 'Next',
                 currentPage + 1,
                 'page-edge',
-                'Next page'
+                'Go to next page'
             );
 
-            addPageButton(
+            createPageButton(
                 'Last',
                 totalPages,
                 'page-edge',
-                'Last page'
+                'Go to last page'
             );
+        }
+    }
 
+    function updateSearchURL() {
+        if (!search) return;
+
+        const url = new URL(window.location.href);
+        const value = search.value.trim();
+
+        if (value) {
+            url.searchParams.set('q', value);
+        } else {
+            url.searchParams.delete('q');
         }
 
+        window.history.replaceState({}, '', url);
     }
 
     function render() {
-
-        const visibleFeatured = featuredCards.filter(matches);
+        // Featured posts are independent of latest pagination.
+        const matchingFeatured = featuredCards.filter(matches);
 
         featuredCards.forEach(card => {
             card.hidden = !matches(card);
         });
 
-        const filteredLatest = latestCards.filter(matches);
+        if (featuredEmptyState) {
+            featuredEmptyState.hidden = matchingFeatured.length > 0;
+        }
+
+        // Filter the latest posts.
+        const matchingLatest = latestCards.filter(matches);
 
         const totalPages = Math.max(
             1,
-            Math.ceil(filteredLatest.length / pageSize)
+            Math.ceil(matchingLatest.length / pageSize)
         );
 
+        // Keep the current page valid after filtering.
         currentPage = Math.min(currentPage, totalPages);
 
-        const start = (currentPage - 1) * pageSize;
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
 
-        const visibleOnPage = new Set(
-            filteredLatest.slice(start, start + pageSize)
+        const visibleLatest = new Set(
+            matchingLatest.slice(startIndex, endIndex)
         );
 
         latestCards.forEach(card => {
-            card.hidden = !visibleOnPage.has(card);
+            card.hidden = !visibleLatest.has(card);
         });
 
-        const totalVisible =
-            visibleFeatured.length + filteredLatest.length;
+        // Show the main empty state only when neither section has results.
+        const totalMatches =
+            matchingFeatured.length + matchingLatest.length;
 
-        if (empty) {
-            empty.hidden = totalVisible !== 0;
+        if (emptyState) {
+            emptyState.hidden = totalMatches > 0;
         }
 
-        if (pagination) {
-            pagination.hidden = filteredLatest.length <= pageSize;
-        }
-
+        // Update result count.
         if (resultCount) {
             resultCount.textContent =
-                `${filteredLatest.length} ${
-                    filteredLatest.length === 1 ? 'POST' : 'POSTS'
+                `${matchingLatest.length} ${
+                    matchingLatest.length === 1 ? 'POST' : 'POSTS'
                 }`;
         }
 
+        // Update pagination.
         renderPagination(totalPages);
     }
 
     // Live search.
     if (search) {
-
         search.addEventListener('input', () => {
-
             currentPage = 1;
             render();
-
-            const url = new URL(window.location.href);
-
-            if (search.value.trim()) {
-                url.searchParams.set('q', search.value.trim());
-            } else {
-                url.searchParams.delete('q');
-            }
-
-            window.history.replaceState({}, '', url);
-
+            updateSearchURL();
         });
-
     }
 
+    // Search form submission.
     if (searchForm) {
-
         searchForm.addEventListener('submit', event => {
-
             event.preventDefault();
 
             currentPage = 1;
             render();
+            updateSearchURL();
 
-            document.getElementById('latest')?.scrollIntoView({
+            latestSection?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
-
         });
-
     }
 
-    // Category filters.
+    // Category selection.
     if (categoryBar) {
-
         categoryBar.addEventListener('click', event => {
-
             const button = event.target.closest('[data-category]');
 
-            if (!button) return;
+            if (!button || !categoryBar.contains(button)) return;
 
-            activeCategory = button.dataset.category;
+            activeCategory = normalize(button.dataset.category);
 
-            categoryBar.querySelectorAll('.category-chip')
-                .forEach(chip => {
+            categoryBar.querySelectorAll('[data-category]').forEach(chip => {
+                const selected = chip === button;
 
-                    const selected = chip === button;
-
-                    chip.classList.toggle('is-active', selected);
-
-                    chip.setAttribute(
-                        'aria-pressed',
-                        String(selected)
-                    );
-
-                });
+                chip.classList.toggle('is-active', selected);
+                chip.setAttribute('aria-pressed', String(selected));
+            });
 
             currentPage = 1;
             render();
-
         });
-
     }
 
-    // "/" keyboard shortcut focuses search.
+    // Press "/" to focus search, unless the user is typing elsewhere.
     document.addEventListener('keydown', event => {
+        if (event.key !== '/' || !search) return;
 
         const target = event.target;
 
-        const isTyping = target && (
+        const isTyping = target instanceof HTMLElement && (
             target.isContentEditable ||
             ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)
         );
 
-        if (event.key === '/' && !isTyping && search) {
-
-            event.preventDefault();
-            search.focus();
-
+        if (isTyping || event.ctrlKey || event.metaKey || event.altKey) {
+            return;
         }
 
+        event.preventDefault();
+        search.focus();
     });
 
+    // Initialize.
+    setupCategories();
     render();
 
 })();
