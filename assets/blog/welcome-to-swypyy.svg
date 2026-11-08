@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Welcome to Swypyy</title>
+  <desc id="desc">A glowing purple creative workspace with an open notebook, idea spark, and the words Welcome to Swypyy.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#100b1d"/>
+      <stop offset=".55" stop-color="#17102a"/>
+      <stop offset="1" stop-color="#09090f"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c084fc"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity=".36"/>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V42" fill="none" stroke="#c4b5fd" stroke-opacity=".055" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <ellipse cx="890" cy="320" rx="380" ry="300" fill="url(#halo)"/>
+  <circle cx="928" cy="296" r="158" fill="#8b5cf6" opacity=".14" filter="url(#softGlow)"/>
+
+  <g opacity=".7" fill="none" stroke="#a78bfa">
+    <circle cx="919" cy="310" r="205" stroke-opacity=".24" stroke-width="1.5"/>
+    <circle cx="919" cy="310" r="246" stroke-opacity=".13" stroke-width="1.5" stroke-dasharray="3 12"/>
+    <path d="M738 200c75-76 196-100 296-57" stroke-opacity=".45" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <circle cx="742" cy="198" r="5" fill="#d8b4fe"/>
+  <circle cx="1096" cy="396" r="4" fill="#c084fc"/>
+  <circle cx="1019" cy="112" r="3" fill="#a78bfa"/>
+
+  <g transform="translate(775 158) rotate(7 145 160)">
+    <rect x="16" y="12" width="270" height="336" rx="28" fill="#05040a" opacity=".4"/>
+    <rect x="0" y="0" width="270" height="336" rx="28" fill="#181425" stroke="#8b5cf6" stroke-opacity=".55" stroke-width="2"/>
+    <rect x="18" y="18" width="234" height="300" rx="18" fill="#100d19" stroke="#ffffff" stroke-opacity=".08"/>
+    <path d="M70 18v300" stroke="#a78bfa" stroke-opacity=".23" stroke-width="2"/>
+    <path d="M94 88h119M94 117h98M94 146h110M94 215h119M94 244h91" stroke="#a78bfa" stroke-opacity=".58" stroke-width="5" stroke-linecap="round"/>
+    <path d="M94 182h64" stroke="#c084fc" stroke-opacity=".92" stroke-width="5" stroke-linecap="round"/>
+    <path d="M46 83h11M46 113h11M46 143h11M46 173h11M46 203h11M46 233h11" stroke="#c4b5fd" stroke-opacity=".42" stroke-width="4" stroke-linecap="round"/>
+    <path d="m187 55 6 13 14 2-10 10 2 14-12-7-12 7 3-14-10-10 14-2z" fill="url(#glow)"/>
+  </g>
+
+  <g transform="translate(845 412)">
+    <rect x="0" y="0" width="204" height="66" rx="18" fill="#201638" stroke="#a78bfa" stroke-opacity=".44"/>
+    <circle cx="34" cy="33" r="14" fill="url(#glow)"/>
+    <path d="m29 33 4 4 7-9" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M61 27h111M61 39h76" stroke="#ddd6fe" stroke-opacity=".72" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(99 99)">
+    <rect width="54" height="54" rx="16" fill="#7c3aed" fill-opacity=".18" stroke="#a78bfa" stroke-opacity=".42"/>
+    <path d="M27 10c-7 0-12 5-12 12 0 5 3 8 6 11 2 2 2 4 2 6h8c0-2 0-4 2-6 3-3 6-6 6-11 0-7-5-12-12-12Z" fill="none" stroke="#d8b4fe" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M23 43h8M24 47h6M27 3V0M8 11 4 7M46 11l4-4" stroke="#d8b4fe" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <text x="100" y="246" fill="#c4b5fd" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="5">A PERSONAL CREATIVE JOURNAL</text>
+  <text x="94" y="326" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="62" font-weight="800" letter-spacing="-2">Welcome to</text>
+  <text x="94" y="398" fill="#ffffff" font-family="Inter,Arial,sans-serif" font-size="74" font-weight="800" letter-spacing="-3">Swypyy<tspan fill="#c084fc">.</tspan></text>
+  <text x="100" y="455" fill="#c6c2d2" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="400">Projects, experiments, and ideas built with curiosity.</text>
+  <path d="M100 500h255" stroke="url(#glow)" stroke-width="3" stroke-linecap="round"/>
+  <text x="100" y="548" fill="#89849a" font-family="Inter,Arial,sans-serif" font-size="13" font-weight="600" letter-spacing="3">BUILD  ·  LEARN  ·  EXPLORE</text>
+</svg>

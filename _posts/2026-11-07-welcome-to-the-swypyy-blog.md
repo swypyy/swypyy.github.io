@@ -6,6 +6,8 @@ description: "An introduction to Swypyy: a personal space for projects, experime
 featured: true
 tags: [Swypyy]
 categories: [Announcements]
+cover: /assets/blog/welcome-to-swypyy.svg
+cover_alt: "Purple creative workspace illustration with an open notebook and the title Welcome to Swypyy"
 ---
 
 Welcome—a place to share what I’m building, what I’m learning, and the ideas that inspire me to keep experimenting.
