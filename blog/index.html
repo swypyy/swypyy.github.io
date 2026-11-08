@@ -1,9 +1,7 @@
-
 ---
 layout: default
 title: Blog
-description: Stories, updates, ideas and announcements from Swypyy.
-permalink: /blog/
+description: Stories, updates, ideas and announcements from Swypyy. permalink: /blog/
 ---
 
 <!-- BLOG CONTENT -->
@@ -126,7 +124,7 @@ permalink: /blog/
 
                     <article
                         class="featured-card"
-                        data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}"
+                        data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }}"
                         data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}"
                     >
 
@@ -237,7 +235,7 @@ permalink: /blog/
 
                     <article
                         class="post-row"
-                        data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }} {{ post.categories | join: ' ' | downcase | escape }}"
+                        data-search="{{ post.title | downcase | escape }} {{ post.description | default: post.excerpt | strip_html | normalize_whitespace | downcase | escape }} {{ post.tags | join: ' ' | downcase | escape }}"
                         data-categories="{{ post.categories | join: ',' | downcase | escape }}{% if post.tags.size > 0 %},{{ post.tags | join: ',' | downcase | escape }}{% endif %}"
                     >
 
