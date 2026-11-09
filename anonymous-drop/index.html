@@ -1,1 +1,539 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#07060b">
 
+    <title>Anonymous Drop | Swypyy</title>
+    <meta name="description" content="Share your thoughts anonymously and discover different perspectives on Swypyy's Anonymous Drop.">
+    <meta name="author" content="Swypyy">
+    <meta name="robots" content="noindex, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Anonymous Drop | Swypyy">
+    <meta property="og:description" content="A place to share your thoughts anonymously.">
+    <meta property="og:image" content="https://swypyy.github.io/assets/logo.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Anonymous Drop | Swypyy">
+    <meta name="twitter:description" content="Share your thoughts anonymously on Swypyy.">
+    <meta name="twitter:image" content="https://swypyy.github.io/assets/logo.png">
+
+    <link rel="icon" type="image/png" href="/assets/s-logo.png">
+    <link rel="apple-touch-icon" href="/assets/s-logo.png">
+
+    <!-- TAILWIND CONFIGURATION -->
+    <script>
+        window.tailwind = window.tailwind || {};
+
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#07060b',
+                        surface: '#120f1d',
+                        'surface-light': '#1c172e',
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: #07060b;
+            color: #f3f4f6;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .purple-glow-bg {
+            background: radial-gradient(circle at 50% 20%, rgba(124, 58, 237, 0.19) 0%, rgba(7, 6, 11, 0) 72%);
+        }
+
+        .purple-glow-card { box-shadow: 0 0 30px -8px rgba(124, 58, 237, 0.2); }
+        .s-logo-handwritten { font-family: 'Caveat', cursive; line-height: 1; }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        button:focus-visible,
+        a:focus-visible,
+        article:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 2px solid #a78bfa;
+            outline-offset: 3px;
+        }
+
+        .solid-purple-button {
+            background-color: #7c3aed !important;
+            color: #ffffff !important;
+            opacity: 1;
+            border: 1px solid rgba(255,255,255,0.12);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .solid-purple-button:hover { background-color: #a78bfa !important; }
+
+        #floating-create-button {
+            position: fixed;
+            right: 24px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+            z-index: 60;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #7c3aed;
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50%;
+            box-shadow: 0 8px 30px rgba(124,58,237,0.5);
+            transition: background-color 0.2s ease, transform 0.2s ease, bottom 0.12s ease-out;
+        }
+
+        #floating-create-button:hover { background-color: #a78bfa; transform: scale(1.1); }
+        #floating-create-button:active { transform: scale(0.95); }
+        #floating-create-button.hidden { display: none !important; }
+
+        .drop-card {
+            background-color: #120f1d !important;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .drop-card:hover { border-color: rgba(124,58,237,0.6); background-color: #1c172e !important; }
+        .drop-input { background-color: #09070f !important; color: #ffffff !important; border: 1px solid rgba(255,255,255,0.13); }
+        .drop-input::placeholder { color: #77717f; }
+        .drop-input:focus { border-color: #7c3aed; outline: none; }
+
+        @media (max-width: 640px) {
+            #floating-create-button { right: 18px; width: 56px; height: 56px; }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col selection:bg-brand-purple selection:text-white">
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-white/5">
+        <div class="w-full px-6 md:px-10 xl:px-16 h-20 flex items-center">
+            <a href="/" class="flex items-center group" aria-label="Swypyy Home">
+                <img src="/assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';">
+                <div id="textBrandLogo" class="hidden items-center gap-1">
+                    <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
+                    <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <section class="relative px-6 pt-10 pb-9 sm:pt-14 sm:pb-12 purple-glow-bg">
+            <div class="max-w-3xl mx-auto text-center space-y-4">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">Anonymous <span class="text-brand-light">Drop</span></h1>
+                <p class="text-sm sm:text-base text-gray-400 max-w-lg mx-auto leading-relaxed">Share your thoughts, discover different perspectives, and join conversations.</p>
+                <div class="pt-1">
+                    <button type="button" onclick="showCreateView()" class="solid-purple-button inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold shadow-lg shadow-brand-purple/30">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        Create a Drop
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="px-6 pb-20">
+            <div class="max-w-3xl mx-auto">
+                <div id="feed-view" class="space-y-5">
+                    <div class="flex items-center justify-between gap-3">
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Latest Drops</h2>
+                            <p class="text-xs text-gray-500 mt-1">Thoughts shared by the community</p>
+                        </div>
+                        <button type="button" onclick="fetchPosts()" class="inline-flex items-center gap-2 text-xs text-gray-300 hover:text-brand-light bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2 rounded-lg transition" aria-label="Refresh drops">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            Refresh
+                        </button>
+                    </div>
+                    <div id="posts-container" class="space-y-4" aria-live="polite">
+                        <p class="text-gray-400 text-center py-10">Loading drops...</p>
+                    </div>
+                </div>
+
+                <div id="create-view" class="hidden space-y-5">
+                    <div class="flex justify-between items-center gap-3">
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Create a Drop</h2>
+                            <p class="text-xs text-gray-500 mt-1">Share what's on your mind.</p>
+                        </div>
+                        <button type="button" onclick="showFeedView()" class="text-sm text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl transition">Cancel</button>
+                    </div>
+                    <form id="create-form" class="drop-card p-5 sm:p-7 rounded-2xl space-y-4 shadow-xl purple-glow-card">
+                        <div>
+                            <label for="author" class="block text-xs font-medium text-gray-400 mb-2">Name <span class="text-gray-600">(Optional)</span></label>
+                            <input type="text" id="author" maxlength="60" autocomplete="off" placeholder="Your name or nickname" class="drop-input w-full p-3 rounded-xl text-sm transition">
+                        </div>
+                        <div>
+                            <label for="title" class="block text-xs font-medium text-gray-400 mb-2">Title</label>
+                            <input type="text" id="title" maxlength="120" placeholder="Give your drop a title" required class="drop-input w-full p-3 rounded-xl text-sm transition">
+                        </div>
+                        <div>
+                            <label for="content" class="block text-xs font-medium text-gray-400 mb-2">Your thoughts</label>
+                            <textarea id="content" placeholder="Write anything you want to share..." rows="6" maxlength="10000" required class="drop-input w-full p-3 rounded-xl text-sm transition resize-y"></textarea>
+                        </div>
+                        <div class="bg-amber-500/10 border border-amber-500/25 rounded-xl p-4 flex gap-3">
+                            <div class="shrink-0 mt-0.5"><i data-lucide="alert-triangle" class="w-5 h-5 text-amber-400"></i></div>
+                            <div>
+                                <h3 class="text-sm font-semibold text-amber-300 mb-1">Important: Posts are permanent</h3>
+                                <p class="text-xs sm:text-sm text-amber-100/70 leading-relaxed">Once published, your drop cannot be edited or deleted by you. Please review your title and content carefully before publishing.</p>
+                            </div>
+                        </div>
+                        <button id="publish-button" type="submit" class="solid-purple-button w-full font-semibold py-3 rounded-xl shadow-lg shadow-brand-purple/30 text-sm">Publish Drop</button>
+                    </form>
+                </div>
+
+                <div id="detail-view" class="hidden space-y-5">
+                    <button type="button" onclick="showFeedView()" class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        Back to Drops
+                    </button>
+                    <div id="single-post-container" class="space-y-5"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <button id="floating-create-button" type="button" onclick="showCreateView()" aria-label="Create a Drop" title="Create a Drop">
+        <i data-lucide="plus" class="w-7 h-7"></i>
+    </button>
+
+    <footer class="py-7 border-t border-white/5 bg-void text-center text-gray-600 text-xs">
+        <p>&copy; <span id="footer-year"></span> SWYPYY. All rights reserved.</p>
+    </footer>
+
+    <div id="warning-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="warning-title">
+        <div class="bg-surface border border-white/10 rounded-2xl p-6 max-w-md w-full text-white shadow-2xl space-y-5">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center"><i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i></div>
+                <h3 id="warning-title" class="text-lg font-bold text-white">Before You Enter</h3>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">You are entering an open anonymous drop zone. Posts and comments are public and may be visible to anyone. Once published, posts and comments cannot be edited or deleted by users. Content may not be moderated. Do not share passwords, personal contact details, or other private information.</p>
+            <div class="grid grid-cols-3 gap-2 pt-1">
+                <button type="button" onclick="goBack()" class="bg-white/5 hover:bg-white/10 text-gray-300 py-2.5 rounded-xl text-sm font-medium transition">Back</button>
+                <button type="button" onclick="declineTerms()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 py-2.5 rounded-xl text-sm font-medium transition">Decline</button>
+                <button type="button" onclick="acceptTerms()" class="solid-purple-button py-2.5 rounded-xl text-sm font-semibold transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://anonymous-blogger-djqp.onrender.com';
+        let allPostsData = [];
+        let currentPostId = null;
+        let postsRequestId = 0;
+        let commentsRequestId = 0;
+
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        function refreshIcons() {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+        refreshIcons();
+
+        const floatingButton = document.getElementById('floating-create-button');
+        const footer = document.querySelector('footer');
+
+        function updateFloatingButtonPosition() {
+            if (!floatingButton || !footer || floatingButton.classList.contains('hidden')) return;
+            const footerRect = footer.getBoundingClientRect();
+            const defaultBottom = window.innerWidth <= 640 ? 18 : 24;
+            const footerOverlap = window.innerHeight - footerRect.top;
+            if (footerOverlap > 0) {
+                floatingButton.style.bottom = `${footerOverlap + defaultBottom}px`;
+            } else {
+                floatingButton.style.bottom = `calc(env(safe-area-inset-bottom, 0px) + ${defaultBottom}px)`;
+            }
+        }
+
+        window.addEventListener('scroll', updateFloatingButtonPosition, { passive: true });
+        window.addEventListener('resize', updateFloatingButtonPosition);
+        if ('ResizeObserver' in window) {
+            const footerObserver = new ResizeObserver(updateFloatingButtonPosition);
+            footerObserver.observe(footer);
+        }
+
+        function acceptTerms() {
+            document.getElementById('warning-modal').style.display = 'none';
+            try { localStorage.setItem('warningAccepted', 'true'); }
+            catch (error) { console.warn('Browser storage is unavailable.'); }
+        }
+
+        function declineTerms() { window.location.href = '/'; }
+        function goBack() { window.location.href = '/'; }
+
+        try {
+            if (localStorage.getItem('warningAccepted') === 'true') {
+                document.getElementById('warning-modal').style.display = 'none';
+            }
+        } catch (error) {
+            // Warning stays visible if storage is unavailable.
+        }
+
+        function showFeedView() {
+            document.getElementById('feed-view').classList.remove('hidden');
+            document.getElementById('create-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+            floatingButton.classList.remove('hidden');
+            currentPostId = null;
+            commentsRequestId++;
+            fetchPosts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            requestAnimationFrame(updateFloatingButtonPosition);
+        }
+
+        function showCreateView() {
+            document.getElementById('feed-view').classList.add('hidden');
+            document.getElementById('create-view').classList.remove('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+            floatingButton.classList.add('hidden');
+            refreshIcons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('title').focus();
+        }
+
+        function showDetailView(postId) {
+            if (!isValidPostId(postId)) return;
+            currentPostId = String(postId);
+            commentsRequestId++;
+            document.getElementById('feed-view').classList.add('hidden');
+            document.getElementById('create-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.remove('hidden');
+            floatingButton.classList.remove('hidden');
+            renderSinglePost(postId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            requestAnimationFrame(updateFloatingButtonPosition);
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>\'"]/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            })[character]);
+        }
+
+        function isReservedAuthorName(value) {
+            const normalized = String(value ?? '').normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g, '').trim().toLowerCase();
+            return normalized === 'swypyy';
+        }
+
+        function isValidPostId(value) {
+            const id = Number(value);
+            return Number.isSafeInteger(id) && id > 0;
+        }
+
+        function formatDate(value) {
+            if (!value) return '';
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return escapeHtml(value);
+            return escapeHtml(date.toLocaleString());
+        }
+
+        async function fetchPosts() {
+            const container = document.getElementById('posts-container');
+            const requestId = ++postsRequestId;
+            container.innerHTML = '<p class="text-gray-400 text-center py-10">Loading drops...</p>';
+            try {
+                const response = await fetch(`${API_URL}/api/posts`);
+                if (!response.ok) throw new Error(`Server returned ${response.status}`);
+                const data = await response.json();
+                if (!Array.isArray(data)) throw new Error('Unexpected response from server.');
+                if (requestId !== postsRequestId) return;
+                allPostsData = data;
+                const validPosts = allPostsData.filter(post => isValidPostId(post.id));
+                if (validPosts.length === 0) {
+                    container.innerHTML = `
+                        <div class="drop-card p-8 text-center">
+                            <div class="w-12 h-12 mx-auto rounded-2xl bg-brand-purple/20 flex items-center justify-center mb-4"><i data-lucide="message-circle" class="w-6 h-6 text-brand-light"></i></div>
+                            <h3 class="text-white font-semibold mb-2">No drops yet</h3>
+                            <p class="text-gray-400 text-sm">Be the first to share something!</p>
+                        </div>`;
+                    refreshIcons();
+                    return;
+                }
+                container.innerHTML = validPosts.map(post => {
+                    const content = String(post.content ?? '');
+                    const preview = content.length > 180 ? content.substring(0, 180) + '...' : content;
+                    const postId = Number(post.id);
+                    return `
+                        <article class="drop-card p-5 sm:p-6 space-y-3 shadow-lg cursor-pointer" onclick="showDetailView(${postId})" tabindex="0" role="button" aria-label="Read post: ${escapeHtml(post.title)}" onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); showDetailView(${postId}); }">
+                            <div class="flex justify-between items-center gap-3 text-xs text-gray-400"><span class="truncate">By: ${escapeHtml(post.author || 'Anonymous')}</span><span class="shrink-0">${formatDate(post.date)}</span></div>
+                            <h3 class="text-lg sm:text-xl font-bold text-brand-light break-words">${escapeHtml(post.title)}</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap break-words">${escapeHtml(preview)}</p>
+                            <div class="pt-1 flex items-center gap-1 text-xs font-semibold text-brand-light">Read post<i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></div>
+                        </article>`;
+                }).join('');
+                refreshIcons();
+            } catch (error) {
+                if (requestId !== postsRequestId) return;
+                container.innerHTML = `
+                    <div class="drop-card p-6 text-center border-red-500/30">
+                        <i data-lucide="cloud-off" class="w-7 h-7 text-red-400 mx-auto mb-3"></i>
+                        <p class="text-red-400 text-sm">Failed to load drops.</p>
+                        <p class="text-gray-400 text-xs mt-2">The server might be waking up. Please try again.</p>
+                        <button type="button" onclick="fetchPosts()" class="mt-4 text-xs text-brand-light hover:text-white">Try again</button>
+                    </div>`;
+                refreshIcons();
+                console.error('Fetch posts error:', error);
+            }
+        }
+
+        async function renderSinglePost(postId) {
+            const post = allPostsData.find(item => String(item.id) === String(postId));
+            const container = document.getElementById('single-post-container');
+            if (!post) {
+                container.innerHTML = '<p class="text-red-400 text-sm">Post not found. It may have been removed.</p>';
+                return;
+            }
+            container.innerHTML = `
+                <article class="drop-card p-5 sm:p-7 space-y-4 shadow-xl">
+                    <div class="flex justify-between items-center gap-3 text-xs text-gray-400"><span>By: ${escapeHtml(post.author || 'Anonymous')}</span><span>${formatDate(post.date)}</span></div>
+                    <h2 class="text-2xl font-bold text-brand-light break-words">${escapeHtml(post.title)}</h2>
+                    <p class="text-gray-300 whitespace-pre-wrap break-words leading-relaxed text-sm sm:text-base">${escapeHtml(post.content)}</p>
+                    <div class="border-t border-white/10 pt-6 mt-6 space-y-4">
+                        <h4 class="font-semibold text-gray-200">Comments</h4>
+                        <div id="single-comments-container" class="space-y-3 text-sm" aria-live="polite"><p class="text-gray-400">Loading comments...</p></div>
+                        <form onsubmit="event.preventDefault(); addComment(${Number(post.id)});" class="flex flex-col sm:flex-row gap-2 pt-2">
+                            <input type="text" id="single-comment-input" maxlength="1000" placeholder="Write an anonymous comment..." required class="drop-input flex-1 min-w-0 px-4 py-3 rounded-xl text-sm">
+                            <button type="submit" id="reply-button" class="solid-purple-button px-5 py-3 rounded-xl text-sm font-semibold">Reply</button>
+                        </form>
+                    </div>
+                </article>`;
+            refreshIcons();
+            fetchComments(post.id);
+        }
+
+        async function fetchComments(postId) {
+            const container = document.getElementById('single-comments-container');
+            if (!container) return;
+            const requestId = ++commentsRequestId;
+            const requestedPostId = String(postId);
+            try {
+                const response = await fetch(`${API_URL}/api/comments/${encodeURIComponent(postId)}`);
+                if (!response.ok) throw new Error(`Server returned ${response.status}`);
+                const comments = await response.json();
+                if (!Array.isArray(comments)) throw new Error('Unexpected comments response.');
+                if (requestId !== commentsRequestId || String(currentPostId) !== requestedPostId) return;
+                if (comments.length === 0) {
+                    container.innerHTML = '<p class="text-gray-400 text-xs">No comments yet. Be the first to reply!</p>';
+                    return;
+                }
+                container.innerHTML = comments.map(comment => `
+                    <div class="bg-black/40 p-3.5 rounded-xl border border-white/10 space-y-2">
+                        <p class="text-gray-200 break-words whitespace-pre-wrap">${escapeHtml(comment.text)}</p>
+                        <p class="text-[10px] text-gray-400">${formatDate(comment.time)}</p>
+                    </div>`).join('');
+            } catch (error) {
+                if (requestId !== commentsRequestId || String(currentPostId) !== requestedPostId) return;
+                container.innerHTML = '<p class="text-red-400 text-xs">Failed to load comments. Please refresh and try again.</p>';
+                console.error('Fetch comments error:', error);
+            }
+        }
+
+        async function addComment(postId) {
+            const input = document.getElementById('single-comment-input');
+            const button = document.getElementById('reply-button');
+            if (!input || !button) return;
+            const text = input.value.trim();
+            if (!text) { input.focus(); return; }
+            if (text.length > 1000) { alert('Your comment is too long.'); return; }
+            if (!isValidPostId(postId)) { alert('Invalid post.'); return; }
+            button.disabled = true;
+            button.textContent = 'Sending...';
+            try {
+                const response = await fetch(`${API_URL}/api/comments/${encodeURIComponent(postId)}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                if (!response.ok) throw new Error(`Server returned ${response.status}`);
+                input.value = '';
+                await fetchComments(postId);
+            } catch (error) {
+                alert('Unable to add your comment. Please try again.');
+                console.error('Add comment error:', error);
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Reply';
+            }
+        }
+
+        async function createPost() {
+            const authorInput = document.getElementById('author');
+            const titleInput = document.getElementById('title');
+            const contentInput = document.getElementById('content');
+            const button = document.getElementById('publish-button');
+            const author = authorInput.value.trim();
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+            if (!title || !content) { alert('Please fill out the title and content.'); return; }
+            if (title.length > 120 || content.length > 10000 || author.length > 60) { alert('One or more fields exceed the allowed length.'); return; }
+            if (isReservedAuthorName(author)) {
+                alert('The author name "Swypyy" is reserved and cannot be used.');
+                authorInput.focus();
+                return;
+            }
+            button.disabled = true;
+            button.textContent = 'Publishing...';
+            try {
+                const response = await fetch(`${API_URL}/api/posts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ author, title, content })
+                });
+                if (!response.ok) {
+                    let message = 'Unable to publish your drop.';
+                    try {
+                        const errorData = await response.json();
+                        if (errorData.error || errorData.message) message = errorData.error || errorData.message;
+                    } catch (error) { /* Use default error message. */ }
+                    throw new Error(message);
+                }
+                authorInput.value = '';
+                titleInput.value = '';
+                contentInput.value = '';
+                showFeedView();
+            } catch (error) {
+                alert(error.message || 'Unable to publish your drop. The server might be waking up. Please try again.');
+                console.error('Create post error:', error);
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Publish Drop';
+            }
+        }
+
+        document.getElementById('create-form').addEventListener('submit', event => {
+            event.preventDefault();
+            createPost();
+        });
+
+        fetchPosts();
+        requestAnimationFrame(updateFloatingButtonPosition);
+    </script>
+</body>
+</html>
