@@ -1,148 +1,147 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#090711">
-  <meta name="description" content="Create your own website with SwypSites. Choose a template, answer a few questions and build your website.">
-  <title>SwypSites - Build Your Website</title>
+  <title>SwypSites | Build Your Website</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
   <header class="navbar">
-    <a href="#" class="logo">Swyp<span>Sites</span></a>
+    <a href="#" class="logo" id="home-link">Swyp<span>Sites</span></a>
 
-    <button class="menu-toggle" id="menuToggle"
-      aria-label="Toggle navigation" aria-expanded="false">
-      ☰
-    </button>
+    <button class="menu-toggle" id="menu-toggle"
+      aria-label="Toggle navigation" aria-expanded="false">☰</button>
 
-    <nav id="navigation">
-      <a href="#templates">Templates</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="#about">About</a>
-      <a href="#templates" class="nav-button">Start Building</a>
+    <nav id="nav-links">
+      <a href="#templates" class="nav-link">Templates</a>
+      <a href="#how-it-works" class="nav-link">How it works</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#templates" class="nav-cta">Start Building</a>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="home">
       <div class="hero-content">
         <span class="eyebrow">YOUR WEBSITE. YOUR WAY.</span>
-
-        <h1>
-          Build a website.<br>
-          <span>No coding required.</span>
-        </h1>
-
-        <p>
-          Choose a design, answer a few simple questions,
-          and turn your ideas into a real website.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#templates" class="primary-button">
-            Explore Templates →
-          </a>
-          <a href="#how-it-works" class="secondary-button">
-            How it works
-          </a>
-        </div>
-
-        <div class="hero-note">
-          <span>✓</span> Free to get started
-          <span>✓</span> Download your website
-        </div>
+        <h1>Build a website.<br><span>No coding required.</span></h1>
+        <p>Choose a template, answer a few simple questions, and create your own website.</p>
+        <a href="#templates" class="primary-button">Explore Templates</a>
       </div>
 
-      <div class="hero-visual" aria-label="Website preview illustration">
-        <div class="browser">
-          <div class="browser-bar">
-            <span></span><span></span><span></span>
+      <div class="hero-art">
+        <div class="browser-card">
+          <div class="browser-top">
+            <i></i><i></i><i></i>
+            <span>yourwebsite.com</span>
           </div>
           <div class="browser-content">
-            <div class="mock-nav"></div>
-            <div class="mock-title"></div>
-            <div class="mock-title short"></div>
-            <div class="mock-description"></div>
+            <div class="mock-heading"></div>
+            <div class="mock-line"></div>
+            <div class="mock-line short"></div>
             <div class="mock-button"></div>
-            <div class="mock-cards">
-              <div></div><div></div><div></div>
-            </div>
+            <div class="mock-blocks"><i></i><i></i><i></i></div>
           </div>
         </div>
-        <div class="floating-label">Your website, ready to go.</div>
       </div>
     </section>
 
     <section class="templates-section" id="templates">
       <div class="section-heading">
-        <span class="eyebrow">START WITH A DESIGN</span>
-        <h2>Find your perfect template.</h2>
-        <p>Pick a starting point. Make it yours.</p>
+        <span class="eyebrow">GET STARTED</span>
+        <h2>Choose your template</h2>
+        <p>Pick a design that matches what you want to create.</p>
       </div>
 
-      <div class="category-list" id="categories">
-        <button class="category active" data-category="all">All</button>
-        <button class="category" data-category="portfolio">Portfolio</button>
-        <button class="category" data-category="business">Business</button>
-        <button class="category" data-category="restaurant">Restaurant</button>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-category="all">All</button>
+        <button class="filter-btn" data-category="portfolio">Portfolio</button>
+        <button class="filter-btn" data-category="business">Business</button>
+        <button class="filter-btn" data-category="restaurant">Restaurant</button>
       </div>
 
-      <div class="template-grid" id="templateGrid">
-        <p class="loading">Loading templates...</p>
+      <div class="template-grid" id="template-grid"></div>
+    </section>
+
+    <section class="editor-section hidden" id="editor">
+      <div class="editor-heading">
+        <button class="secondary-button" id="back-to-templates">← Templates</button>
+        <span class="eyebrow">CUSTOMIZE YOUR WEBSITE</span>
+        <h2 id="editor-title">Customize your website</h2>
+        <p>Answer these questions. Your preview will update as you type.</p>
+      </div>
+
+      <div class="editor-layout">
+        <form id="customization-form" class="question-panel">
+          <div id="question-fields"></div>
+          <div class="editor-actions">
+            <button type="button" class="secondary-button" id="reset-answers">
+              Reset answers
+            </button>
+          </div>
+        </form>
+
+        <div class="preview-panel">
+          <div class="preview-heading">
+            <div>
+              <span class="eyebrow">LIVE PREVIEW</span>
+              <h3>Your website</h3>
+            </div>
+            <span class="preview-status">Live</span>
+          </div>
+          <iframe
+            id="website-preview"
+            title="Your website preview"
+            sandbox
+          ></iframe>
+          <p class="preview-note">This is a simplified preview of your website.</p>
+        </div>
       </div>
     </section>
 
-    <section class="how-section" id="how-it-works">
+    <section class="steps-section" id="how-it-works">
       <div class="section-heading">
-        <span class="eyebrow">SIMPLE BY DESIGN</span>
-        <h2>Three steps. One website.</h2>
+        <span class="eyebrow">SIMPLE PROCESS</span>
+        <h2>How SwypSites works</h2>
       </div>
 
-      <div class="steps">
-        <article class="step">
-          <span class="step-number">01</span>
+      <div class="steps-grid">
+        <article class="step-card">
+          <span>01</span>
           <h3>Choose a template</h3>
-          <p>Explore designs and select the one that fits your idea.</p>
+          <p>Start with a design that fits your project.</p>
         </article>
-
-        <article class="step">
-          <span class="step-number">02</span>
+        <article class="step-card">
+          <span>02</span>
           <h3>Answer questions</h3>
-          <p>Add your website name, content, images and colours.</p>
+          <p>Add your text, details, and preferred colors.</p>
         </article>
-
-        <article class="step">
-          <span class="step-number">03</span>
-          <h3>Download your site</h3>
-          <p>Preview your website and export HTML or a ZIP project.</p>
+        <article class="step-card">
+          <span>03</span>
+          <h3>Preview your site</h3>
+          <p>Check your website before exporting it.</p>
         </article>
       </div>
     </section>
 
     <section class="about-section" id="about">
-      <span class="eyebrow">MADE FOR EVERYONE</span>
-      <h2>Your ideas deserve a website.</h2>
-      <p>
-        SwypSites makes website creation simpler.
-        Start with a template, personalize it and take
-        your website wherever you want.
-      </p>
-      <a href="#templates" class="primary-button">Start creating →</a>
+      <span class="eyebrow">ABOUT SWYPSITES</span>
+      <h2>Website creation made simpler.</h2>
+      <p>SwypSites aims to make website creation accessible to everyone, without requiring coding skills.</p>
     </section>
   </main>
 
   <footer>
     <a href="#" class="logo">Swyp<span>Sites</span></a>
-    <p>Build something worth sharing.</p>
-    <small>© <span id="year"></span> SwypSites. All rights reserved.</small>
+    <p>© <span id="year"></span> SwypSites. All rights reserved.</p>
   </footer>
 
   <script src="templates/templates.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="js/preview.js"></script>
   <script src="js/app.js"></script>
 </body>
   </html>
-  
