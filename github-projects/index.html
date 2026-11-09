@@ -13,11 +13,13 @@
     <meta name="copyright" content="SWYPYY. All rights reserved.">
     <meta name="robots" content="index, follow">
 
+    <link rel="canonical" href="https://swypyy.github.io/Github-Projects/">
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/s-logo.png">
     <link rel="apple-touch-icon" href="/assets/s-logo.png">
 
-    <!-- Open Graph / Social Media -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://swypyy.github.io/Github-Projects/">
     <meta property="og:title" content="My GitHub Projects | SWYPYY">
@@ -30,8 +32,11 @@
     <meta name="twitter:description" content="Explore web apps, custom tools, and experimental projects built by Swypyy.">
     <meta name="twitter:image" content="https://swypyy.github.io/assets/logo.png">
 
+    <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
             theme: {
@@ -40,100 +45,223 @@
                         void: '#07060b',
                         surface: '#120f1d',
                         'surface-light': '#1c172e',
-                        brand: { purple: '#7c3aed', light: '#a78bfa', glow: '#c084fc', accent: '#d8b4fe' }
+                        brand: {
+                            purple: '#7c3aed',
+                            light: '#a78bfa',
+                            glow: '#c084fc',
+                            accent: '#d8b4fe'
+                        }
                     },
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], cursive: ['Caveat', 'cursive', 'sans-serif'] }
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        cursive: ['Caveat', 'cursive', 'sans-serif']
+                    }
                 }
             }
-        }
+        };
     </script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;600;800&display=swap');
-        body { background-color: #07060b; color: #f3f4f6; }
-        .purple-glow-card { box-shadow: 0 0 30px -5px rgba(124, 58, 237, 0.25); }
-        .s-logo-handwritten { font-family: 'Caveat', cursive; line-height: 1; }
+
+        body {
+            background-color: #07060b;
+            color: #f3f4f6;
+        }
+
+        .purple-glow-card {
+            box-shadow: 0 0 30px -5px rgba(124, 58, 237, 0.25);
+        }
+
+        .s-logo-handwritten {
+            font-family: 'Caveat', cursive;
+            line-height: 1;
+        }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
+
+    <!-- Header -->
     <header class="bg-void/90 backdrop-blur-md border-b border-white/5 py-4">
         <div class="w-full px-6 md:px-10 xl:px-16 flex items-center justify-between">
+
             <a href="/" class="flex items-center group" aria-label="Swypyy home">
-                <img src="/assets/logo.png" alt="Swypyy Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';">
+
+                <img
+                    src="/assets/logo.png"
+                    alt="Swypyy Logo"
+                    class="h-9 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                    onerror="this.onerror=null; this.style.display='none'; document.getElementById('textBrandLogo').style.display='flex';"
+                >
+
                 <div id="textBrandLogo" class="hidden items-center gap-1">
                     <span class="s-logo-handwritten text-4xl font-bold text-brand-purple">S</span>
                     <span class="text-2xl font-bold tracking-wider text-white">wypyy</span>
                 </div>
+
             </a>
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="flex-grow py-8 px-6">
+
         <div class="max-w-4xl mx-auto space-y-6">
+
+            <!-- Back Button -->
             <div>
-                <a href="/" class="inline-flex items-center text-white hover:text-brand-glow transition-colors" aria-label="Back to Home">
+                <a
+                    href="/"
+                    class="inline-flex items-center text-white hover:text-brand-glow transition-colors"
+                    aria-label="Back to Home"
+                >
                     <i data-lucide="arrow-left" class="w-7 h-7"></i>
                 </a>
             </div>
+
+            <!-- Page Heading -->
             <div class="space-y-2 text-left">
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">My GitHub Projects</h1>
-                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">Custom web apps and tools I've built from scratch while learning.</p>
+
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    My GitHub Projects
+                </h1>
+
+                <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+                    Custom web apps and tools I've built from scratch while learning.
+                </p>
+
             </div>
 
+            <!-- Projects -->
             <div class="space-y-6 pt-2">
+
+                <!-- Anonymous Chat -->
                 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+
                     <div class="flex items-center gap-5 text-left">
+
                         <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
                             <i data-lucide="message-square" class="w-7 h-7"></i>
                         </div>
+
                         <div class="space-y-1">
-                            <h2 class="text-xl sm:text-2xl font-bold text-white">Anonymous Chat</h2>
-                            <p class="text-xs sm:text-sm text-gray-400">Anonymous, ephemeral real-time chat with self-destructing rooms.</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-white">
+                                Anonymous Chat
+                            </h2>
+
+                            <p class="text-xs sm:text-sm text-gray-400">
+                                Anonymous, ephemeral real-time chat with self-destructing rooms.
+                            </p>
                         </div>
+
                     </div>
+
                     <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
-                        <a href="https://github.com/swypyy/Anonymous-Chat-repo" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2">
-                            <i data-lucide="code" class="w-4 h-4 text-brand-glow"></i><span>GitHub Repo</span>
+
+                        <a
+                            href="https://github.com/swypyy/Anonymous-Chat-repo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2"
+                        >
+                            <i data-lucide="code" class="w-4 h-4 text-brand-glow"></i>
+                            <span>GitHub Repo</span>
                         </a>
-                        <a href="/anonymous-chat/" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2">
-                            <span>Open App</span><i data-lucide="external-link" class="w-4 h-4"></i>
+
+                        <a
+                            href="/anonymous-chat/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2"
+                        >
+                            <span>Open App</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
                         </a>
+
                     </div>
                 </div>
 
+                <!-- Anonymous Drop -->
                 <div class="bg-surface rounded-3xl border border-white/10 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 purple-glow-card hover:border-brand-purple/40 transition-all">
+
                     <div class="flex items-center gap-5 text-left">
+
                         <div class="w-14 h-14 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center shrink-0 text-brand-glow">
                             <i data-lucide="globe" class="w-7 h-7"></i>
                         </div>
+
                         <div class="space-y-1">
-                            <h2 class="text-xl sm:text-2xl font-bold text-white">Anonymous Drop</h2>
-                            <p class="text-xs sm:text-sm text-gray-400">Zero-friction anonymous blogging and commenting wall for everyone.</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-white">
+                                Anonymous Drop
+                            </h2>
+
+                            <p class="text-xs sm:text-sm text-gray-400">
+                                Zero-friction anonymous blogging and commenting wall for everyone.
+                            </p>
                         </div>
+
                     </div>
+
                     <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto shrink-0">
-                        <a href="https://github.com/swypyy/Anonymous-Drop-repo" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2">
-                            <i data-lucide="code" class="w-4 h-4 text-brand-glow"></i><span>GitHub Repo</span>
+
+                        <a
+                            href="https://github.com/swypyy/Anonymous-Drop-repo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="px-5 py-3 rounded-xl bg-surface-light border border-white/10 hover:border-brand-purple/50 text-gray-200 font-semibold transition-all text-center flex items-center justify-center gap-2"
+                        >
+                            <i data-lucide="code" class="w-4 h-4 text-brand-glow"></i>
+                            <span>GitHub Repo</span>
                         </a>
-                        <a href="/anonymous-drop/" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2">
-                            <span>Open App</span><i data-lucide="external-link" class="w-4 h-4"></i>
+
+                        <a
+                            href="/anonymous-drop/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="px-6 py-3 rounded-xl bg-brand-purple hover:bg-brand-glow text-white font-semibold transition-all shadow-md text-center flex items-center justify-center gap-2"
+                        >
+                            <span>Open App</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
                         </a>
+
                     </div>
                 </div>
-                
-                </div>
+
             </div>
+
         </div>
+
     </main>
 
-    <footer id="footer-container" class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs"></footer>
+    <!-- Footer -->
+    <footer
+        id="footer-container"
+        class="py-8 border-t border-white/5 bg-void text-center text-gray-500 text-xs"
+    ></footer>
+
+    <!-- Scripts -->
     <script>
-        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') lucide.createIcons();
+        // Initialize Lucide icons
+        if (
+            typeof lucide !== 'undefined' &&
+            typeof lucide.createIcons === 'function'
+        ) {
+            lucide.createIcons();
+        }
+
+        // Dynamic copyright year
         const currentYear = new Date().getFullYear();
+
         document.getElementById('footer-container').innerHTML = `
             <div class="max-w-6xl mx-auto px-6">
-                <p>&copy; ${currentYear} SWYPYY. All rights reserved. Unauthorized duplication prohibited.</p>
+                <p>
+                    &copy; ${currentYear} SWYPYY. All rights reserved.
+                    Unauthorized duplication prohibited.
+                </p>
             </div>
         `;
     </script>
+
 </body>
-</html>
+    </html>
