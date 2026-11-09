@@ -38,7 +38,7 @@
       <form id="download-form" novalidate>
         <label class="sr-only" for="media-url">Video or image URL</label>
         <div class="input-wrap"><span class="input-link-icon">⌁</span><input id="media-url" type="url" placeholder="Paste a YouTube, Instagram or Facebook link..." autocomplete="url" /><button id="paste-button" class="ghost-button" type="button">Paste</button></div>
-        <div class="form-bottom"><p class="helper-text">Only use links to content you own or are authorized to save.</p><button id="preview-button" class="primary-button" type="submit">Preview media <span>→</span></button></div>
+        <div class="form-bottom"><button id="preview-button" class="primary-button" type="submit">Preview media <span>→</span></button></div>
       </form>
       <div id="message" class="message" role="status" aria-live="polite" hidden></div>
     </section>
@@ -52,8 +52,6 @@
       <div class="section-heading"><div><span class="step-label">YOUR RECENT ACTIVITY</span><h2>Download history</h2></div><button id="clear-history" class="text-button" type="button">Clear history</button></div>
       <div id="history-list" class="history-list"><div class="empty-state"><span class="empty-icon">↻</span><p>No activity yet</p><small>Your preview and download activity will appear here.</small></div></div>
     </section>
-
-    <section class="privacy-note"><span class="privacy-icon">✳</span><p><strong>Respect the source.</strong> Swypyy does not bypass private-account settings, DRM, access controls or platform restrictions. Use this tool only for content you own or are authorized to download.</p></section>
   </main>
 
   <footer class="footer"><span>© <span id="year"></span> SWYPYY. All rights reserved.</span><span>Built for a more thoughtful web.</span></footer>
