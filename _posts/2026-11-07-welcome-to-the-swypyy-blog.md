@@ -4,7 +4,7 @@ title: "Welcome to Swypyy"
 date: 2026-11-07 16:00:00 +0530
 description: "An introduction to Swypyy: a personal space for projects, experiments, and the lessons learned while building with curiosity."
 featured: true
-tags: [Swypyy]
+tags: []
 categories: [Announcements]
 cover: /assets/blog/welcome-to-swypyy.svg
 cover_alt: "Purple creative workspace illustration with an open notebook and the title Welcome to Swypyy"
