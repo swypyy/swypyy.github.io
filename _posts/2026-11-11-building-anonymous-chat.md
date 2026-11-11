@@ -3,7 +3,7 @@ layout: post
 title: "Building Anonymous Chat with Node.js and Socket.IO"
 date: 2026-11-11 10:30:00 +0530
 description: "Learn how I built Anonymous Chat, a real-time chat app with Node.js, Express, and Socket.IO. Discover how temporary rooms, live messaging, and in-memory storage work."
-tags: [Projects, Web Development, JavaScript]
+tags: [Web Development, JavaScript]
 categories: [Projects]
 ---
 
