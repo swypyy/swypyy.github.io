@@ -57,6 +57,7 @@ It was a great way to explore real-time messaging, event-driven architecture, an
 ## Try it
 
 - Live app: [https://swypyy.github.io/anonymous-chat/](https://swypyy.github.io/anonymous-chat/)
-- GitHub: https://github.com/swypyy/Anonymous-Chat-repo/
+  
+- GitHub: [https://github.com/swypyy/Anonymous-Chat-repo/](https://github.com/swypyy/Anonymous-Chat-repo/)
 
 Anonymous Chat is a lightweight experimental project for temporary conversations. It is useful for quick collaboration and idea-sharing, but it is not designed for permanent chat storage or secure private communication.
