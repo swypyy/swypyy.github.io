@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Building Anonymous Chat: Real-Time Conversations Without Accounts or a Database"
-date: 2026-11-11 18:00:00 +0530
-description: "A behind-the-scenes look at how I built Anonymous Chat with Node.js, Express, and Socket.IO, including temporary rooms, real-time messaging, room cleanup, and the decisions behind its architecture."
+date: 2026-11-11 10:30:00 +0530
+description: "A behind-the-scenes look at how I built Anonymous Chat with Node.js, Express, and Socket.IO, including temporary rooms, real-time messaging, room cleanup, and the decisions behind its lightweight architecture."
 tags: [Projects, Web Development, JavaScript]
 categories: [Projects]
 ---
@@ -379,4 +379,4 @@ It is one of the projects developed under **Swypyy**, where I experiment with bu
 
 ---
 
-*Anonymous Chat is a lightweight experimental messaging project. Messages are held in server memory while a room is active and are not end-to-end encrypted. Avoid sharing passwords, contact details, or other sensitive personal information in conversations.*
+*Anonymous Chat is a lightweight experimental messaging project. Messages are held in server memory while a room is active and are not end-to-end encrypted. Avoid sharing passwords, contact details, or sensitive personal information in temporary rooms.*
