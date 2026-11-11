@@ -3,7 +3,7 @@ layout: post
 title: "Building Anonymous Chat: Real-Time Conversations Without Accounts or a Database"
 date: 2026-11-11 10:30:00 +0530
 description: "A behind-the-scenes look at how I built Anonymous Chat with Node.js, Express, and Socket.IO, including temporary rooms, real-time messaging, room cleanup, and the decisions behind its lightweight architecture."
-tags: [Creations]
+tags: []
 categories: [Creations]
 ---
 
