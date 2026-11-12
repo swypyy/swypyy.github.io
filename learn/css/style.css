@@ -60,8 +60,9 @@ img {
 }
 
 .container {
-    width: min(1120px, 90%);
+    width: min(1440px, 94%);
     margin-inline: auto;
+
 }
 
 section {
