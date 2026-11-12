@@ -60,7 +60,7 @@ img {
 }
 
 .container {
-    width: min(1440px, 94%);
+    width: min(1440px, 100%);
     margin-inline: auto;
 
 }
